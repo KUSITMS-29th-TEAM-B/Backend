@@ -14,7 +14,6 @@ this module is responsible for domain layer
             └── kotlin/
                 └── com/
                     └── bamyanggang/
-                        ├── global
                         └── domain/
                             └── user/
                                 ├── repository
