@@ -1,7 +1,7 @@
 # Api-Module
 
 ## Description
-this module is responsible for presentation layer and application layer
+This module is responsible for spring execution, presentation, and application layer
 
 ## Dependencies
 
@@ -19,7 +19,7 @@ this module is responsible for presentation layer and application layer
                             ├── user/
                             │   ├── presentation
                             │   └── application
-                            └── jobDescription/
+                            └── apply/
                                 ├── presentation
                                 └── application
 
