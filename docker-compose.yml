@@ -1,0 +1,16 @@
+version: '3'
+services:
+  blue:
+    container_name: blue
+    image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}
+    expose:
+      - 8080
+    ports:
+      - "8082:8080"
+  green:
+    container_name: green
+    image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}
+    expose:
+      - 8080
+    ports:
+      - "8081:8080"
