@@ -30,15 +30,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-        # copy application.yml
-      - name: Set up dev ENV
-        run: |
-          cd ./Api-Module/src/main/resources/
-          touch ./application.yml
-          echo "$APPLICATION_DEV" > ./application.yml
-        env:
-          APPLICATION_DEV: ${{ secrets.APPLICATION_DEV }}
-
       - name: Set .env for configuration
         uses: appleboy/ssh-action@master
         with:
