@@ -33,5 +33,4 @@ jobs:
       - name: Build With Gradle
         run: |
           ./gradlew build
-#          ./gradlew generateRestDocs
           ./gradlew bootJar
