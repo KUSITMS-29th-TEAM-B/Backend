@@ -2,8 +2,7 @@ name: CI-dev
 
 on:
   push:
-    branches:
-      - feat/ci-cd
+    branches: [ "feat/ci-cd" ]
 
 jobs:
   ci:
@@ -29,7 +28,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Grant Execute Permission For Gradlew
+      # gradle build
+      - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build With Gradle
