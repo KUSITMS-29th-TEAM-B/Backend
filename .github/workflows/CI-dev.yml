@@ -2,10 +2,11 @@ name: CI-dev
 
 on:
   push:
-    branches: [ "feat/ci-cd" ]
+    branches:
+      - feat/ci-cd
 
 jobs:
-  ci:
+  build:
     runs-on: ubuntu-22.04
 
     steps:
@@ -17,7 +18,6 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
 
-      # Gradle 의존성 캐싱
       - name: Gradle Caching
         uses: actions/cache@v3
         with:
@@ -27,13 +27,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      # gradle build
-      - name: Grant execute permission for gradlew
+      - name: Grant Execute Permission For Gradlew
         run: chmod +x gradlew
 
       - name: Build With Gradle
         run: |
           ./gradlew build
-#          ./gradlew generateRestDocs
+          ./gradlew generateRestDocs
           ./gradlew bootJar
