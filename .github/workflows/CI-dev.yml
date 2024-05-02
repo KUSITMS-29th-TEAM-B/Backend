@@ -1,9 +1,9 @@
 name: CI-dev
 
 on:
-  pull_request:
+  push:
     branches:
-      - develop
+      - feat/ci-cd
 
 jobs:
   ci:
