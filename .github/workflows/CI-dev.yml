@@ -3,7 +3,7 @@ name: CI-dev
 on:
   push:
     branches:
-      - feat/ci-cd
+      - develop
 
 jobs:
   build:

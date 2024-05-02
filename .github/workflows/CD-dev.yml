@@ -2,7 +2,7 @@ name: CD-dev
 
 on:
   push:
-    branches: [ "feat/ci-cd" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
