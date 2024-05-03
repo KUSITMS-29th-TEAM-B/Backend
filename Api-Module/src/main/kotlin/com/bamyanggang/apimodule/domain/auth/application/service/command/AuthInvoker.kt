@@ -18,8 +18,8 @@ class AuthInvoker (
 
     fun invoke(request: SocialLogin.Request, provider: SocialLoginProvider): SocialLogin.Response {
         val response = attemptLogin(request, provider)
-        return TransactionUtils.write {
-            return@write userReader.findBySocialIdOrNull(response.socialId)?.let {
+        return TransactionUtils.writable {
+            return@writable userReader.findBySocialIdOrNull(response.socialId)?.let {
                 val accessToken = jwtProvider.generateAccessToken(Claims.UserClaims(it.id))
                 val refreshToken = jwtProvider.generateRefreshToken(Claims.UserClaims(it.id))
                 SocialLogin.Response.Success(accessToken, refreshToken)

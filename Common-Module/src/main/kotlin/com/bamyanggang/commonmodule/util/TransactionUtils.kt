@@ -15,12 +15,12 @@ class TransactionUtils(
     companion object{
         private lateinit var transactionHandler: TransactionHandler
 
-        fun <T> read(func: () -> T): T {
-            return transactionHandler.read { func() }
+        fun <T> readable(func: () -> T): T {
+            return transactionHandler.readable { func() }
         }
 
-        fun <T> write(func: () -> T): T {
-            return transactionHandler.write { func() }
+        fun <T> writable(func: () -> T): T {
+            return transactionHandler.writable { func() }
         }
 
     }
@@ -29,12 +29,12 @@ class TransactionUtils(
     class TransactionHandler{
 
         @Transactional(readOnly = true)
-        fun <T> read(func: () -> T): T {
+        fun <T> readable(func: () -> T): T {
             return func()
         }
 
         @Transactional
-        fun <T> write(func: () -> T): T {
+        fun <T> writable(func: () -> T): T {
             return func()
         }
     }
