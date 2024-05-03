@@ -94,6 +94,11 @@ subprojects {
         testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
         testImplementation("io.mockk:mockk:1.13.10")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
+
+        // JWT
+        implementation("io.jsonwebtoken:jjwt-api:0.12.5")
+        implementation("io.jsonwebtoken:jjwt-impl:0.12.5")
+        implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
     }
 
     tasks.withType<Test> {
