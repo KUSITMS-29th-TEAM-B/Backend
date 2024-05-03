@@ -1,4 +1,4 @@
-package com.bamyanggang.apimodule.domain.auth.presentation.config
+package com.bamyanggang.apimodule.global.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
