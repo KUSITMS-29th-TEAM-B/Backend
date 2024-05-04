@@ -4,9 +4,9 @@ import com.bamyanggang.apimodule.domain.auth.application.dto.SocialLogin
 import com.bamyanggang.apimodule.domain.auth.application.exception.AuthException
 import com.bamyanggang.apimodule.domain.auth.application.service.command.handler.AuthHandler
 import com.bamyanggang.commonmodule.util.TransactionUtils
-import com.bamyanggang.domainmodule.auth.enum.SocialLoginProvider
-import com.bamyanggang.domainmodule.auth.jwt.Claims
-import com.bamyanggang.domainmodule.auth.jwt.JwtProvider
+import com.bamyanggang.domainmodule.domain.auth.enum.SocialLoginProvider
+import com.bamyanggang.domainmodule.domain.auth.jwt.Claims
+import com.bamyanggang.domainmodule.domain.auth.jwt.JwtProvider
 import org.springframework.stereotype.Component
 
 @Component
