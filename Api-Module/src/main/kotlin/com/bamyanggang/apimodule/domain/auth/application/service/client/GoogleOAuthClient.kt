@@ -5,7 +5,9 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Component
 class GoogleOAuthClient {
+
     private val webClient = WebClient.create("https://www.googleapis.com")
+
     fun retrieveUserInfo(accessToken: String): GoogleUserInfo? {
         return webClient.get()
             .uri("/oauth2/v1/userinfo")
