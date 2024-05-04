@@ -1,5 +1,6 @@
 package com.bamyanggang.apimodule.domain.auth.application.service.command.handler.impl
 
+import com.bamyanggang.apimodule.domain.auth.application.exception.AuthException
 import com.bamyanggang.apimodule.domain.auth.application.service.client.GoogleOAuthClient
 import com.bamyanggang.apimodule.domain.auth.application.service.command.handler.AuthHandler
 import com.bamyanggang.domainmodule.auth.enum.SocialLoginProvider
@@ -16,7 +17,7 @@ class GoogleOAuthHandler(
     }
 
     override fun handle(request: AuthHandler.Request): AuthHandler.Response {
-        val googleUserInfo = googleOAuthClient.retrieveUserInfo(request.accessToken)?: throw IllegalAccessException("구글 사용자 정보를 가져오는데 실패했습니다.")
+        val googleUserInfo = googleOAuthClient.retrieveUserInfo(request.accessToken)?: throw AuthException.GoogleUserInfoRetrievalException()
         return AuthHandler.Response(googleUserInfo.id, googleUserInfo.name)
     }
 }
