@@ -1,5 +1,6 @@
 package com.bamyanggang.apimodule.domain.auth.application.service.client
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -17,10 +18,18 @@ class KakaoOAuthClient {
             .block()
     }
 
-
     data class KakaoUserInfo(
         val id: String,
-        val nickname: String
+        @field:JsonAlias("kakao_account")
+        val kakaoAccount: KakaoAccount
     )
+
+    data class KakaoAccount(
+        val profile: Map<String, Any?>,
+    ) {
+        val nickname: String
+            get() = profile["nickname"] as String
+    }
+
 
 }

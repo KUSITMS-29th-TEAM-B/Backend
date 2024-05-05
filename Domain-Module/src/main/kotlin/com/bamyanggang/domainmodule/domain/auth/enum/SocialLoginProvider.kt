@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.auth.enum
+package com.bamyanggang.domainmodule.domain.auth.enum
 
 enum class SocialLoginProvider {
     KAKAO,
