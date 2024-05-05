@@ -16,7 +16,7 @@ class SocialLogin{
 
         data class UnRegistered(
             val registerToken: String,
-            val userName: String
+            val nickName: String
         ): Response()
     }
 }
