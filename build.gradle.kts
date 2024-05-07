@@ -61,23 +61,6 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-        // configuration properties
-        implementation("org.springframework.boot:spring-boot-configuration-processor")
-
-        // aop
-        implementation("org.springframework.boot:spring-boot-starter-aop")
-
-        // jpa
-        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-        runtimeOnly("com.mysql:mysql-connector-j")
-
-        //web
-        implementation("org.springframework.boot:spring-boot-starter-web")
-
-        // security
-        implementation("org.springframework.boot:spring-boot-starter-security")
-        testImplementation("org.springframework.security:spring-security-test")
-
         // fixture testing tool
         testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter-kotlin:1.0.14")
         testFixturesImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter-kotlin:1.0.14")
@@ -94,11 +77,6 @@ subprojects {
         testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
         testImplementation("io.mockk:mockk:1.13.10")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
-
-        // JWT
-        implementation("io.jsonwebtoken:jjwt-api:0.12.5")
-        implementation("io.jsonwebtoken:jjwt-impl:0.12.5")
-        implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
     }
 
     tasks.withType<Test> {
