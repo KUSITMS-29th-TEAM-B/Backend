@@ -86,5 +86,4 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
             sudo docker stop ${{secrets.DOCKER_REPOSITORY}}
             sudo docker rm ${{secrets.DOCKER_REPOSITORY}}
-            sudo docker run --name ${{secrets.DOCKER_REPOSITORY}} -d -p 8080:8080 ${{secrets.DOCKER_REPOSITORY}}
-            docker image prune -f
+            sudo docker run --name ${{secrets.DOCKER_REPOSITORY}} -d -p 8080:8080 ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}
