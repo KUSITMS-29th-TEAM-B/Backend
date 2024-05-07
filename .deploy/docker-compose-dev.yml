@@ -1,0 +1,12 @@
+services:
+  deploy:
+    container_name: flight
+    image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=${DB_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
