@@ -1,9 +1,9 @@
 package com.bamyanggang.apimodule.domain.auth.application.service.command.handler.impl
 
 import com.bamyanggang.apimodule.domain.auth.application.exception.AuthException
-import com.bamyanggang.apimodule.domain.auth.application.service.client.GoogleOAuthClient
+import com.bamyanggang.infrastructuremodule.client.GoogleOAuthClient
 import com.bamyanggang.apimodule.domain.auth.application.service.command.handler.AuthHandler
-import com.bamyanggang.domainmodule.auth.enum.SocialLoginProvider
+import com.bamyanggang.domainmodule.domain.auth.enum.SocialLoginProvider
 import org.springframework.stereotype.Component
 
 @Component
