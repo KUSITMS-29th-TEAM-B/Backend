@@ -2,7 +2,7 @@ name: CD-dev
 
 on:
   push:
-    branches: [ "feat/flight-17" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -84,4 +84,7 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
-            docker compose restart
+            docker compose stop
+            docker compose rm -f
+            docker compose up -d
+            docker image prune -f
