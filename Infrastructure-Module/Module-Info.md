@@ -14,7 +14,7 @@ this module is responsible for infrastructure layer
             └── kotlin/
                 └── com/
                     └── bamyanggang/
-                        └── domain/
+                        └── persistence/
                             └── user/
                                 ├── mapper
                                 ├── jpa/
@@ -22,4 +22,5 @@ this module is responsible for infrastructure layer
                                 │   └── repository
                                 ├── DomainRepositoryImpl.class
                                 └── ..
+                        └── client
 ```
