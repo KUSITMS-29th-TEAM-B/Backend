@@ -1,4 +1,4 @@
-package com.bamyanggang.apimodule.domain.auth.application.service.client
+package com.bamyanggang.infrastructuremodule.client
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import org.springframework.stereotype.Component

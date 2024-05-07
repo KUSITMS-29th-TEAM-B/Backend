@@ -1,7 +1,7 @@
 package com.bamyanggang.apimodule.domain.auth.application.service.command.handler.impl
 
 import com.bamyanggang.apimodule.domain.auth.application.exception.AuthException
-import com.bamyanggang.apimodule.domain.auth.application.service.client.KakaoOAuthClient
+import com.bamyanggang.infrastructuremodule.client.KakaoOAuthClient
 import com.bamyanggang.apimodule.domain.auth.application.service.command.handler.AuthHandler
 import com.bamyanggang.domainmodule.domain.auth.enum.SocialLoginProvider
 import org.springframework.stereotype.Component
