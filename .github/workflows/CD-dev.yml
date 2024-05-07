@@ -72,7 +72,7 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
           port: 22
-          source: "./.deploy/docker-compose.yml"
+          source: "./.deploy/docker-compose-dev.yml"
           target: "/home/ubuntu/"
 
       ## 도커 허브에서 jar파일 및 pull후에 컴포즈 up
