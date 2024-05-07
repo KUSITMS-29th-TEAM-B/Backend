@@ -1,4 +1,3 @@
-version: '3'
 services:
   deploy:
     container_name: flight

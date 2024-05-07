@@ -3,6 +3,7 @@ package com.bamyanggang.apimodule.domain.auth.presentation
 import com.bamyanggang.apimodule.domain.auth.application.dto.SocialLogin
 import com.bamyanggang.apimodule.domain.auth.application.service.AuthService
 import com.bamyanggang.domainmodule.domain.auth.enum.SocialLoginProvider
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,4 +20,8 @@ class AuthController(
         @RequestBody request: SocialLogin.Request
     ): SocialLogin.Response = authService.executeSocialLogin(provider,request)
 
+    @GetMapping("")
+    fun healthCheck(): String {
+        return "OK"
+    }
 }
