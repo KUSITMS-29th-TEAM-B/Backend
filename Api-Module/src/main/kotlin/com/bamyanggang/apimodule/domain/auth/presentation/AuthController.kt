@@ -19,9 +19,4 @@ class AuthController(
         @PathVariable provider: SocialLoginProvider,
         @RequestBody request: SocialLogin.Request
     ): SocialLogin.Response = authService.executeSocialLogin(provider,request)
-
-    @GetMapping("")
-    fun healthCheck(): String {
-        return "OK"
-    }
 }

@@ -84,6 +84,4 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
-            docker compose stop
-            docker compose rm -f
-            docker compose up -d
+            docker compose restart
