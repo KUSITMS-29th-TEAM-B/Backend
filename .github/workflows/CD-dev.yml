@@ -2,7 +2,7 @@ name: CD-dev
 
 on:
   push:
-    branches: [ "feat/flight-17" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
