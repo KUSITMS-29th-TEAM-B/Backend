@@ -1,48 +1,42 @@
 package com.bamyanggang.apimodule.global.config
 
+import com.bamyanggang.apimodule.global.security.filter.JwtAuthenticationFilter
+import com.bamyanggang.apimodule.global.security.filter.JwtEntryPoint
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer
+import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 
-@EnableWebSecurity
 @Configuration
-class SecurityConfig {
-    // TODO: api 추가될 때 white list url 확인해서 추가하기.
-    private val whiteList: Array<String> = arrayOf(
-        "/api/**",
-        "/api-docs/**",
-        "/",
-        "/error"
-    )
+@EnableWebSecurity
+class SecurityConfig(private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+private val jwtEntryPoint: JwtEntryPoint) {
 
     @Bean
-    fun webSecurityCustomizer(): WebSecurityCustomizer {
-        return WebSecurityCustomizer { web: WebSecurity -> web.ignoring().requestMatchers(*whiteList) }
-    }
+    fun securityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
+        httpSecurity {
+            authorizeRequests {
+                authorize(anyRequest, permitAll)
 
-    @Bean
-    @Throws(Exception::class)
-    fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        return http
-            .csrf { obj: AbstractHttpConfigurer<*, *> -> obj.disable() }
-            .formLogin { obj: AbstractHttpConfigurer<*, *> -> obj.disable() }
-            .httpBasic { obj: AbstractHttpConfigurer<*, *> -> obj.disable() }
-            .sessionManagement { sessionManagementConfigurer ->
-                sessionManagementConfigurer
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
-            .authorizeHttpRequests { authorizationManagerRequestMatcherRegistry ->
-                authorizationManagerRequestMatcherRegistry
-                    .anyRequest()
-                    .authenticated()
-            }
-            .build()
+            formLogin { disable() }
+            httpBasic { disable() }
+            logout { disable() }
+            sessionManagement { sessionCreationPolicy = SessionCreationPolicy.STATELESS }
+            csrf { disable() }
+            addFilterBefore<UsernamePasswordAuthenticationFilter>(jwtAuthenticationFilter)
+            addFilterBefore<JwtAuthenticationFilter>(jwtEntryPoint)
+        }
+        return httpSecurity.build()
     }
 }
