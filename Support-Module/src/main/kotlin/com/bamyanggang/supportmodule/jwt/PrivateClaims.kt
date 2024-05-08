@@ -1,6 +1,4 @@
-package com.bamyanggang.domainmodule.domain.auth.jwt
-
-import com.bamyanggang.domainmodule.domain.auth.enum.SocialLoginProvider
+package com.bamyanggang.supportmodule.jwt
 import com.fasterxml.jackson.annotation.JsonProperty
 
 class PrivateClaims(
@@ -27,9 +25,7 @@ sealed interface Claims {
     data class RegistrationClaims(
         @param:JsonProperty("social_id")
         @get:JsonProperty("social_id")
-        val socialId: String,
-        @param:JsonProperty("social_login_provider")
-        val socialLoginProvider: SocialLoginProvider
+        val socialId: String
     ) : Claims {
         override fun createPrivateClaims(tokenType: TokenType) = PrivateClaims(this, tokenType)
         override fun convertToClaims(): Map<String, Any> = mapOf(

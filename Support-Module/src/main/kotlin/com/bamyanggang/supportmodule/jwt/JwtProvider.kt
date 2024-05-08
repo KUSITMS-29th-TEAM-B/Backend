@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.auth.jwt
+package com.bamyanggang.supportmodule.jwt
 
 import io.jsonwebtoken.Jwts
 import org.springframework.stereotype.Component

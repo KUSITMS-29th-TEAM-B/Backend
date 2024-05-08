@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.auth.jwt
+package com.bamyanggang.supportmodule.jwt
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

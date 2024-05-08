@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.auth.jwt
+package com.bamyanggang.supportmodule.jwt
 
 object JwtConst {
     const val TOKEN_ISSUER = "flight"

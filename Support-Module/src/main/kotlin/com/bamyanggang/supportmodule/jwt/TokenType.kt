@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.auth.jwt
+package com.bamyanggang.supportmodule.jwt
 
 enum class TokenType {
     ACCESS_TOKEN,

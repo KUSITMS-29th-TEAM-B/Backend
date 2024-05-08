@@ -1,6 +1,6 @@
-package com.bamyanggang.domainmodule.domain.auth.jwt
+package com.bamyanggang.supportmodule.jwt
 
-import com.bamyanggang.domainmodule.domain.auth.jwt.exception.JwtException
+import com.bamyanggang.supportmodule.jwt.exception.JwtException
 import io.jsonwebtoken.*
 import io.jsonwebtoken.jackson.io.JacksonDeserializer
 import io.jsonwebtoken.security.SignatureException
