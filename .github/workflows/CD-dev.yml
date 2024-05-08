@@ -44,7 +44,7 @@ jobs:
             echo "DB_URL=${{ secrets.DEV_DB_URL }}" >> ./.env
             echo "DB_USERNAME=${{ secrets.DEV_DB_USERNAME }}" >> ./.env
             echo "DB_PASSWORD=${{ secrets.DEV_DB_PASSWORD }}" >> ./.env
-#            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ./.env
+            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ./.env
 #            echo "KAKAO_APP_ID=${{ secrets.KAKAO_APP_ID }}" >> ./.env
 #            echo "APPLE_APP_ID=${{ secrets.APPLE_APP_ID }}" >> ./.env
 #            echo "S3_BUCKET=${{ secrets.S3_BUCKET }}" >> ./.env
@@ -62,19 +62,8 @@ jobs:
       - name: docker build and push
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }} .
+          docker build -f ./.deploy/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }} .
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
-
-      ## deploy.sh 파일 서버로 전달
-      - name: Send deploy.sh
-        uses: appleboy/scp-action@master
-        with:
-          username: ubuntu
-          host: ${{ secrets.HOST }}
-          key: ${{ secrets.KEY }}
-          port: 22
-          source: "./scripts/"
-          target: "/home/ubuntu/"
 
       - name: Send docker-compose.yml
         uses: appleboy/scp-action@master
@@ -83,7 +72,7 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
           port: 22
-          source: "./docker-compose.yml"
+          source: "./.deploy/docker-compose-dev.yml"
           target: "/home/ubuntu/"
 
       ## 도커 허브에서 jar파일 및 pull후에 컴포즈 up
@@ -94,8 +83,8 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
-            chmod 777 ./scripts/deploy.sh
-            cp ./scripts/deploy.sh ./deploy.sh
-            ./deploy.sh
+            docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
+            docker compose stop ${{secrets.DOCKER_REPOSITORY}}
+            docker compose rm -f ${{secrets.DOCKER_REPOSITORY}}
+            docker compose -f docker-compose-dev.yml up -d
             docker image prune -f
