@@ -1,8 +1,8 @@
-package com.bamyanggang.apimodule.domain.auth.application.service
+package com.bamyanggang.apimodule.domain.user.application.service
 
-import com.bamyanggang.apimodule.domain.auth.application.dto.SocialLogin
-import com.bamyanggang.apimodule.domain.auth.application.service.command.AuthInvoker
-import com.bamyanggang.domainmodule.domain.auth.enum.SocialLoginProvider
+import com.bamyanggang.apimodule.domain.user.application.dto.SocialLogin
+import com.bamyanggang.apimodule.domain.user.application.service.command.AuthInvoker
+import com.bamyanggang.domainmodule.domain.user.enum.SocialLoginProvider
 import org.springframework.stereotype.Service
 
 @Service

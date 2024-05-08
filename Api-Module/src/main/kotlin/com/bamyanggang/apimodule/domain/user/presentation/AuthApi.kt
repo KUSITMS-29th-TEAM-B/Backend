@@ -1,4 +1,4 @@
-package com.bamyanggang.apimodule.domain.auth.presentation
+package com.bamyanggang.apimodule.domain.user.presentation
 
 object AuthApi {
 

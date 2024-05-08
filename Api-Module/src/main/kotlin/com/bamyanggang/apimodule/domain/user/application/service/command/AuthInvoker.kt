@@ -1,12 +1,12 @@
-package com.bamyanggang.apimodule.domain.auth.application.service.command
+package com.bamyanggang.apimodule.domain.user.application.service.command
 
-import com.bamyanggang.apimodule.domain.auth.application.dto.SocialLogin
-import com.bamyanggang.apimodule.domain.auth.application.exception.AuthException
-import com.bamyanggang.apimodule.domain.auth.application.service.command.handler.AuthHandler
+import com.bamyanggang.apimodule.domain.user.application.dto.SocialLogin
+import com.bamyanggang.apimodule.domain.user.application.exception.AuthException
+import com.bamyanggang.apimodule.domain.user.application.service.command.handler.AuthHandler
 import com.bamyanggang.commonmodule.util.TransactionUtils
-import com.bamyanggang.domainmodule.domain.auth.enum.SocialLoginProvider
-import com.bamyanggang.domainmodule.domain.auth.jwt.Claims
-import com.bamyanggang.domainmodule.domain.auth.jwt.JwtProvider
+import com.bamyanggang.domainmodule.domain.user.enum.SocialLoginProvider
+import com.bamyanggang.supportmodule.jwt.Claims
+import com.bamyanggang.supportmodule.jwt.JwtProvider
 import org.springframework.stereotype.Component
 
 @Component

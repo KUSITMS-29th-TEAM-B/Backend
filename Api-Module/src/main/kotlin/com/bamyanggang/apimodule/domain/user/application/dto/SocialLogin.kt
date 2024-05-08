@@ -1,4 +1,4 @@
-package com.bamyanggang.apimodule.domain.auth.application.dto
+package com.bamyanggang.apimodule.domain.user.application.dto
 
 class SocialLogin{
 
