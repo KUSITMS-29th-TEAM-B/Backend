@@ -1,6 +1,7 @@
 package com.bamyanggang.apimodule.global.security.filter
 
 import com.bamyanggang.apimodule.domain.user.application.service.TokenService
+import com.bamyanggang.apimodule.domain.user.presentation.AuthApi
 import com.bamyanggang.apimodule.global.security.JwtAuthenticationToken
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -59,7 +60,7 @@ class JwtAuthenticationFilter(
         private val ignoredPath: Map<String, HttpMethod> = mapOf(
             "/docs/**" to HttpMethod.GET,
             "/favicon.ico" to HttpMethod.GET,
-            "/api/auth/login/**" to HttpMethod.POST
+            AuthApi.BASE_URL.plus("/login/**") to HttpMethod.POST
         )
     }
 
