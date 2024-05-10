@@ -27,6 +27,7 @@ dependencies {
     implementation(project(":Domain-Module"))
     implementation(project(":Common-Module"))
     implementation(project(":Infrastructure-Module"))
+    implementation(project(":Support-Module"))
 }
 
 
