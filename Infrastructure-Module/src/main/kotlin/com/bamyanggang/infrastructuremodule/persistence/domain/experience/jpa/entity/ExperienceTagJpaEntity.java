@@ -1,8 +1,8 @@
-package com.bamyanggang.infrastructuremodule.persistence.domain.experience.entity;
+package com.bamyanggang.infrastructuremodule.persistence.domain.experience.jpa.entity;
 
 import static jakarta.persistence.FetchType.*;
 
-import com.bamyanggang.infrastructuremodule.persistence.domain.strongpoint.entity.StrongPointJpaEntity;
+import com.bamyanggang.infrastructuremodule.persistence.domain.tag.jpa.entity.TagJpaEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -13,8 +13,8 @@ import lombok.Getter;
 
 @Entity
 @Getter
-@Table(name = "experience_strong_point")
-public class ExperienceStrongPointJpaEntity {
+@Table(name = "experience_tag")
+public class ExperienceTagJpaEntity {
     @Id
     private UUID id;
 
@@ -23,6 +23,6 @@ public class ExperienceStrongPointJpaEntity {
     private ExperienceJpaEntity experience;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "strong_point_id")
-    private StrongPointJpaEntity strongPoint;
+    @JoinColumn(name = "tag_id")
+    private TagJpaEntity tag;
 }

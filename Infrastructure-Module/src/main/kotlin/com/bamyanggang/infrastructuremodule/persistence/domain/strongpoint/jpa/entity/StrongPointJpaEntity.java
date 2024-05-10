@@ -1,4 +1,4 @@
-package com.bamyanggang.infrastructuremodule.persistence.domain.strongpoint.entity;
+package com.bamyanggang.infrastructuremodule.persistence.domain.strongpoint.jpa.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
