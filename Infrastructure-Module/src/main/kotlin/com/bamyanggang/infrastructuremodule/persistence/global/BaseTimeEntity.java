@@ -9,6 +9,5 @@ import lombok.Getter;
 public class BaseTimeEntity {
 
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 }
