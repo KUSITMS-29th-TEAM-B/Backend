@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "experience")
 public class ExperienceJpaEntity extends BaseTimeEntity{
     @Id
@@ -30,14 +32,6 @@ public class ExperienceJpaEntity extends BaseTimeEntity{
     /*
      * Todo: User 연관관계 구현 필요
      */
-
-    @Builder
-    public ExperienceJpaEntity(UUID id, String title, LocalDateTime startedAt, LocalDateTime endedAt) {
-        this.id = id;
-        this.title = title;
-        this.startedAt = startedAt;
-        this.endedAt = endedAt;
-    }
 }
 
 

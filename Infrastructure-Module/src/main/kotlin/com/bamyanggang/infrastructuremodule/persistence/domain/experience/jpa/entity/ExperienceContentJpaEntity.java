@@ -9,13 +9,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "experience_content")
 public class ExperienceContentJpaEntity {
     @Id
@@ -31,12 +34,4 @@ public class ExperienceContentJpaEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "experience_id")
     private ExperienceJpaEntity experience;
-
-    @Builder
-    public ExperienceContentJpaEntity(UUID id, String question, String answer, ExperienceJpaEntity experience) {
-        this.id = id;
-        this.question = question;
-        this.answer = answer;
-        this.experience = experience;
-    }
 }
