@@ -3,7 +3,7 @@ package com.bamyanggang.apimodule.domain.user.application.service.command.handle
 import com.bamyanggang.apimodule.domain.user.application.exception.AuthException
 import com.bamyanggang.infrastructuremodule.client.KakaoOAuthClient
 import com.bamyanggang.apimodule.domain.user.application.service.command.handler.AuthHandler
-import com.bamyanggang.domainmodule.domain.user.enum.SocialLoginProvider
+import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 import org.springframework.stereotype.Component
 
 @Component
