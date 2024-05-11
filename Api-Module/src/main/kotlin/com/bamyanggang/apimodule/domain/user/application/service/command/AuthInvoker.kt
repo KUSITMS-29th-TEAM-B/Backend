@@ -4,7 +4,8 @@ import com.bamyanggang.apimodule.domain.user.application.dto.SocialLogin
 import com.bamyanggang.apimodule.domain.user.application.exception.AuthException
 import com.bamyanggang.apimodule.domain.user.application.service.command.handler.AuthHandler
 import com.bamyanggang.commonmodule.util.TransactionUtils
-import com.bamyanggang.domainmodule.domain.user.enum.SocialLoginProvider
+import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
+import com.bamyanggang.domainmodule.domain.user.service.UserReader
 import com.bamyanggang.supportmodule.jwt.Claims
 import com.bamyanggang.supportmodule.jwt.JwtProvider
 import org.springframework.stereotype.Component
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component
 class AuthInvoker (
     private val authHandlerList: List<AuthHandler>,
     private val jwtProvider: JwtProvider,
-//    private val userReader: UserReader
+    private val userReader: UserReader
     ) {
 
     fun invoke(request: SocialLogin.Request, provider: SocialLoginProvider): SocialLogin.Response {
