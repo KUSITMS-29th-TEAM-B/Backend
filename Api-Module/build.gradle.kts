@@ -24,6 +24,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.security:spring-security-test")
 
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
     implementation(project(":Domain-Module"))
     implementation(project(":Common-Module"))
     implementation(project(":Infrastructure-Module"))
