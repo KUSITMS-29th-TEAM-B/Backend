@@ -1,6 +1,6 @@
-package com.bamyanggang.supportmodule.jwt.config
+package com.bamyanggang.jwt.config
 
-import com.bamyanggang.supportmodule.jwt.JwtProperties
+import com.bamyanggang.jwt.JwtProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
 

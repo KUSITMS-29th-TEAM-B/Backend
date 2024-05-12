@@ -1,4 +1,4 @@
-package com.bamyanggang.supportmodule.jwt.exception
+package com.bamyanggang.jwt.exception
 
 import com.bamyanggang.commonmodule.exception.CustomException
 import org.springframework.http.HttpStatus

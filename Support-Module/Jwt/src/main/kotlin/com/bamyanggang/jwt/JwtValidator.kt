@@ -1,10 +1,10 @@
-package com.bamyanggang.supportmodule.jwt
+package com.bamyanggang.jwt
 
-import com.bamyanggang.supportmodule.jwt.exception.JwtException
 import io.jsonwebtoken.*
 import io.jsonwebtoken.jackson.io.JacksonDeserializer
 import io.jsonwebtoken.security.SignatureException
 import org.springframework.stereotype.Component
+import com.bamyanggang.jwt.exception.JwtException
 
 @Component
 class JwtValidator(

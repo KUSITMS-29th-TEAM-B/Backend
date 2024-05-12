@@ -1,4 +1,4 @@
-package com.bamyanggang.supportmodule.jwt
+package com.bamyanggang.jwt
 
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys

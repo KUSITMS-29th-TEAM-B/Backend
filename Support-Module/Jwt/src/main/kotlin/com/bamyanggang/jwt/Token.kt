@@ -1,4 +1,4 @@
-package com.bamyanggang.supportmodule.jwt
+package com.bamyanggang.jwt
 
 data class Token(
     val accessToken: String,

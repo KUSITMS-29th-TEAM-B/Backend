@@ -3,7 +3,7 @@ package com.bamyanggang.apimodule.global.security.filter
 import com.bamyanggang.apimodule.domain.user.application.service.TokenService
 import com.bamyanggang.apimodule.domain.user.presentation.AuthApi
 import com.bamyanggang.apimodule.global.security.JwtAuthenticationToken
-import com.bamyanggang.supportmodule.jwt.TokenExtractor
+import com.bamyanggang.jwt.TokenExtractor
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

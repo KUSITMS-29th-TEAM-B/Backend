@@ -1,7 +1,7 @@
-package com.bamyanggang.supportmodule.jwt
+package com.bamyanggang.jwt
 
 
-import com.bamyanggang.supportmodule.jwt.exception.JwtException
+import com.bamyanggang.jwt.exception.JwtException
 import org.springframework.stereotype.Component
 
 @Component

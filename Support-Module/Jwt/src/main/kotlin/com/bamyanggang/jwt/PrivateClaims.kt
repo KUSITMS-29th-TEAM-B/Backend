@@ -1,4 +1,4 @@
-package com.bamyanggang.supportmodule.jwt
+package com.bamyanggang.jwt
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.UUID
 
