@@ -7,9 +7,8 @@ import com.bamyanggang.commonmodule.util.TransactionUtils
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 import com.bamyanggang.domainmodule.domain.user.service.TokenAppender
 import com.bamyanggang.domainmodule.domain.user.service.UserReader
-import com.bamyanggang.supportmodule.jwt.Claims
-import com.bamyanggang.supportmodule.jwt.JwtProvider
-import com.bamyanggang.supportmodule.jwt.TokenType
+import com.bamyanggang.jwt.Claims
+import com.bamyanggang.jwt.JwtProvider
 import org.springframework.stereotype.Component
 
 @Component
@@ -26,7 +25,7 @@ class AuthInvoker (
             return@writable userReader.readUserBySocialId(response.socialId)?.let {
                 val accessToken = jwtProvider.generateAccessToken(Claims.UserClaims(it.id))
                 val refreshToken = jwtProvider.generateRefreshToken(Claims.UserClaims(it.id))
-                tokenAppender.appendToken(it, refreshToken, TokenType.REFRESH_TOKEN)
+                tokenAppender.appendToken(it, refreshToken)
                 SocialLogin.Response.Success(accessToken, refreshToken)
             } ?: run {
                 val registrationToken = jwtProvider.generateRegistrationToken(Claims.RegistrationClaims(response.socialId))

@@ -4,7 +4,7 @@ import com.bamyanggang.domainmodule.domain.user.enums.DesiredJob
 import com.bamyanggang.domainmodule.domain.user.enums.JobSearchStatus
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 import com.bamyanggang.domainmodule.common.entity.AggregateRoot
-import com.bamyanggang.supportmodule.uuid.UuidCreator
+import com.example.uuid.UuidCreator
 import java.time.LocalDateTime
 import java.util.UUID
 

@@ -1,6 +1,6 @@
 package com.bamyanggang.apimodule.domain.user.application.service
 
-import com.bamyanggang.supportmodule.jwt.*
+import com.bamyanggang.jwt.*
 import org.springframework.stereotype.Service
 import java.util.*
 

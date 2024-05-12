@@ -30,7 +30,7 @@ dependencies {
     implementation(project(":Common-Module"))
     implementation(project(":Infrastructure-Module:client"))
     implementation(project(":Infrastructure-Module:persistence"))
-    implementation(project(":Support-Module"))
+    implementation(project(":Support-Module:Jwt"))
 }
 
 
