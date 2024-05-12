@@ -9,6 +9,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -45,9 +46,15 @@ public class UserJpaEntity {
 
     private String dream;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     public static UserJpaEntity from(UUID id, String socialId, String profileImgUrl, SocialLoginProvider provider, String nickName,
-                                     JobSearchStatus jobSearchStatus, DesiredJob desiredJob, String goal, String dream) {
-        return new UserJpaEntity(id, socialId, profileImgUrl, provider, nickName, jobSearchStatus, desiredJob, goal, dream);
+                                     JobSearchStatus jobSearchStatus, DesiredJob desiredJob, String goal, String dream
+                                        , LocalDateTime createdAt, LocalDateTime updatedAt) {
+        return new UserJpaEntity(id, socialId, profileImgUrl, provider, nickName, jobSearchStatus,
+                desiredJob, goal, dream, createdAt, updatedAt);
     }
 
 }

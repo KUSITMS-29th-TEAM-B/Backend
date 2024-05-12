@@ -3,7 +3,7 @@ package com.bamyanggang.domainmodule.domain.user.aggregate
 import com.bamyanggang.domainmodule.domain.user.enums.DesiredJob
 import com.bamyanggang.domainmodule.domain.user.enums.JobSearchStatus
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
-import com.bamyanggang.domainmodule.global.entity.AggregateRoot
+import com.bamyanggang.domainmodule.common.entity.AggregateRoot
 import com.bamyanggang.supportmodule.uuid.UuidCreator
 import java.time.LocalDateTime
 import java.util.UUID
@@ -18,9 +18,9 @@ data class User (
     val desiredJob: DesiredJob? = null,
     val goal: String? = null,
     val dream: String? = null,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
-    val updatedAt: LocalDateTime = LocalDateTime.now(),
-) : AggregateRoot{
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime,
+) : AggregateRoot {
 
     companion object {
         fun create(
@@ -42,6 +42,8 @@ data class User (
                 desiredJob = desiredJob,
                 goal = goal,
                 dream = dream,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now()
             )
         }
 
@@ -54,7 +56,9 @@ data class User (
             jobSearchStatus: JobSearchStatus?,
             desiredJob: DesiredJob?,
             goal: String?,
-            dream: String?
+            dream: String?,
+            createdAt: LocalDateTime,
+            updatedAt: LocalDateTime,
         ): User {
             return User(
                 id = id,
@@ -65,7 +69,9 @@ data class User (
                 jobSearchStatus = jobSearchStatus,
                 desiredJob = desiredJob,
                 goal = goal,
-                dream = dream
+                dream = dream,
+                createdAt = createdAt,
+                updatedAt = updatedAt
             )
         }
     }

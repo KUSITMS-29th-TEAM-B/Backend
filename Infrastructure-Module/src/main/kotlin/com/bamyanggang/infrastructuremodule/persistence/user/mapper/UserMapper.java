@@ -17,7 +17,9 @@ public class UserMapper {
                 user.getJobSearchStatus(),
                 user.getDesiredJob(),
                 user.getGoal(),
-                user.getDream()
+                user.getDream(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
         );
     }
 
@@ -30,6 +32,9 @@ public class UserMapper {
                 userJpaEntity.getJobSearchStatus(),
                 userJpaEntity.getDesiredJob(),
                 userJpaEntity.getGoal(),
-                userJpaEntity.getDream());
+                userJpaEntity.getDream(),
+                userJpaEntity.getCreatedAt(),
+                userJpaEntity.getUpdatedAt()
+        );
     }
 }
