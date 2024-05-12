@@ -3,7 +3,7 @@ package com.bamyanggang.apimodule.domain.user.application.service
 import com.bamyanggang.apimodule.domain.user.application.dto.Register
 import com.bamyanggang.domainmodule.domain.user.aggregate.User
 import com.bamyanggang.domainmodule.domain.user.service.UserAppender
-import com.bamyanggang.supportmodule.jwt.*
+import com.bamyanggang.jwt.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

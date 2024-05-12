@@ -28,8 +28,9 @@ dependencies {
 
     implementation(project(":Domain-Module"))
     implementation(project(":Common-Module"))
-    implementation(project(":Infrastructure-Module"))
-    implementation(project(":Support-Module"))
+    implementation(project(":Infrastructure-Module:client"))
+    implementation(project(":Infrastructure-Module:persistence"))
+    implementation(project(":Support-Module:Jwt"))
 }
 
 
