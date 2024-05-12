@@ -1,4 +1,4 @@
-package com.bamyanggang.supportmodule.uuid
+package com.example.uuid
 
 import java.util.*
 import com.github.f4b6a3.uuid.UuidCreator
