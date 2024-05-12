@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.global.entity
+package com.bamyanggang.domainmodule.common.entity
 
 import java.util.UUID
 
