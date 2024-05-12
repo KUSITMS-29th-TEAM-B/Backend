@@ -22,7 +22,6 @@ class TransactionUtils(
         fun <T> writable(func: () -> T): T {
             return transactionHandler.writable { func() }
         }
-
     }
 
     @Component

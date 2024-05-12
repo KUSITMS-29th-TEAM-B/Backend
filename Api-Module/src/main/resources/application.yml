@@ -1,17 +1,10 @@
-spring:
-  application:
-    name: Api-Module
+server:
+  shutdown: graceful
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect
+spring:
+  profiles:
+    include:
+      - db
 
 jwt:
   secret: ${JWT_SECRET}
