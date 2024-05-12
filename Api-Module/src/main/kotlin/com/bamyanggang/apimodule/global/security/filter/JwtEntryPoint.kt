@@ -26,7 +26,7 @@ class JwtEntryPoint : OncePerRequestFilter() {
         response.status = HttpServletResponse.SC_UNAUTHORIZED
         response.contentType = "application/json"
         response.characterEncoding = "UTF-8"
-        response.writer.write(objectMapper.writeValueAsString(ErrorResponse(exception.code, exception.message, exception.httpStatusCode)))
+        response.writer.write(objectMapper.writeValueAsString(ErrorResponse(exception.code, exception.message)))
     }
 }
 
