@@ -1,4 +1,4 @@
-package com.bamyanggang.infrastructuremodule.persistence.global;
+package com.bamyanggang.infrastructuremodule.persistence.common.global;
 
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;

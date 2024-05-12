@@ -1,4 +1,4 @@
-package com.bamyanggang.infrastructuremodule.persistence.config;
+package com.bamyanggang.infrastructuremodule.persistence.common.config;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;

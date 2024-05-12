@@ -1,6 +1,6 @@
-package com.bamyanggang.infrastructuremodule.persistence.domain.experience.jpa.entity;
+package com.bamyanggang.infrastructuremodule.persistence.experience.jpa.entity;
 
-import com.bamyanggang.infrastructuremodule.persistence.global.BaseTimeEntity;
+import com.bamyanggang.infrastructuremodule.persistence.common.global.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

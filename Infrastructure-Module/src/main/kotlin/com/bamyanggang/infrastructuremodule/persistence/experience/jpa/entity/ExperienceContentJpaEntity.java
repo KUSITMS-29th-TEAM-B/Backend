@@ -1,4 +1,4 @@
-package com.bamyanggang.infrastructuremodule.persistence.domain.tag.jpa.entity;
+package com.bamyanggang.infrastructuremodule.persistence.experience.jpa.entity;
 
 import static jakarta.persistence.FetchType.*;
 
@@ -18,15 +18,19 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "tag")
-public class TagJpaEntity {
+@Table(name = "experience_content")
+public class ExperienceContentJpaEntity {
     @Id
-    @Column(name = "tag_id")
+    @Column(name = "experience_content_id")
     private UUID id;
 
-    private String name;
+    @Column(columnDefinition = "TEXT")
+    private String question;
+
+    @Column(columnDefinition = "TEXT")
+    private String answer;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "parent_tag_id")
-    private TagJpaEntity parentTag;
+    @JoinColumn(name = "experience_id")
+    private ExperienceJpaEntity experience;
 }

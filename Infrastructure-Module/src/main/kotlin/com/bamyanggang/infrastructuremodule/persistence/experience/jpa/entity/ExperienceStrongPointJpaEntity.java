@@ -1,8 +1,8 @@
-package com.bamyanggang.infrastructuremodule.persistence.domain.experience.jpa.entity;
+package com.bamyanggang.infrastructuremodule.persistence.experience.jpa.entity;
 
 import static jakarta.persistence.FetchType.*;
 
-import com.bamyanggang.infrastructuremodule.persistence.domain.strongpoint.jpa.entity.StrongPointJpaEntity;
+import com.bamyanggang.infrastructuremodule.persistence.strongpoint.jpa.entity.StrongPointJpaEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
