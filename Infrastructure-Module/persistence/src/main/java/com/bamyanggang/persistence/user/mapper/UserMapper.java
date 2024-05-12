@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
 
     public UserJpaEntity toJpaEntity(User user) {
-        return UserJpaEntity.from(
+        return UserJpaEntity.of(
                 user.getId(),
                 user.getSocialId(),
                 user.getProfileImgUrl(),

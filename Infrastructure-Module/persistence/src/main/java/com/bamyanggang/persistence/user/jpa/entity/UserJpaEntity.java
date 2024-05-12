@@ -18,10 +18,10 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name = "user")
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Getter
+@Table(name = "user")
 public class UserJpaEntity {
     @Id
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
@@ -50,7 +50,7 @@ public class UserJpaEntity {
 
     private LocalDateTime updatedAt;
 
-    public static UserJpaEntity from(UUID id, String socialId, String profileImgUrl, SocialLoginProvider provider, String nickName,
+    public static UserJpaEntity of(UUID id, String socialId, String profileImgUrl, SocialLoginProvider provider, String nickName,
                                      JobSearchStatus jobSearchStatus, DesiredJob desiredJob, String goal, String dream
                                         , LocalDateTime createdAt, LocalDateTime updatedAt) {
         return new UserJpaEntity(id, socialId, profileImgUrl, provider, nickName, jobSearchStatus,
