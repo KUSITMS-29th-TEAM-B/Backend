@@ -6,4 +6,6 @@ interface UserRepository {
 
  fun save(user: User)
 
+ fun findBySocialId(socialId: String): User
+
 }
