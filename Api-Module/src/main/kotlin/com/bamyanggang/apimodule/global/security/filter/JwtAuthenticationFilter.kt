@@ -3,6 +3,7 @@ package com.bamyanggang.apimodule.global.security.filter
 import com.bamyanggang.apimodule.domain.user.application.service.TokenService
 import com.bamyanggang.apimodule.domain.user.presentation.AuthApi
 import com.bamyanggang.apimodule.global.security.JwtAuthenticationToken
+import com.bamyanggang.supportmodule.jwt.TokenExtractor
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -14,7 +15,8 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class JwtAuthenticationFilter(
-    private val tokenService: TokenService
+    private val tokenService: TokenService,
+    private val tokenExtractor: TokenExtractor
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -23,17 +25,11 @@ class JwtAuthenticationFilter(
         filterChain: FilterChain
     ) {
         if (!isIgnoredPath(request)) {
-            extractToken(request)?.let { processToken(it) }
+            val bearerToken: String = request.getHeader(TOKEN_HEADER)
+            tokenExtractor.extractValue(bearerToken)?.let { processToken(it) }
         }
         filterChain.doFilter(request, response)
         SecurityContextHolder.clearContext()
-    }
-
-    private fun extractToken(request: HttpServletRequest): String? {
-        val bearerToken: String? = request.getHeader(TOKEN_HEADER)
-        return if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
-            bearerToken.substring(TOKEN_PREFIX.length)
-        } else null
     }
 
     private fun processToken(token: String) {
@@ -56,7 +52,6 @@ class JwtAuthenticationFilter(
 
     companion object {
         const val TOKEN_HEADER = "Authorization"
-        const val TOKEN_PREFIX = "Bearer "
         private val ignoredPath: Map<String, HttpMethod> = mapOf(
             "/docs/**" to HttpMethod.GET,
             "/favicon.ico" to HttpMethod.GET,

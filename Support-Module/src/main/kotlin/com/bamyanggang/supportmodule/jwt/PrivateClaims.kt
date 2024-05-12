@@ -1,5 +1,6 @@
 package com.bamyanggang.supportmodule.jwt
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.util.UUID
 
 class PrivateClaims(
     private val claims: Claims,
@@ -44,7 +45,7 @@ sealed interface Claims {
     data class UserClaims(
         @param:JsonProperty("user_id")
         @get:JsonProperty("user_id")
-        val userId: Long
+        val userId: UUID
     ) : Claims {
         override fun createPrivateClaims(tokenType: TokenType) = PrivateClaims(this, tokenType)
         override fun convertToClaims(): Map<String, Any> = mapOf(

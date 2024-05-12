@@ -1,6 +1,6 @@
 package com.bamyanggang.apimodule.domain.user.application.service.command.handler
 
-import com.bamyanggang.domainmodule.domain.user.enum.SocialLoginProvider
+import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 
 interface AuthHandler {
 

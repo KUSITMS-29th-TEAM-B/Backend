@@ -10,6 +10,7 @@ plugins {
     kotlin("kapt") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
+    kotlin("plugin.lombok") version "1.9.23"
 }
 
 val kotestVersion = "5.8.1"
@@ -33,7 +34,7 @@ subprojects {
     apply(plugin = "kotlin-spring")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
-
+    apply(plugin = "org.jetbrains.kotlin.plugin.lombok")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "java-test-fixtures")

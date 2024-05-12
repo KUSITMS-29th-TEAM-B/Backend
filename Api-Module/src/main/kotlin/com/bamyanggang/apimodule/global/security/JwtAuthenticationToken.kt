@@ -1,8 +1,9 @@
 package com.bamyanggang.apimodule.global.security
 
 import org.springframework.security.authentication.AbstractAuthenticationToken
+import java.util.UUID
 
-class JwtAuthenticationToken(private val userId: Long) : AbstractAuthenticationToken(null) {
+class JwtAuthenticationToken(private val userId: UUID) : AbstractAuthenticationToken(null) {
 
     init {
         isAuthenticated = true
