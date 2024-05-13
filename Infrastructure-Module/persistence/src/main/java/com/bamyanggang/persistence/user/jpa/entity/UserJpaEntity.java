@@ -38,8 +38,10 @@ public class UserJpaEntity {
 
     private String desiredJob;
 
+    @Column(columnDefinition = "VARCHAR(1200)")
     private String goal;
 
+    @Column(columnDefinition = "VARCHAR(1200)")
     private String dream;
 
     private LocalDateTime createdAt;
