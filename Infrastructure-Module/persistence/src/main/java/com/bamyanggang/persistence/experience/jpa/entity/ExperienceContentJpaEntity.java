@@ -30,7 +30,5 @@ public class ExperienceContentJpaEntity {
     @Column(columnDefinition = "TEXT")
     private String answer;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "experience_id")
-    private ExperienceJpaEntity experience;
+    private UUID experienceId;
 }

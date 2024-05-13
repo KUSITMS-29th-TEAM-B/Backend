@@ -27,11 +27,7 @@ public class TagJpaEntity {
 
     private String name;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "parent_tag_id")
-    private TagJpaEntity parentTag;
+    private UUID parentTagId;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
-    private UserJpaEntity user;
+    private UUID userId;
 }

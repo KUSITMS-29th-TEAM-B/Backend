@@ -26,7 +26,5 @@ public class StrongPointJpaEntity {
 
     private String name;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
-    private UserJpaEntity user;
+    private UUID userId;
 }
