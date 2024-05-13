@@ -2,7 +2,6 @@ package com.bamyanggang.persistence.experience.jpa.entity;
 
 import static jakarta.persistence.FetchType.*;
 
-import com.bamyanggang.persistence.tag.jpa.entity.TagJpaEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
