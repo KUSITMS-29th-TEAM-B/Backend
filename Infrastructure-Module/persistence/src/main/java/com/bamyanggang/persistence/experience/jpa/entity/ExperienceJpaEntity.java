@@ -1,14 +1,8 @@
 package com.bamyanggang.persistence.experience.jpa.entity;
 
-import static jakarta.persistence.FetchType.*;
-
-import com.bamyanggang.persistence.user.jpa.entity.UserJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -35,14 +29,20 @@ public class ExperienceJpaEntity{
 
     private UUID userId;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     public static ExperienceJpaEntity of(
             UUID id,
             String title,
             LocalDateTime startedAt,
             LocalDateTime endedAt,
-            UUID userId
+            UUID userId,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
     ) {
-        return new ExperienceJpaEntity(id, title, startedAt, endedAt, userId);
+        return new ExperienceJpaEntity(id, title, startedAt, endedAt, userId, createdAt, updatedAt);
     }
 }
 
