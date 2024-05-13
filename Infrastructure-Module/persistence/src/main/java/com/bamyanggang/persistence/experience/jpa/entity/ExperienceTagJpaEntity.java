@@ -17,11 +17,7 @@ public class ExperienceTagJpaEntity {
     @Id
     private UUID id;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "experience_id")
-    private ExperienceJpaEntity experience;
+    private UUID experienceId;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "tag_id")
-    private TagJpaEntity tag;
+    private UUID tagId;
 }

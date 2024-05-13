@@ -33,9 +33,17 @@ public class ExperienceJpaEntity{
 
     private LocalDateTime endedAt;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
-    private UserJpaEntity user;
+    private UUID userId;
+
+    public static ExperienceJpaEntity of(
+            UUID id,
+            String title,
+            LocalDateTime startedAt,
+            LocalDateTime endedAt,
+            UUID userId
+    ) {
+        return new ExperienceJpaEntity(id, title, startedAt, endedAt, userId);
+    }
 }
 
 
