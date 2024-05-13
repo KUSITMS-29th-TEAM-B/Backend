@@ -1,4 +1,4 @@
-package com.bamyanggang.persistence.tag.jpa.entity;
+package com.bamyanggang.persistence.experience.jpa.entity;
 
 import static jakarta.persistence.FetchType.*;
 
