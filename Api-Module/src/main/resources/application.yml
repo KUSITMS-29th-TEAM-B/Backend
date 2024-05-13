@@ -1,0 +1,8 @@
+server:
+  shutdown: graceful
+
+spring:
+  profiles:
+    include:
+      - db
+      - jwt

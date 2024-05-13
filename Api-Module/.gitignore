@@ -38,3 +38,6 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### rest docs ###
+**/src/main/resources/static/docs/
