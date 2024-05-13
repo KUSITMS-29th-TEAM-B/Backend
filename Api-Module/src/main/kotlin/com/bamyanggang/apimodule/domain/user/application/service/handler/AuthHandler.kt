@@ -1,15 +1,10 @@
-package com.bamyanggang.apimodule.domain.user.application.service.command.handler
+package com.bamyanggang.apimodule.domain.user.application.service.handler
 
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 
 interface AuthHandler {
 
     val provider: SocialLoginProvider
-
-    fun isAccessible(provider: SocialLoginProvider): Boolean {
-        return false
-    }
-
     fun handle(request: Request): Response
 
     data class Request(
