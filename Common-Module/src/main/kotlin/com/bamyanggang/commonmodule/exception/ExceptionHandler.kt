@@ -19,5 +19,13 @@ class ExceptionHandler {
             HttpStatus.INTERNAL_SERVER_ERROR
         )
     }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(exception: IllegalArgumentException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity(
+            ErrorResponse("BAD_REQUEST", exception.message ?: "Bad Request"),
+            HttpStatus.BAD_REQUEST
+        )
+    }
 }
 

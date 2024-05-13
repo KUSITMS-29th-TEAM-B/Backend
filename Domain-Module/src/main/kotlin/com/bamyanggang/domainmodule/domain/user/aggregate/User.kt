@@ -20,6 +20,15 @@ data class User (
     val updatedAt: LocalDateTime
 ) : AggregateRoot {
 
+    init {
+        require(profileImgUrl.isNotBlank()) { "프로필 이미지는 필수입니다." }
+        require(nickName.isNotBlank()) { "닉네임은 필수입니다." }
+        require(nickName.length <= 10) { "닉네임은 최대 10자까지 작성이 가능합니다." }
+        require(desiredJob?.length ?: 0 <= 50) { "희망 직무는 최대 50자까지 작성이 가능합니다." }
+        require(goal?.length ?: 0 <= 400) { "발전시키고 싶은 역량은 최대 400자까지 작성이 가능합니다." }
+        require(dream?.length ?: 0 <= 400) { "꿈은 최대 400자까지 작성이 가능합니다." }
+    }
+
     companion object {
         fun create(
             socialId: String,
