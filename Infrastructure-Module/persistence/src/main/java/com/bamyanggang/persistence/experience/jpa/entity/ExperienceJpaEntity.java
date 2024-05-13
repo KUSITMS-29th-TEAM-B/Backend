@@ -1,8 +1,14 @@
 package com.bamyanggang.persistence.experience.jpa.entity;
 
+import static jakarta.persistence.FetchType.*;
+
+import com.bamyanggang.persistence.user.jpa.entity.UserJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -27,9 +33,9 @@ public class ExperienceJpaEntity{
 
     private LocalDateTime endedAt;
 
-    /*
-     * Todo: User 연관관계 구현 필요
-     */
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private UserJpaEntity user;
 }
 
 

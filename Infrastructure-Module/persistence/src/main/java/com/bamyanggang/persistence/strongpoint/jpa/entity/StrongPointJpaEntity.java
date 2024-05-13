@@ -1,7 +1,13 @@
 package com.bamyanggang.persistence.strongpoint.jpa.entity;
 
+import static jakarta.persistence.FetchType.*;
+
+import com.bamyanggang.persistence.user.jpa.entity.UserJpaEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -19,4 +25,8 @@ public class StrongPointJpaEntity {
     private UUID id;
 
     private String name;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private UserJpaEntity user;
 }
