@@ -2,6 +2,7 @@ package com.bamyanggang.persistence.experience.jpa.entity;
 
 import static jakarta.persistence.FetchType.*;
 
+import com.bamyanggang.persistence.user.jpa.entity.UserJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -29,4 +30,8 @@ public class TagJpaEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_tag_id")
     private TagJpaEntity parentTag;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private UserJpaEntity user;
 }
