@@ -1,7 +1,5 @@
 package com.bamyanggang.persistence.user.jpa.entity;
 
-import com.bamyanggang.domainmodule.domain.user.enums.DesiredJob;
-import com.bamyanggang.domainmodule.domain.user.enums.JobSearchStatus;
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,11 +34,9 @@ public class UserJpaEntity {
 
     private String nickName;
 
-    @Enumerated(value = EnumType.STRING)
-    private JobSearchStatus jobSearchStatus;
+    private String jobSearchStatus;
 
-    @Enumerated(value = EnumType.STRING)
-    private DesiredJob desiredJob;
+    private String desiredJob;
 
     private String goal;
 
@@ -51,7 +47,7 @@ public class UserJpaEntity {
     private LocalDateTime updatedAt;
 
     public static UserJpaEntity of(UUID id, String socialId, String profileImgUrl, SocialLoginProvider provider, String nickName,
-                                     JobSearchStatus jobSearchStatus, DesiredJob desiredJob, String goal, String dream
+                                     String jobSearchStatus, String desiredJob, String goal, String dream
                                         , LocalDateTime createdAt, LocalDateTime updatedAt) {
         return new UserJpaEntity(id, socialId, profileImgUrl, provider, nickName, jobSearchStatus,
                 desiredJob, goal, dream, createdAt, updatedAt);

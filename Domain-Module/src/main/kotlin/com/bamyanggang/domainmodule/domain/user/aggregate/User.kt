@@ -1,7 +1,5 @@
 package com.bamyanggang.domainmodule.domain.user.aggregate
 
-import com.bamyanggang.domainmodule.domain.user.enums.DesiredJob
-import com.bamyanggang.domainmodule.domain.user.enums.JobSearchStatus
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 import com.bamyanggang.domainmodule.common.entity.AggregateRoot
 import com.example.uuid.UuidCreator
@@ -14,8 +12,8 @@ data class User (
     val profileImgUrl: String,
     val provider: SocialLoginProvider,
     val nickName: String,
-    val jobSearchStatus: JobSearchStatus? = null,
-    val desiredJob: DesiredJob? = null,
+    val jobSearchStatus: String? = null,
+    val desiredJob: String? = null,
     val goal: String? = null,
     val dream: String? = null,
     val createdAt: LocalDateTime,
@@ -28,8 +26,8 @@ data class User (
             profileImgUrl: String,
             provider: SocialLoginProvider,
             nickName: String,
-            jobSearchStatus: JobSearchStatus?,
-            desiredJob: DesiredJob?,
+            jobSearchStatus: String?,
+            desiredJob: String?,
             goal: String?,
             dream: String?,
         ): User {
@@ -53,8 +51,8 @@ data class User (
             profileImgUrl: String,
             provider: SocialLoginProvider,
             nickName: String,
-            jobSearchStatus: JobSearchStatus?,
-            desiredJob: DesiredJob?,
+            jobSearchStatus: String?,
+            desiredJob: String?,
             goal: String?,
             dream: String?,
             createdAt: LocalDateTime,

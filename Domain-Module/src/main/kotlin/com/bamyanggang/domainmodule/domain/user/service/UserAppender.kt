@@ -1,8 +1,6 @@
 package com.bamyanggang.domainmodule.domain.user.service
 
 import com.bamyanggang.domainmodule.domain.user.aggregate.User
-import com.bamyanggang.domainmodule.domain.user.enums.DesiredJob
-import com.bamyanggang.domainmodule.domain.user.enums.JobSearchStatus
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 import com.bamyanggang.domainmodule.domain.user.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -17,8 +15,8 @@ class UserAppender(
         profileImgUrl: String,
         provider: SocialLoginProvider,
         nickName: String,
-        jobSearchStatus: JobSearchStatus?,
-        desiredJob: DesiredJob?,
+        jobSearchStatus: String?,
+        desiredJob: String?,
         goal: String?,
         dream: String?
     ): User {
