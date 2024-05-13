@@ -1,6 +1,8 @@
 package com.bamyanggang.persistence.user.mapper;
 
+import com.bamyanggang.domainmodule.domain.user.aggregate.Token;
 import com.bamyanggang.domainmodule.domain.user.aggregate.User;
+import com.bamyanggang.persistence.user.jpa.entity.TokenJpaEntity;
 import com.bamyanggang.persistence.user.jpa.entity.UserJpaEntity;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
 
     public UserJpaEntity toJpaEntity(User user) {
-        return UserJpaEntity.from(
+        return UserJpaEntity.of(
                 user.getId(),
                 user.getSocialId(),
                 user.getProfileImgUrl(),
@@ -35,6 +37,16 @@ public class UserMapper {
                 userJpaEntity.getDream(),
                 userJpaEntity.getCreatedAt(),
                 userJpaEntity.getUpdatedAt()
+        );
+    }
+
+    public TokenJpaEntity toJpaEntity(Token token) {
+        return TokenJpaEntity.of(
+                token.getId(),
+                token.getUserId(),
+                token.getValue(),
+                token.getCreatedAt(),
+                token.getUpdatedAt()
         );
     }
 }

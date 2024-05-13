@@ -11,7 +11,9 @@ configurations.create(asciidoctorExt) {
 }
 
 dependencies {
+    // security
     implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("org.springframework.security:spring-security-test")
 
     //OAuth
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
@@ -22,7 +24,6 @@ dependencies {
     testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
-    testImplementation("org.springframework.security:spring-security-test")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
@@ -31,6 +32,7 @@ dependencies {
     implementation(project(":Infrastructure-Module:client"))
     implementation(project(":Infrastructure-Module:persistence"))
     implementation(project(":Support-Module:Jwt"))
+    testImplementation(testFixtures(project(":Common-Module")))
 }
 
 
@@ -47,20 +49,19 @@ tasks.asciidoctor {
     configurations(asciidoctorExt)
     baseDirFollowsSourceFile()
 }
-
-tasks.register<Copy>("copyDocument") {
+tasks.bootJar{
     dependsOn(tasks.asciidoctor)
-    val docsDir = file("src/main/resources/static/docs")
-    val fromDir = file("build/docs/asciidoc")
-    doFirst {
-        if (docsDir.exists())
-            delete(docsDir)
+    from("build/docs/asciidoc"){
+        into("static/docs")
     }
-    from(fromDir)
-    into(docsDir)
+}
 
+tasks.register("copyDocs", Copy::class){
+    dependsOn(tasks.bootJar)
+    from("build/docs/asciidoc")
+    into("src/main/resources/static/docs")
 }
 
 tasks.build {
-    dependsOn(tasks.getByName("copyDocument"))
+    dependsOn(tasks.getByName("copyDocs"))
 }

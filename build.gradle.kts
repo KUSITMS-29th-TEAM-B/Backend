@@ -3,7 +3,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("java-test-fixtures")
-    id("org.springframework.boot") version "3.1.1"
+    id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
 
     kotlin("jvm") version "1.9.23"
@@ -13,6 +13,7 @@ plugins {
 }
 
 val kotestVersion = "5.8.1"
+val mockkVersion = "1.13.10"
 
 allprojects {
     group = "com.bamyanggang"
@@ -66,16 +67,16 @@ subprojects {
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
 
         // mvc
-        implementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
-        testImplementation("io.mockk:mockk:1.4.1")
+
+        // mockk
+        testImplementation("io.mockk:mockk:${mockkVersion}")
 
         //kotest
-        testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
-        testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
-        testImplementation("io.mockk:mockk:1.13.10")
-        testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
+        testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")  // Test Framework
+        testImplementation("io.kotest:kotest-assertions-core:$kotestVersion") // Assertions Library
+        testImplementation("io.kotest:kotest-property:$kotestVersion") // Property Testing
     }
 
     tasks.withType<Test> {

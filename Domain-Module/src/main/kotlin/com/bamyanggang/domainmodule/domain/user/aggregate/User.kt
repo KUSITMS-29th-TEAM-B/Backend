@@ -19,7 +19,7 @@ data class User (
     val goal: String? = null,
     val dream: String? = null,
     val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime,
+    val updatedAt: LocalDateTime
 ) : AggregateRoot {
 
     companion object {
@@ -43,7 +43,7 @@ data class User (
                 goal = goal,
                 dream = dream,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
             )
         }
 
@@ -58,7 +58,7 @@ data class User (
             goal: String?,
             dream: String?,
             createdAt: LocalDateTime,
-            updatedAt: LocalDateTime,
+            updatedAt: LocalDateTime
         ): User {
             return User(
                 id = id,
