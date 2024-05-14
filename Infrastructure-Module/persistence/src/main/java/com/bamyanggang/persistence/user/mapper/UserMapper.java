@@ -26,7 +26,7 @@ public class UserMapper {
     }
 
     public User toDomainEntity(UserJpaEntity userJpaEntity) {
-        return User.Companion.toDomain(userJpaEntity.getId(),
+        return User.Companion.toDomain(userJpaEntity.getUserId(),
                 userJpaEntity.getSocialId(),
                 userJpaEntity.getProfileImgUrl(),
                 userJpaEntity.getProvider(),

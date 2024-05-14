@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserJpaRepository extends JpaRepository<UserJpaEntity, UUID> {
     Optional<UserJpaEntity> findBySocialId(String socialId);
 
+    Optional<UserJpaEntity> findByUserId(UUID id);
+
 }
