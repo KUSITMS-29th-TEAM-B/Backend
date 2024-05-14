@@ -1,8 +1,7 @@
 package com.bamyanggang.persistence.experience.jpa.entity;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
-import com.bamyanggang.persistence.user.jpa.entity.UserJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,14 +10,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "tag")
 public class TagJpaEntity {
     @Id
@@ -27,7 +24,16 @@ public class TagJpaEntity {
 
     private String name;
 
-    private UUID parentTagId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "parent_tag_id")
+    private TagJpaEntity parentTag;
 
     private UUID userId;
+
+    public TagJpaEntity(UUID id, String name, TagJpaEntity parentTag, UUID userId) {
+        this.id = id;
+        this.name = name;
+        this.parentTag = parentTag;
+        this.userId = userId;
+    }
 }

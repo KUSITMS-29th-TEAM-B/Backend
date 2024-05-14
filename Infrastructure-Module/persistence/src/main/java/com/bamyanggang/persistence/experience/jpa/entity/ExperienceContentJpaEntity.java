@@ -1,6 +1,6 @@
 package com.bamyanggang.persistence.experience.jpa.entity;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,5 +30,11 @@ public class ExperienceContentJpaEntity {
     @Column(columnDefinition = "TEXT")
     private String answer;
 
-    private UUID experienceId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "experience_id")
+    private ExperienceJpaEntity experience;
+
+    public static ExperienceContentJpaEntity of(UUID id, String question, String answer, ExperienceJpaEntity experience) {
+        return new ExperienceContentJpaEntity(id, question, answer, experience);
+    }
 }
