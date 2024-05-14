@@ -5,15 +5,13 @@ import org.springframework.http.HttpStatusCode
 abstract class CustomException(
     codePrefix: String = DEFAULT_CODE_PREFIX,
     errorCode: Int,
-    httpStatusCode: HttpStatusCode,
+    val httpStatusCode: HttpStatusCode,
     override val message: String = DEFAULT_MESSAGE,
 ) : RuntimeException(message) {
 
     val code: String = "$codePrefix-${
         errorCode.toString().padStart(DEFAULT_CODE_NUMBER_LENGTH, DEFAULT_CODE_NUMBER_PAD_CHAR)
     }"
-
-    val httpStatusCode: HttpStatusCode = httpStatusCode
 
     companion object {
         const val DEFAULT_CODE_PREFIX = "UNKNOWN"

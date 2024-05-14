@@ -1,4 +1,4 @@
-package com.bamyanggang.persistence.strongpoint.jpa.entity;
+package com.bamyanggang.persistence.experience.jpa.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,4 +19,10 @@ public class StrongPointJpaEntity {
     private UUID id;
 
     private String name;
+
+    private UUID userId;
+
+    public static StrongPointJpaEntity of(UUID id, String name, UUID userId) {
+        return new StrongPointJpaEntity(id, name, userId);
+    }
 }
