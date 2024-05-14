@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.strongpoint.aggregate
+package com.bamyanggang.domainmodule.domain.experience.aggregate
 
 import com.bamyanggang.domainmodule.common.entity.AggregateRoot
 import com.example.uuid.UuidCreator

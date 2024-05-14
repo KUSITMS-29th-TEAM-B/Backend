@@ -1,7 +1,6 @@
 package com.bamyanggang.domainmodule.domain.experience.aggregate
 
 import com.bamyanggang.domainmodule.common.entity.AggregateRoot
-import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint
 import com.example.uuid.UuidCreator
 import java.time.LocalDateTime
 import java.util.*
@@ -9,11 +8,11 @@ import java.util.*
 data class Experience(
     override val id: UUID = UuidCreator.create(),
     val userId : UUID,
-    val parentTag : Tag,
-    val childTag : Tag,
-    val strongPoints : List<StrongPoint> = emptyList(),
+    val parentTagId : UUID,
+    val childTagId : UUID,
+    val strongPointIds : List<UUID> = emptyList(),
     val title : String,
-    val contents : List<ExperienceContent> = emptyList(),
+    val contentIds : List<UUID> = emptyList(),
     val startedAt : LocalDateTime,
     val endedAt : LocalDateTime,
     val createdAt : LocalDateTime,
@@ -23,22 +22,22 @@ data class Experience(
     companion object {
         fun create(
             userId: UUID,
-            parentTag: Tag,
-            childTag: Tag,
-            strongPoints: List<StrongPoint>,
+            parentTagId: UUID,
+            childTagId: UUID,
+            strongPointIds: List<UUID>,
             title: String,
-            contents: List<ExperienceContent> = emptyList(),
+            contentIds: List<UUID> = emptyList(),
             startedAt: LocalDateTime,
             endedAt: LocalDateTime,
         ): Experience {
             return Experience(
                 id = UuidCreator.create(),
                 userId = userId,
-                parentTag = parentTag,
-                childTag = childTag,
-                strongPoints = strongPoints,
+                parentTagId = parentTagId,
+                childTagId = childTagId,
+                strongPointIds = strongPointIds,
                 title = title,
-                contents = contents,
+                contentIds = contentIds,
                 startedAt = startedAt,
                 endedAt = endedAt,
                 createdAt = LocalDateTime.now(),
@@ -49,11 +48,11 @@ data class Experience(
         fun toDomain(
             id: UUID,
             userId: UUID,
-            parentTag: Tag,
-            childTag: Tag,
-            strongPoints: List<StrongPoint>,
+            parentTagId: UUID,
+            childTagId: UUID,
+            strongPointIds: List<UUID>,
             title: String,
-            contents: List<ExperienceContent> = emptyList(),
+            contentIds: List<UUID> = emptyList(),
             startedAt: LocalDateTime,
             endedAt: LocalDateTime,
             createdAt: LocalDateTime,
@@ -62,11 +61,11 @@ data class Experience(
             return Experience(
                 id = id,
                 userId = userId,
-                parentTag = parentTag,
-                childTag = childTag,
-                strongPoints = strongPoints,
+                parentTagId = parentTagId,
+                childTagId = childTagId,
+                strongPointIds = strongPointIds,
                 title = title,
-                contents = contents,
+                contentIds = contentIds,
                 startedAt = startedAt,
                 endedAt = endedAt,
                 createdAt = createdAt,
