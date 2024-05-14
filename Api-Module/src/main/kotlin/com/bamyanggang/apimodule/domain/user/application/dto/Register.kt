@@ -1,7 +1,5 @@
 package com.bamyanggang.apimodule.domain.user.application.dto
 
-import com.bamyanggang.domainmodule.domain.user.enums.DesiredJob
-import com.bamyanggang.domainmodule.domain.user.enums.JobSearchStatus
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 
 class Register {
@@ -11,8 +9,8 @@ class Register {
         val profileImgUrl: String,
         val provider: SocialLoginProvider,
         val nickName: String,
-        val jobSearchStatus: JobSearchStatus?,
-        val desiredJob: DesiredJob?,
+        val jobSearchStatus: String?,
+        val desiredJob: String?,
         val goal: String?,
         val dream: String?
     )

@@ -2,6 +2,7 @@ package com.bamyanggang.apimodule.domain.user.application.service
 
 import com.bamyanggang.apimodule.domain.user.application.dto.Register
 import com.bamyanggang.domainmodule.domain.user.aggregate.User
+import com.bamyanggang.domainmodule.domain.user.service.TokenAppender
 import com.bamyanggang.domainmodule.domain.user.service.UserAppender
 import com.bamyanggang.jwt.*
 import org.springframework.stereotype.Service
@@ -12,7 +13,8 @@ class UserCreateService(
     private val jwtValidator: JwtValidator,
     private val userAppender: UserAppender,
     private val claimsExtractor: ClaimsExtractor,
-    private val jwtProvider: JwtProvider
+    private val jwtProvider: JwtProvider,
+    private val tokenAppender: TokenAppender
 ) {
 
     @Transactional
@@ -32,9 +34,14 @@ class UserCreateService(
                 dream = request.dream
         )
 
+        val accessToken = jwtProvider.generateAccessToken(Claims.UserClaims(user.id))
+        val refreshToken = jwtProvider.generateRefreshToken(Claims.UserClaims(user.id))
+
+        tokenAppender.appendToken(user, refreshToken)
+
         return Register.Response.Success(
-            accessToken = jwtProvider.generateAccessToken(Claims.UserClaims(user.id)),
-            refreshToken = jwtProvider.generateRefreshToken(Claims.UserClaims(user.id))
+            accessToken = accessToken,
+            refreshToken = refreshToken
         )
 
     }

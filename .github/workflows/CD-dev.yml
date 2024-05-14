@@ -45,9 +45,9 @@ jobs:
             echo "DB_USERNAME=${{ secrets.DEV_DB_USERNAME }}" >> ./.env
             echo "DB_PASSWORD=${{ secrets.DEV_DB_PASSWORD }}" >> ./.env
             echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ./.env
-#            echo "S3_BUCKET=${{ secrets.S3_BUCKET }}" >> ./.env
-#            echo "AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" >> ./.env
-#            echo "AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}" >> ./.env
+            echo "JWT_ACCESS_TOKEN_EXPIRATION_TIME=${{ secrets.JWT_ACCESS_TOKEN_EXPIRATION_TIME }}" >> ./.env
+            echo "JWT_REFRESH_TOKEN_EXPIRATION_TIME=${{ secrets.JWT_REFRESH_TOKEN_EXPIRATION_TIME }}" >> ./.env
+            echo "JWT_REGISTRATION_TOKEN_EXPIRATION_TIME=${{ secrets.JWT_REGISTRATION_TOKEN_EXPIRATION_TIME }}" >> ./.env
 
       # gradle build
       - name: Grant execute permission for gradlew
