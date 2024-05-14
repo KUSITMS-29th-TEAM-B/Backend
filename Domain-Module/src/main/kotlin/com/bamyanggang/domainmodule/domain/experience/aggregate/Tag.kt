@@ -6,16 +6,17 @@ import java.util.*
 
 data class Tag(
     override val id: UUID = UuidCreator.create(),
-    val name : String,
-    val parentTagId : UUID?
+    val name: String,
+    val parentTagId: UUID?,
+    val userId: UUID
 ) : DomainEntity{
     companion object {
-        fun create(name: String, parentTagId: UUID): Tag {
-            return Tag(UuidCreator.create(), name, parentTagId)
+        fun create(name: String, parentTagId: UUID, userId: UUID): Tag {
+            return Tag(UuidCreator.create(), name, parentTagId, userId)
         }
 
-        fun toDomain(id : UUID, name: String, parentTagId: UUID): Tag {
-            return Tag(id, name, parentTagId)
+        fun toDomain(id : UUID, name: String, parentTagId: UUID, userId: UUID): Tag {
+            return Tag(id, name, parentTagId, userId)
         }
     }
 }

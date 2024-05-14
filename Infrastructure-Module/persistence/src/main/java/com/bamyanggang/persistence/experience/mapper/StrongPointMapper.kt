@@ -14,7 +14,7 @@ class StrongPointMapper {
         )
 
     fun toDomain(strongPointJpaEntity: StrongPointJpaEntity) =
-        StrongPoint(
+        StrongPoint.toDomain(
             strongPointJpaEntity.id,
             strongPointJpaEntity.name,
             strongPointJpaEntity.userId
