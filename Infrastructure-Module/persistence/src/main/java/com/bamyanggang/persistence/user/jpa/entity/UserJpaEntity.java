@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class UserJpaEntity {
     @Id
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    private UUID userId;
 
     private String socialId;
 
