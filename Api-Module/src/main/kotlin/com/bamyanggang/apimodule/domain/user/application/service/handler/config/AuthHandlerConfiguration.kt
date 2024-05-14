@@ -1,9 +1,8 @@
 package com.bamyanggang.apimodule.domain.user.application.service.handler.config
 
-import com.bamyanggang.apimodule.domain.user.application.service.handler.AuthHandler
+import com.bamyanggang.apimodule.domain.user.application.service.handler.AuthHandlerManager
 import com.bamyanggang.apimodule.domain.user.application.service.handler.impl.GoogleOAuthHandler
 import com.bamyanggang.apimodule.domain.user.application.service.handler.impl.KakaoOAuthHandler
-import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -14,10 +13,7 @@ class AuthHandlerConfiguration(
 ) {
 
     @Bean
-    fun socialLoginHandlerMap(): Map<SocialLoginProvider, AuthHandler>{
-        return mapOf(
-            kakaoOAuthHandler.provider to kakaoOAuthHandler,
-            googleOAuthHandler.provider to googleOAuthHandler
-        )
+    fun authHandlerManager(): AuthHandlerManager {
+        return AuthHandlerManager(kakaoOAuthHandler, googleOAuthHandler)
     }
 }

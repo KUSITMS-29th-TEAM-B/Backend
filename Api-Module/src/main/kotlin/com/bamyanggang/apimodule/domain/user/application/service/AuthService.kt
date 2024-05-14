@@ -3,6 +3,7 @@ package com.bamyanggang.apimodule.domain.user.application.service
 import com.bamyanggang.apimodule.domain.user.application.dto.SocialLogin
 import com.bamyanggang.apimodule.domain.user.application.exception.AuthException
 import com.bamyanggang.apimodule.domain.user.application.service.handler.AuthHandler
+import com.bamyanggang.apimodule.domain.user.application.service.handler.AuthHandlerManager
 import com.bamyanggang.commonmodule.util.TransactionUtils
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
 import com.bamyanggang.domainmodule.domain.user.service.TokenAppender
@@ -13,13 +14,13 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthService(
-    private val authHandlerMap: Map<SocialLoginProvider, AuthHandler>,
+    private val authHandlerManager: AuthHandlerManager,
     private val jwtProvider: JwtProvider,
     private val userReader: UserReader,
     private val tokenAppender: TokenAppender
 ){
     fun executeSocialLogin(provider: SocialLoginProvider, request: SocialLogin.Request): SocialLogin.Response {
-        val socialLoginHandler = authHandlerMap[provider] ?: throw AuthException.OAuthFailed()
+        val socialLoginHandler = authHandlerManager.getHandler(provider)
         val response = socialLoginHandler.handle(AuthHandler.Request(request.accessToken))
         return TransactionUtils.writable {
             return@writable userReader.readUserBySocialId(response.socialId)?.let {
