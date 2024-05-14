@@ -1,12 +1,8 @@
 package com.bamyanggang.persistence.experience.jpa.entity;
 
-import static jakarta.persistence.FetchType.LAZY;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -24,11 +20,7 @@ public class ExperienceTagJpaEntity {
     @Column(name = "experience_tag_id")
     private UUID id;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "experience_id")
-    private ExperienceJpaEntity experience;
+    private UUID experienceId;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "tag_id")
-    private TagJpaEntity tag;
+    private UUID tagId;
 }
