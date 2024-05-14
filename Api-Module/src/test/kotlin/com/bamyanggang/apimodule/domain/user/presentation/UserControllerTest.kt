@@ -1,7 +1,9 @@
 package com.bamyanggang.apimodule.domain.user.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
+import com.bamyanggang.apimodule.domain.user.application.dto.ProfileImageResponse
 import com.bamyanggang.apimodule.domain.user.application.dto.Register
+import com.bamyanggang.apimodule.domain.user.application.service.ProfileImageGetService
 import com.bamyanggang.apimodule.domain.user.application.service.UserCreateService
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import org.junit.jupiter.api.DisplayName
@@ -19,6 +21,8 @@ class UserControllerTest : BaseRestDocsTest(){
 
         @MockBean
         private lateinit var userCreateService: UserCreateService
+        @MockBean
+        private lateinit var profileImageGetService: ProfileImageGetService
 
         @Test
         @DisplayName("회원가입을 진행한다.")
@@ -49,6 +53,26 @@ class UserControllerTest : BaseRestDocsTest(){
                         responseFields(
                             fieldWithPath("accessToken").description("서버 접근을 위한 accessToken"),
                             fieldWithPath("refreshToken").description("서버 접근을 위한 refreshToken")
+                        )
+                    )
+                )
+        }
+
+        @Test
+        @DisplayName("기본 프로필 이미지 url을 가져온다.")
+        fun getProfileImages() {
+            //given
+            val profileImageResponse: ProfileImageResponse = generateFixture()
+            given(profileImageGetService.getProfileImages()).willReturn(profileImageResponse)
+            val request = RestDocumentationRequestBuilders.get(UserApi.PROFILE_IMG)
+            //when
+            val result = mockMvc.perform(request)
+            //then
+            result.andExpect(status().isOk)
+                .andDo(
+                    resultHandler.document(
+                        responseFields(
+                            fieldWithPath("profileImgUrl").description("프로필 이미지 URL 리스트")
                         )
                     )
                 )
