@@ -9,7 +9,7 @@ class TagMapper {
     fun toJpaEntity(tag: Tag): TagJpaEntity = TagJpaEntity.of(tag.id, tag.name, tag.parentTagId, tag.userId)
 
     fun toDomain(parentTagJpaEntity: TagJpaEntity): Tag =
-        Tag(parentTagJpaEntity.id,
+        Tag.toDomain(parentTagJpaEntity.id,
             parentTagJpaEntity.name,
             parentTagJpaEntity.parentTagId,
             parentTagJpaEntity.userId
