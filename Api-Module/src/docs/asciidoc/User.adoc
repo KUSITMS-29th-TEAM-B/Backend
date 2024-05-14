@@ -1,0 +1,7 @@
+[[User-API]]
+== User-API
+
+[[Register]]
+=== 회원가입 API
+
+operation::UserControllerTest/register[snippets='http-request,request-fields,http-response,response-fields']
