@@ -27,9 +27,23 @@ public class ExperienceJpaEntity{
 
     private LocalDateTime endedAt;
 
-    /*
-     * Todo: User 연관관계 구현 필요
-     */
+    private UUID userId;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    public static ExperienceJpaEntity of(
+            UUID id,
+            String title,
+            LocalDateTime startedAt,
+            LocalDateTime endedAt,
+            UUID userId,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+    ) {
+        return new ExperienceJpaEntity(id, title, startedAt, endedAt, userId, createdAt, updatedAt);
+    }
 }
 
 

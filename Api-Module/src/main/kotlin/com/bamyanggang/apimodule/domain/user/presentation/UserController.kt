@@ -15,7 +15,4 @@ class UserController(
     fun register(
         @RequestBody request: Register.Request
     ): Register.Response = userCreateService.createUser(request)
-
-
-
 }
