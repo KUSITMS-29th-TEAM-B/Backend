@@ -6,24 +6,20 @@ import org.springframework.stereotype.Component
 
 @Component
 class ExperienceContentMapper(
-    private val experienceMapper: ExperienceMapper
 ) {
-
-    fun toDomain(experienceContentJpaEntity: ExperienceContentJpaEntity): ExperienceContent {
-        return ExperienceContent(
-            experienceContentJpaEntity.id,
-            experienceContentJpaEntity.question,
-            experienceContentJpaEntity.answer,
-            experienceMapper.toDomainEntity(experienceContentJpaEntity.experience)
-        )
-    }
-
-    fun toJpaEntity(experienceContent: ExperienceContent) : ExperienceContentJpaEntity {
-        return ExperienceContentJpaEntity.of(
+    fun toJpaEntity(experienceContent: ExperienceContent) : ExperienceContentJpaEntity =
+        ExperienceContentJpaEntity.of(
             experienceContent.id,
             experienceContent.question,
             experienceContent.answer,
-            experienceMapper.toJpaEntity(experienceContent.experience)
+            experienceContent.experienceId
         )
-    }
+
+    fun toDomain(experienceContentJpaEntity: ExperienceContentJpaEntity): ExperienceContent =
+        ExperienceContent.toDomain(
+            experienceContentJpaEntity.id,
+            experienceContentJpaEntity.question,
+            experienceContentJpaEntity.answer,
+            experienceContentJpaEntity.experienceId
+        )
 }
