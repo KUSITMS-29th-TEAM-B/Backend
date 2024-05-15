@@ -26,14 +26,7 @@ public class StrongPointRepositoryImpl implements StrongPointRepository {
 
     @Override
     public List<StrongPoint> findAllByUserId(UUID userId) {
-        List<StrongPointJpaEntity> strongPoints = strongPointJpaRepository.findAllByUserId(userId);
-
-        return strongPoints.stream().map(strongPointEntity ->
-                    StrongPoint.Companion.toDomain(
-                        strongPointEntity.getStrongPointId(),
-                        strongPointEntity.getName(),
-                        strongPointEntity.getUserId()
-                    )
-            ).toList();
+        List<StrongPointJpaEntity> strongPointJpaEntities = strongPointJpaRepository.findAllByUserId(userId);
+        return strongPointJpaEntities.stream().map(strongPointMapper::toDomainEntity).toList();
     }
 }
