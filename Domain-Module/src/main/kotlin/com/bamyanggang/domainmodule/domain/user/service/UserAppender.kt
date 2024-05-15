@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service
 @Service
 class UserAppender(
     private val userRepository: UserRepository
-    
 ) {
     fun appendUser (
         socialId: String,
