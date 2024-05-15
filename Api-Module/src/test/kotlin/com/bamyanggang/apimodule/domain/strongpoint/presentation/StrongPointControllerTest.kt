@@ -1,8 +1,7 @@
 package com.bamyanggang.apimodule.domain.strongpoint.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
-import com.bamyanggang.apimodule.domain.experience.application.dto.CreateStrongPointRequest
-import com.bamyanggang.apimodule.domain.experience.application.dto.CreateStrongPointResponse
+import com.bamyanggang.apimodule.domain.experience.application.dto.CreateStrongPoint
 import com.bamyanggang.apimodule.domain.experience.presentation.StrongPointApi
 import com.bamyanggang.apimodule.domain.experience.presentation.StrongPointController
 import com.bamyanggang.commonmodule.fixture.generateFixture
@@ -25,14 +24,14 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("역량 키워드를 저장한 뒤 생성된 역량 키워드 ID를 반환한다.")
     fun createStrongPointTest() {
-        val createStrongPointRequest: CreateStrongPointRequest = generateFixture()
-        val createStrongPointResponse: CreateStrongPointResponse = generateFixture()
+        val createStrongPoint: CreateStrongPoint.Request = generateFixture()
+        val createStrongPointResponse: CreateStrongPoint.Response = generateFixture()
 
-        given(strongPointController.createStrongPoint(createStrongPointRequest)).willReturn(createStrongPointResponse)
+        given(strongPointController.createStrongPoint(createStrongPoint)).willReturn(createStrongPointResponse)
 
         val request = RestDocumentationRequestBuilders.post(StrongPointApi.BASE_URL)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsString(createStrongPointRequest))
+            .content(objectMapper.writeValueAsString(createStrongPoint))
 
         val result = mockMvc.perform(request)
 
