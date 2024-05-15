@@ -2,11 +2,13 @@ package com.bamyanggang.apimodule.domain.user.presentation
 
 import com.bamyanggang.apimodule.domain.user.application.dto.ProfileImageResponse
 import com.bamyanggang.apimodule.domain.user.application.dto.Register
-import com.bamyanggang.apimodule.domain.user.application.dto.UserInfoResponse
+import com.bamyanggang.apimodule.domain.user.application.dto.UserInfo
 import com.bamyanggang.apimodule.domain.user.application.service.ProfileImageGetService
 import com.bamyanggang.apimodule.domain.user.application.service.UserCreateService
 import com.bamyanggang.apimodule.domain.user.application.service.UserInfoGetService
+import com.bamyanggang.apimodule.domain.user.application.service.UserInfoUpdateService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -15,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(
     private val userCreateService: UserCreateService,
     private val profileImageGetService: ProfileImageGetService,
-    private val userInfoGetService: UserInfoGetService
+    private val userInfoGetService: UserInfoGetService,
+    private val userInfoUpdateService: UserInfoUpdateService
 ) {
 
     @PostMapping(UserApi.REGISTER)
@@ -27,7 +30,12 @@ class UserController(
     fun getProfileImage(): ProfileImageResponse = profileImageGetService.getProfileImages()
 
     @GetMapping(UserApi.USER_INFO)
-    fun getUserInfo(): UserInfoResponse = userInfoGetService.getUserInfo()
+    fun getUserInfo(): UserInfo.Response.Success = userInfoGetService.getUserInfo()
+
+    @PatchMapping(UserApi.USER_INFO_UPDATE)
+    fun updateUserInfo(
+        @RequestBody request: UserInfo.Request.UpdateUserInfo
+    ) = userInfoUpdateService.updateUserInfo(request)
 
 
 }
