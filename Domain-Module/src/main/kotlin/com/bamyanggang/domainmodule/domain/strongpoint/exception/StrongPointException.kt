@@ -1,4 +1,4 @@
-package com.bamyanggang.apimodule.domain.strongpoint.application.exception
+package com.bamyanggang.domainmodule.domain.strongpoint.exception
 
 import com.bamyanggang.commonmodule.exception.CustomException
 import org.springframework.http.HttpStatus
