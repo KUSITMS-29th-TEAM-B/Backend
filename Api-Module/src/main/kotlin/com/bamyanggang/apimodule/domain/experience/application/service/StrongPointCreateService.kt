@@ -1,6 +1,6 @@
 package com.bamyanggang.apimodule.domain.experience.application.service
 
-import com.bamyanggang.apimodule.common.UserSecurityUtils
+import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateStrongPointRequest
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateStrongPointResponse
 import com.bamyanggang.apimodule.domain.experience.application.exception.StrongPointException
@@ -15,7 +15,7 @@ class StrongPointCreateService(
     val strongPointReader: StrongPointReader,
 ) {
     fun createStrongPoint(request: CreateStrongPointRequest): CreateStrongPointResponse {
-        val accessUserId = UserSecurityUtils.getAuthenticationPrincipal()
+        val accessUserId = getAuthenticationPrincipal()
 
         val userStrongPoints = strongPointReader.findAllByUserId(accessUserId)
         validateDuplicatedName(userStrongPoints, request.name)
