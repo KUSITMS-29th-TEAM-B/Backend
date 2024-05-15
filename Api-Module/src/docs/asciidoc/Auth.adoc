@@ -11,3 +11,13 @@ operation::AuthControllerTest/socialLoginWithRegisterUser[snippets='http-request
 
 operation::AuthControllerTest/socialLoginWithUnRegisterUser[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
+[[Auth-Reissue-Token]]
+=== 토큰 재발급
+
+operation::AuthControllerTest/reissueToken[snippets='http-request,http-response,request-fields,response-fields']
+
+[[Auth-Logout]]
+=== 로그아웃
+
+operation::AuthControllerTest/logout[snippets='http-request,http-response,request-fields']
+
