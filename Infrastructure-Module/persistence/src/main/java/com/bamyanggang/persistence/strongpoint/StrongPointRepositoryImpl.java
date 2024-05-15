@@ -1,10 +1,10 @@
-package com.bamyanggang.persistence.experience;
+package com.bamyanggang.persistence.strongpoint;
 
 import com.bamyanggang.domainmodule.domain.experience.repository.StrongPointRepository;
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint;
-import com.bamyanggang.persistence.experience.jpa.entity.StrongPointJpaEntity;
-import com.bamyanggang.persistence.experience.jpa.repository.StrongPointJpaRepository;
-import com.bamyanggang.persistence.experience.mapper.StrongPointMapper;
+import com.bamyanggang.persistence.strongpoint.jpa.entity.StrongPointJpaEntity;
+import com.bamyanggang.persistence.strongpoint.jpa.repository.StrongPointJpaRepository;
+import com.bamyanggang.persistence.strongpoint.mapper.StrongPointMapper;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

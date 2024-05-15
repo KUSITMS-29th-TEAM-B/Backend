@@ -1,6 +1,6 @@
-package com.bamyanggang.persistence.experience.jpa.repository;
+package com.bamyanggang.persistence.tag.jpa.repository;
 
-import com.bamyanggang.persistence.experience.jpa.entity.TagJpaEntity;
+import com.bamyanggang.persistence.tag.jpa.entity.TagJpaEntity;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 

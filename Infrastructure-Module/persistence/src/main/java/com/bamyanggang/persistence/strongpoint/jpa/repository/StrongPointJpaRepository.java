@@ -1,6 +1,6 @@
-package com.bamyanggang.persistence.experience.jpa.repository;
+package com.bamyanggang.persistence.strongpoint.jpa.repository;
 
-import com.bamyanggang.persistence.experience.jpa.entity.StrongPointJpaEntity;
+import com.bamyanggang.persistence.strongpoint.jpa.entity.StrongPointJpaEntity;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;

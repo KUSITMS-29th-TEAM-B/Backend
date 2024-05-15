@@ -1,7 +1,7 @@
-package com.bamyanggang.persistence.experience.mapper;
+package com.bamyanggang.persistence.strongpoint.mapper;
 
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint;
-import com.bamyanggang.persistence.experience.jpa.entity.StrongPointJpaEntity;
+import com.bamyanggang.persistence.strongpoint.jpa.entity.StrongPointJpaEntity;
 import org.springframework.stereotype.Component;
 
 @Component

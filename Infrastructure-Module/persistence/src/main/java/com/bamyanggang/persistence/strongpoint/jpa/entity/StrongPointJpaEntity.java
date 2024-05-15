@@ -1,6 +1,5 @@
-package com.bamyanggang.persistence.experience.jpa.entity;
+package com.bamyanggang.persistence.strongpoint.jpa.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -14,19 +13,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "tag")
-public class TagJpaEntity {
+@Table(name = "strong_point")
+public class StrongPointJpaEntity {
     @Id
-    @Column(name = "tag_id")
     private UUID id;
 
     private String name;
 
-    private UUID parentTagId;
-
     private UUID userId;
 
-    public static TagJpaEntity of(UUID id, String name, UUID parentTagId, UUID userId) {
-        return new TagJpaEntity(id, name, parentTagId, userId);
+    public static StrongPointJpaEntity of(UUID id, String name, UUID userId) {
+        return new StrongPointJpaEntity(id, name, userId);
     }
 }
