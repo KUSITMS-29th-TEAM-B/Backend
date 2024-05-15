@@ -1,0 +1,24 @@
+package com.bamyanggang.persistence.experience.mapper;
+
+import com.bamyanggang.domainmodule.domain.experience.aggregate.StrongPoint;
+import com.bamyanggang.persistence.experience.jpa.entity.StrongPointJpaEntity;
+import org.springframework.stereotype.Component;
+
+@Component
+public class StrongPointMapper {
+    public StrongPointJpaEntity toJpaEntity(StrongPoint strongPoint) {
+        return StrongPointJpaEntity.of(
+                strongPoint.getId(),
+                strongPoint.getName(),
+                strongPoint.getUserId()
+        );
+    }
+
+    public StrongPoint toDomainEntity(StrongPointJpaEntity strongPointJpaEntity) {
+        return StrongPoint.Companion.toDomain(
+                strongPointJpaEntity.getId(),
+                strongPointJpaEntity.getName(),
+                strongPointJpaEntity.getUserId()
+        );
+    }
+}
