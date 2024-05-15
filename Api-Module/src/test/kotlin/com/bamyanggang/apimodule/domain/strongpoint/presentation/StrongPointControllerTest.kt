@@ -1,9 +1,7 @@
 package com.bamyanggang.apimodule.domain.strongpoint.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
-import com.bamyanggang.apimodule.domain.experience.application.dto.CreateStrongPoint
-import com.bamyanggang.apimodule.domain.experience.presentation.StrongPointApi
-import com.bamyanggang.apimodule.domain.experience.presentation.StrongPointController
+import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

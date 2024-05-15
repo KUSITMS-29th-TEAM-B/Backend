@@ -1,7 +1,7 @@
-package com.bamyanggang.apimodule.domain.experience.presentation
+package com.bamyanggang.apimodule.domain.strongpoint.presentation
 
-import com.bamyanggang.apimodule.domain.experience.application.dto.CreateStrongPoint
-import com.bamyanggang.apimodule.domain.experience.application.service.StrongPointCreateService
+import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
+import com.bamyanggang.apimodule.domain.strongpoint.application.service.StrongPointCreateService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController

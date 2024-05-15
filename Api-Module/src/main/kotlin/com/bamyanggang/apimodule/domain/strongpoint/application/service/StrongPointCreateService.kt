@@ -1,8 +1,8 @@
-package com.bamyanggang.apimodule.domain.experience.application.service
+package com.bamyanggang.apimodule.domain.strongpoint.application.service
 
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
-import com.bamyanggang.apimodule.domain.experience.application.dto.CreateStrongPoint
-import com.bamyanggang.apimodule.domain.experience.application.exception.StrongPointException
+import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
+import com.bamyanggang.apimodule.domain.strongpoint.application.exception.StrongPointException
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointAppender
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointReader
