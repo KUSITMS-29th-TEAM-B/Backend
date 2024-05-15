@@ -1,6 +1,6 @@
 package com.bamyanggang.persistence.experience.mapper;
 
-import com.bamyanggang.domainmodule.domain.experience.aggregate.Tag;
+import com.bamyanggang.domainmodule.domain.tag.aggregate.Tag;
 import com.bamyanggang.persistence.experience.jpa.entity.TagJpaEntity;
 import org.springframework.stereotype.Component;
 
