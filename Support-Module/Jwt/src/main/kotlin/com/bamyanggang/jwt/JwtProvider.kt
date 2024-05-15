@@ -24,10 +24,12 @@ class JwtProvider(
     }
 
     fun generateRefreshToken(user: Claims.UserClaims): String {
-        return generateToken(
+        val refreshToken = generateToken(
             user.createPrivateClaims(TokenType.REFRESH_TOKEN),
             jwtProperties.refreshTokenExpirationTime
         )
+        jwtRegistry.upsert(user.userId to refreshToken)
+        return refreshToken
     }
 
     fun generateRegistrationToken(registrationClaims: Claims.RegistrationClaims): String {
