@@ -29,6 +29,25 @@ data class User (
         require(dream?.length ?: 0 <= 400) { "꿈은 최대 400자까지 작성이 가능합니다." }
     }
 
+    fun update(
+        nickName: String?,
+        profileImgUrl: String?,
+        jobSearchStatus: String?,
+        desiredJob: String?,
+        goal: String?,
+        dream: String?
+    ): User {
+        return copy(
+            nickName = nickName ?: this.nickName,
+            profileImgUrl = profileImgUrl ?: this.profileImgUrl,
+            jobSearchStatus = jobSearchStatus ?: this.jobSearchStatus,
+            desiredJob = desiredJob ?: this.desiredJob,
+            goal = goal ?: this.goal,
+            dream = dream ?: this.dream,
+            updatedAt = LocalDateTime.now()
+        )
+    }
+
     companion object {
         fun create(
             socialId: String,
