@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class TagJpaEntity {
     @Id
     @Column(name = "tag_id")
-    private UUID id;
+    private UUID tagId;
 
     private String name;
 

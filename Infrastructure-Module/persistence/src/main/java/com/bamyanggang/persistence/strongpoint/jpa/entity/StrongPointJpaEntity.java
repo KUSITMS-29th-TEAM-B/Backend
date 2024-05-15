@@ -1,5 +1,6 @@
 package com.bamyanggang.persistence.strongpoint.jpa.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -16,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "strong_point")
 public class StrongPointJpaEntity {
     @Id
-    private UUID id;
+    @Column(name = "strong_point_id")
+    private UUID strongPointId;
 
     private String name;
 
