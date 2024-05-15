@@ -14,13 +14,14 @@ class StrongPointCreateService(
     val strongPointReader: StrongPointReader,
 ) {
     fun createStrongPoint(request: CreateStrongPoint.Request): CreateStrongPoint.Response {
-        val accessUserId = getAuthenticationPrincipal()
-
-        val userStrongPoints = strongPointReader.findAllByUserId(accessUserId)
-        validateDuplicatedName(userStrongPoints, request.name)
-
-        return strongPointAppender.appendStrongPoint(request.name, accessUserId)
-            .let { CreateStrongPoint.Response(it) }
+        return getAuthenticationPrincipal()
+            .also {
+                val userStrongPoints = strongPointReader.findAllByUserId(it)
+                validateDuplicatedName(userStrongPoints, request.name)
+            }.let {
+                val newStrongPointId = strongPointAppender.appendStrongPoint(request.name, it)
+                CreateStrongPoint.Response(newStrongPointId)
+            }
     }
 
     private fun validateDuplicatedName(userStrongPoints: List<StrongPoint>, name: String) {
