@@ -9,6 +9,9 @@ data class StrongPoint(
     val name : String,
     val userId : UUID?,
 ) : DomainEntity{
+
+    fun isDuplicated(name: String) : Boolean = this.name == name
+
     companion object {
         fun create(name: String, userId: UUID?): StrongPoint {
             return StrongPoint(UuidCreator.create(), name, userId)

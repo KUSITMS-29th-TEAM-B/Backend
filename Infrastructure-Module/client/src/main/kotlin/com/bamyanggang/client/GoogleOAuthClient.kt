@@ -10,14 +10,14 @@ class GoogleOAuthClient {
 
     fun retrieveUserInfo(accessToken: String): GoogleUserInfo? {
         return webClient.get()
-            .uri("/oauth2/v3/userinfo")
+            .uri("/oauth2/v1/userinfo")
             .header("Authorization", "Bearer $accessToken")
             .attribute("access_token", accessToken)
             .retrieve()
             .bodyToMono(GoogleUserInfo::class.java)
             .block()
     }
-    
+
     data class GoogleUserInfo(
         val id: String,
         val name: String
