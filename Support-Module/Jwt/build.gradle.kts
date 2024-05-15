@@ -8,4 +8,6 @@ dependencies {
     //web
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation(project(":Common-Module"))
+    implementation(project(":Support-Module:cache"))
+    implementation(project(":Support-Module:lock"))
 }
