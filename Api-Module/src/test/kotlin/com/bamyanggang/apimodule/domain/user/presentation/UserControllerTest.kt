@@ -3,8 +3,10 @@ package com.bamyanggang.apimodule.domain.user.presentation
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.user.application.dto.ProfileImageResponse
 import com.bamyanggang.apimodule.domain.user.application.dto.Register
+import com.bamyanggang.apimodule.domain.user.application.dto.UserInfoResponse
 import com.bamyanggang.apimodule.domain.user.application.service.ProfileImageGetService
 import com.bamyanggang.apimodule.domain.user.application.service.UserCreateService
+import com.bamyanggang.apimodule.domain.user.application.service.UserInfoGetService
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -23,6 +25,8 @@ class UserControllerTest : BaseRestDocsTest(){
         private lateinit var userCreateService: UserCreateService
         @MockBean
         private lateinit var profileImageGetService: ProfileImageGetService
+        @MockBean
+        private lateinit var userInfoGetService: UserInfoGetService
 
         @Test
         @DisplayName("회원가입을 진행한다.")
@@ -73,6 +77,31 @@ class UserControllerTest : BaseRestDocsTest(){
                     resultHandler.document(
                         responseFields(
                             fieldWithPath("profileImgUrl").description("프로필 이미지 URL 리스트")
+                        )
+                    )
+                )
+        }
+
+        @Test
+        @DisplayName("사용자 정보를 가져온다.")
+        fun getUserInfo() {
+            //given
+            val userInfoResponse: UserInfoResponse = generateFixture()
+            given(userInfoGetService.getUserInfo()).willReturn(userInfoResponse)
+            val request = RestDocumentationRequestBuilders.get(UserApi.USER_INFO)
+            //when
+            val result = mockMvc.perform(request)
+            //then
+            result.andExpect(status().isOk)
+                .andDo(
+                    resultHandler.document(
+                        responseFields(
+                            fieldWithPath("nickName").description("닉네임"),
+                            fieldWithPath("profileImgUrl").description("프로필 이미지 URL"),
+                            fieldWithPath("jobSearchStatus").description("구직 상태"),
+                            fieldWithPath("desiredJob").description("희망 직무"),
+                            fieldWithPath("goal").description("목표"),
+                            fieldWithPath("dream").description("꿈")
                         )
                     )
                 )
