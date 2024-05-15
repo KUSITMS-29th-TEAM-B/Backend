@@ -11,7 +11,7 @@ public class TagMapper {
     }
 
     public Tag toDomainEntity(TagJpaEntity tagJpaEntity) {
-        return Tag.Companion.toDomain(tagJpaEntity.getId(),
+        return Tag.Companion.toDomain(tagJpaEntity.getTagId(),
                 tagJpaEntity.getName(),
                 tagJpaEntity.getParentTagId(),
                 tagJpaEntity.getUserId()

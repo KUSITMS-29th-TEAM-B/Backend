@@ -16,7 +16,7 @@ public class StrongPointMapper {
 
     public StrongPoint toDomainEntity(StrongPointJpaEntity strongPointJpaEntity) {
         return StrongPoint.Companion.toDomain(
-                strongPointJpaEntity.getId(),
+                strongPointJpaEntity.getStrongPointId(),
                 strongPointJpaEntity.getName(),
                 strongPointJpaEntity.getUserId()
         );

@@ -21,7 +21,7 @@ public class StrongPointRepositoryImpl implements StrongPointRepository {
         StrongPointJpaEntity strongPointJpaEntity = strongPointMapper.toJpaEntity(strongPoint);
         strongPointJpaRepository.save(strongPointJpaEntity);
 
-        return strongPointJpaEntity.getId();
+        return strongPointJpaEntity.getStrongPointId();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class StrongPointRepositoryImpl implements StrongPointRepository {
 
         return strongPoints.stream().map(strongPointEntity ->
                     StrongPoint.Companion.toDomain(
-                        strongPointEntity.getId(),
+                        strongPointEntity.getStrongPointId(),
                         strongPointEntity.getName(),
                         strongPointEntity.getUserId()
                     )

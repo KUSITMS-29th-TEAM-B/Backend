@@ -23,7 +23,7 @@ public class ExperienceMapper {
     public Experience toDomainEntity(ExperienceJpaEntity experienceJpaEntity, UUID parentTagId, UUID childTagId,
                                      List<UUID> strongPointIds, List<UUID> experienceContentIds) {
         return Experience.Companion.toDomain(
-                experienceJpaEntity.getId(),
+                experienceJpaEntity.getExperienceId(),
                 experienceJpaEntity.getUserId(),
                 parentTagId,
                 childTagId,

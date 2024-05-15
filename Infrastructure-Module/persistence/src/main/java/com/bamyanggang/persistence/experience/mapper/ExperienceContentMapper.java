@@ -16,7 +16,7 @@ class ExperienceContentMapper {
 
     public ExperienceContent toDomainEntity(ExperienceContentJpaEntity experienceContentJpaEntity) {
         return ExperienceContent.Companion.toDomain(
-                experienceContentJpaEntity.getId(),
+                experienceContentJpaEntity.getExperienceContentId(),
                 experienceContentJpaEntity.getQuestion(),
                 experienceContentJpaEntity.getAnswer(),
                 experienceContentJpaEntity.getExperienceId());
