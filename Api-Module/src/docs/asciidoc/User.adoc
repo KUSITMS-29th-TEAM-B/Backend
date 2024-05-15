@@ -16,4 +16,10 @@ operation::UserControllerTest/getProfileImages[snippets='http-request,snippets='
 
 operation::UserControllerTest/getUserInfo[snippets='http-request,http-response,response-fields']
 
+[[UpdateUserInfo]]
+=== 사용자 정보 수정 API
+
+operation::UserControllerTest/updateUserInfo[snippets='http-request,request-fields,http-response']
+
+
 
