@@ -1,6 +1,6 @@
 package com.bamyanggang.apimodule.domain.user.presentation
 
-import com.bamyanggang.apimodule.domain.user.application.dto.ProfileImageResponse
+import com.bamyanggang.apimodule.domain.user.application.dto.ProfileImage
 import com.bamyanggang.apimodule.domain.user.application.dto.Register
 import com.bamyanggang.apimodule.domain.user.application.dto.UserInfo
 import com.bamyanggang.apimodule.domain.user.application.service.ProfileImageGetService
@@ -27,7 +27,7 @@ class UserController(
     ): Register.Response = userCreateService.createUser(request)
 
     @GetMapping(UserApi.PROFILE_IMG)
-    fun getProfileImage(): ProfileImageResponse = profileImageGetService.getProfileImages()
+    fun getProfileImage(): ProfileImage.Response = profileImageGetService.getProfileImages()
 
     @GetMapping(UserApi.USER_INFO)
     fun getUserInfo(): UserInfo.Response.Success = userInfoGetService.getUserInfo()
