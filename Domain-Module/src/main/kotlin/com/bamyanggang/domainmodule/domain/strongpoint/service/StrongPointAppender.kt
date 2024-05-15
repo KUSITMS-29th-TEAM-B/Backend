@@ -10,9 +10,8 @@ class StrongPointAppender(
     private val strongPointRepository: StrongPointRepository
 ) {
     fun appendStrongPoint(name: String, userId: UUID): UUID {
-        val newStrongPoint = StrongPoint.create(name, userId)
-        val newStrongPointId = strongPointRepository.save(newStrongPoint)
-
-        return newStrongPointId
+        return StrongPoint.create(name, userId).let {
+            strongPointRepository.save(it)
+        }
     }
 }
