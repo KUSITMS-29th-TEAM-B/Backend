@@ -1,6 +1,6 @@
 package com.bamyanggang.persistence.strongpoint;
 
-import com.bamyanggang.domainmodule.domain.experience.repository.StrongPointRepository;
+import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRepository;
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint;
 import com.bamyanggang.persistence.strongpoint.jpa.entity.StrongPointJpaEntity;
 import com.bamyanggang.persistence.strongpoint.jpa.repository.StrongPointJpaRepository;

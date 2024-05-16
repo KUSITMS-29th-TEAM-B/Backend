@@ -1,6 +1,6 @@
 package com.bamyanggang.domainmodule.domain.strongpoint.service
 
-import com.bamyanggang.domainmodule.domain.experience.repository.StrongPointRepository
+import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRepository
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint
 import org.springframework.stereotype.Service
 import java.util.*
