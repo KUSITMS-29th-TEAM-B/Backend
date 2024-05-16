@@ -12,7 +12,7 @@ import java.util.*
 @Service
 class TagCreateService(
     private val tagAppender: TagAppender,
-    private val tagReader: TagReader
+    private val tagReader: TagReader,
 ) {
     fun createChildTag(request: CreateTag.Request, parentTagId: UUID): CreateTag.Response {
         return getAuthenticationPrincipal()

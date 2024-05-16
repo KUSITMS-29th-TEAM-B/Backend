@@ -1,14 +1,15 @@
 package com.bamyanggang.apimodule.domain.tag.presentation
 
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
-import com.bamyanggang.apimodule.domain.tag.application.dto.DeleteTag
 import com.bamyanggang.apimodule.domain.tag.application.service.TagCreateService
+import com.bamyanggang.apimodule.domain.tag.application.service.TagDeleteService
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
 class TagController(
     private val tagCreateService: TagCreateService,
+    private val tagDeleteService: TagDeleteService
 ) {
     @PostMapping(TagApi.BASE_URL, TagApi.TAG_PATH_VARIABLE_URL)
     fun createTag(
@@ -22,8 +23,7 @@ class TagController(
     }
 
     @DeleteMapping(TagApi.TAG_PATH_VARIABLE_URL)
-    fun deleteTag( @PathVariable("tagId", required = false) tagId: UUID) : DeleteTag.Response {
-
+    fun deleteTag( @PathVariable("tagId", required = false) tagId: UUID) {
+        tagDeleteService.deleteTag(tagId)
     }
-
 }
