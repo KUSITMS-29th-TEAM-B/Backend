@@ -107,6 +107,9 @@ class TagControllerTest : BaseRestDocsTest() {
         //then
         result.andExpect(status().isBadRequest)
             .andDo(resultHandler.document(
+                requestFields(
+                    fieldWithPath("name").description("태그 이름")
+                ),
                 responseFields(
                     fieldWithPath("code").description(TagException.DuplicatedTagName().code),
                     fieldWithPath("message").description(TagException.DuplicatedTagName().message)
@@ -136,6 +139,43 @@ class TagControllerTest : BaseRestDocsTest() {
             .andDo(resultHandler.document(
                 pathParameters(
                     parameterWithName("tagId").description("상위 태그 id (생략 시 상위 태그 생성 API 호출)")
+                ),
+                requestFields(
+                    fieldWithPath("name").description("태그 이름")
+                ),
+                responseFields(
+                    fieldWithPath("code").description(TagException.DuplicatedTagName().code),
+                    fieldWithPath("message").description(TagException.DuplicatedTagName().message)
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("태그를 제한 개수(10) 보다 더 많이 등록하려 시도하는 경우 저장하지 않고 예외를 반환한다.")
+    fun overTagCountLimitTest() {
+        //given
+        val createChildTagRequest: CreateTag.Request = generateFixture()
+        val parentTagId: UUID  = generateFixture()
+
+        val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(createChildTagRequest))
+
+        given(tagController.createTag(parentTagId, createChildTagRequest)).willThrow(TagException.OverTagCountLimit())
+        given(tagController.createTag(null, createChildTagRequest)).willThrow(TagException.OverTagCountLimit())
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isBadRequest)
+            .andDo(resultHandler.document(
+                pathParameters(
+                    parameterWithName("tagId").description("상위 태그 id (생략 시 상위 태그 생성 API 호출)")
+                ),
+                requestFields(
+                    fieldWithPath("name").description("태그 이름")
                 ),
                 responseFields(
                     fieldWithPath("code").description(TagException.DuplicatedTagName().code),
