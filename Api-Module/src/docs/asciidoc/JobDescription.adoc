@@ -1,0 +1,21 @@
+[[Job-Description-API]]
+== Job-Description-API
+
+[[CREATE-JD]]
+=== JD 등록
+
+operation::JobDescriptionControllerTest/createJobDescription[snippets='http-request,request-fields,http-response']
+
+[[CREATE-JD-EXCEPTION]]
+==== JD 등록 시 예외 (빈 값, 또는 NULL이 들어올 경우)
+
+operation::JobDescriptionControllerTest/createJobDescriptionWithEmptyValue[snippets='http-request,http-response']
+
+[[CREATE-JD-EXCEPTION-2]]
+==== JD 등록 시 예외 (시작일이 종료일보다 늦을 경우)
+
+operation::JobDescriptionControllerTest/createJobDescriptionWithInvalidDate[snippets='http-request,http-response']
+
+
+
+
