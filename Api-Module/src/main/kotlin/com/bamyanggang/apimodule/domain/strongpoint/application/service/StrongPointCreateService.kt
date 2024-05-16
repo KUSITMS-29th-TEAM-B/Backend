@@ -16,8 +16,9 @@ class StrongPointCreateService(
         return getAuthenticationPrincipal()
             .also {
                 strongPointReader.findAllByUserId(it).forEach { strongPoint ->
-                    if(strongPoint.isDuplicated(request.name))
+                    if(strongPoint.isDuplicated(request.name)) {
                         throw StrongPointException.DuplicatedStrongPointName()
+                    }
                 }
             }.let {
                 val newStrongPointId = strongPointAppender.appendStrongPoint(request.name, it)
