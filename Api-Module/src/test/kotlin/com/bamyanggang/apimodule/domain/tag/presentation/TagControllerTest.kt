@@ -62,7 +62,7 @@ class TagControllerTest : BaseRestDocsTest() {
 
         given(tagController.createTag(parentTagId, createChildTagRequest)).willReturn(createChildTagResponse)
 
-        val request = RestDocumentationRequestBuilders.post(TagApi.CREATE_TAG, parentTagId)
+        val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createChildTagRequest))
 
@@ -73,7 +73,7 @@ class TagControllerTest : BaseRestDocsTest() {
         result.andExpect(status().isOk)
             .andDo(resultHandler.document(
                 pathParameters(
-                    parameterWithName("parentTagId").description("상위 태그 id (생략 시 상위 태그 생성 API 호출)")
+                    parameterWithName("tagId").description("상위 태그 id (생략 시 상위 태그 생성 API 호출)")
                 ),
                 requestFields(
                     fieldWithPath("name").description("태그 이름")
@@ -81,6 +81,27 @@ class TagControllerTest : BaseRestDocsTest() {
                 responseFields(
                     fieldWithPath("id").description("생성된 태그 id")
                 )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("태그를 삭제한다.")
+    fun deleteTagTest() {
+        //given
+        val deleteTagId = generateFixture<UUID>()
+
+        val request = RestDocumentationRequestBuilders.delete(TagApi.TAG_PATH_VARIABLE_URL, deleteTagId)
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                pathParameters(
+                    parameterWithName("tagId").description("태그 id(상위, 하위 둘 다 가능)")
+                ),
             )
         )
     }
