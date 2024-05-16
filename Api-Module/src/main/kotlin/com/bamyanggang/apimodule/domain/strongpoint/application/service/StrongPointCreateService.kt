@@ -2,6 +2,7 @@ package com.bamyanggang.apimodule.domain.strongpoint.application.service
 
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
+import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint
 import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointException
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointAppender
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointReader
@@ -15,14 +16,19 @@ class StrongPointCreateService(
     fun createStrongPoint(request: CreateStrongPoint.Request): CreateStrongPoint.Response {
         return getAuthenticationPrincipal()
             .also {
-                strongPointReader.findAllByUserId(it).forEach { strongPoint ->
-                    if(strongPoint.isDuplicated(request.name)) {
-                        throw StrongPointException.DuplicatedStrongPointName()
-                    }
-                }
+                val userStrongPoints = strongPointReader.readAllByUserId(it)
+                validateDuplicatedStrongPointName(userStrongPoints, request.name)
             }.let {
                 val newStrongPointId = strongPointAppender.appendStrongPoint(request.name, it)
                 CreateStrongPoint.Response(newStrongPointId)
             }
+    }
+
+    private fun validateDuplicatedStrongPointName(userStrongPoints: List<StrongPoint>, name: String) {
+        userStrongPoints.forEach { strongPoint ->
+            if (strongPoint.isDuplicated(name)) {
+                throw StrongPointException.DuplicatedStrongPointName()
+            }
+        }
     }
 }
