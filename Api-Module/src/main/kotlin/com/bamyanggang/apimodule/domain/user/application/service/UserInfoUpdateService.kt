@@ -12,7 +12,7 @@ class UserInfoUpdateService(
 
     fun updateUserInfo(request: UserInfo.Request.UpdateUserInfo) {
         getAuthenticationPrincipal()
-            .let { userModifier.modifyUserInfo(
+            .also { userModifier.modifyUserInfo(
                 it,
                 nickName = request.nickName,
                 profileImgUrl = request.profileImgUrl,

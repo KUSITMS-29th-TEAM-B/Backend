@@ -1,6 +1,8 @@
 package com.bamyanggang.apimodule.domain.user.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
+import com.bamyanggang.apimodule.domain.user.application.dto.Logout
+import com.bamyanggang.apimodule.domain.user.application.dto.Reissue
 import com.bamyanggang.apimodule.domain.user.application.dto.SocialLogin
 import com.bamyanggang.apimodule.domain.user.application.service.AuthService
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
@@ -91,4 +93,54 @@ class AuthControllerTest : BaseRestDocsTest(){
                 )
             )
     }
+
+    @Test
+    @DisplayName("토큰 재발급시 accessToken, refreshToken을 반환한다.")
+    fun reissueToken() {
+        //given
+        val reissueRequest : Reissue.Request = generateFixture()
+        val reissueResponse : Reissue.Response = generateFixture()
+        given(authService.reissueToken(reissueRequest)).willReturn(reissueResponse)
+        val request = RestDocumentationRequestBuilders.put(AuthApi.REISSUE)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(reissueRequest))
+        //when
+        val result = mockMvc.perform(request)
+        //then
+        result.andExpect(status().isOk)
+            .andDo(
+                resultHandler.document(
+                    requestFields(
+                        fieldWithPath("refreshToken").description("재발급을 위한 refreshToken"),
+                    ),
+                    responseFields(
+                        fieldWithPath("accessToken").description("재발급된 accessToken"),
+                        fieldWithPath("refreshToken").description("재발급된 refreshToken")
+                    )
+                )
+            )
+    }
+
+    @Test
+    @DisplayName("로그아웃 요청시 성공한다.")
+    fun logout() {
+        //given
+        val refreshToken : String= generateFixture()
+        val logoutRequest = Reissue.Request(refreshToken)
+        val request = RestDocumentationRequestBuilders.delete(AuthApi.LOGOUT)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(logoutRequest))
+        //when
+        val result = mockMvc.perform(request)
+        //then
+        result.andExpect(status().isOk)
+            .andDo(
+                resultHandler.document(
+                    requestFields(
+                        fieldWithPath("refreshToken").description("로그아웃을 위한 refreshToken"),
+                    )
+                )
+            )
+    }
+
 }

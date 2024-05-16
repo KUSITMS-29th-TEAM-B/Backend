@@ -1,7 +1,7 @@
 package com.bamyanggang.apimodule.domain.user.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
-import com.bamyanggang.apimodule.domain.user.application.dto.ProfileImageResponse
+import com.bamyanggang.apimodule.domain.user.application.dto.ProfileImage
 import com.bamyanggang.apimodule.domain.user.application.dto.Register
 import com.bamyanggang.apimodule.domain.user.application.dto.UserInfo
 import com.bamyanggang.apimodule.domain.user.application.service.ProfileImageGetService
@@ -69,7 +69,7 @@ class UserControllerTest : BaseRestDocsTest(){
         @DisplayName("기본 프로필 이미지 url을 가져온다.")
         fun getProfileImages() {
             //given
-            val profileImageResponse: ProfileImageResponse = generateFixture()
+            val profileImageResponse: ProfileImage.Response = generateFixture()
             given(profileImageGetService.getProfileImages()).willReturn(profileImageResponse)
             val request = RestDocumentationRequestBuilders.get(UserApi.PROFILE_IMG)
             //when
