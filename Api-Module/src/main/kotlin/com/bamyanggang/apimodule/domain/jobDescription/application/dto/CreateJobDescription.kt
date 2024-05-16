@@ -1,6 +1,7 @@
 package com.bamyanggang.apimodule.domain.jobDescription.application.dto
 
 import java.time.LocalDateTime
+import java.util.UUID
 
 class CreateJobDescription {
 
@@ -11,6 +12,10 @@ class CreateJobDescription {
         val link: String,
         val startedAt: LocalDateTime,
         val endedAt: LocalDateTime
+    )
+
+    data class Response(
+        val jobDescriptionId: UUID
     )
 
 }

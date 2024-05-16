@@ -18,8 +18,8 @@ class JobDescriptionAppender(
         startedAt: LocalDateTime,
         endedAt: LocalDateTime,
         userId: UUID
-    ) {
-        JobDescription.create(
+    ): JobDescription {
+        return JobDescription.create(
             enterpriseName = enterpriseName,
             title = title,
             content = content,

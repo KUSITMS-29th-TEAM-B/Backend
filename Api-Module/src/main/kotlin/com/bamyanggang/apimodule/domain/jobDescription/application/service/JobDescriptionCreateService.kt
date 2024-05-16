@@ -12,17 +12,17 @@ class JobDescriptionCreateService(
 ) {
 
     @Transactional
-    fun createJobDescription(request: CreateJobDescription.Request) {
-        getAuthenticationPrincipal().also {
-                jobDescriptionAppender.appendJobDescription(
+    fun createJobDescription(request: CreateJobDescription.Request): CreateJobDescription.Response {
+        getAuthenticationPrincipal().run {
+            jobDescriptionAppender.appendJobDescription(
                 enterpriseName = request.enterpriseName,
                 title = request.title,
                 content = request.content,
                 link = request.link,
                 startedAt = request.startedAt,
                 endedAt = request.endedAt,
-                userId = it
+                userId = this
             )
-        }
+        }.also { return CreateJobDescription.Response(jobDescriptionId = it.id) }
     }
 }
