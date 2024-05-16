@@ -7,4 +7,5 @@ interface TagRepository {
     fun save(newTag : Tag): UUID
     fun findAllParentTagsByUserId(userId: UUID): List<Tag>
     fun findAllChildTagsByUserId(userId: UUID, parentId: UUID): List<Tag>
+    fun deleteByTagId(tagId: UUID)
 }

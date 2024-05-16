@@ -17,7 +17,6 @@ public class TagRepositoryImpl implements TagRepository {
     private final TagMapper tagMapper;
     private final TagJpaRepository tagJpaRepository;
 
-
     @Override
     @Transactional
     public UUID save(Tag newTag) {
@@ -39,5 +38,10 @@ public class TagRepositoryImpl implements TagRepository {
     public List<Tag> findAllChildTagsByUserId(UUID userId, UUID parentTagId) {
         List<TagJpaEntity> childTagJpaEntities = tagJpaRepository.findAllByUserIdAndParentTagId(userId, parentTagId);
         return childTagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
+    }
+
+    @Override
+    public void deleteByTagId(UUID tagId) {
+        tagJpaRepository.deleteById(tagId);
     }
 }
