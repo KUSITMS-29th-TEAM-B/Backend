@@ -16,6 +16,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDateTime
+import java.util.UUID
 
 @WebMvcTest(JobDescriptionController::class)
 @Import(ExceptionHandler::class)
@@ -36,9 +37,13 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("startedAt", LocalDateTime.now())
             it.set("endedAt", LocalDateTime.now())
         }
+        val createJobDescriptionResponse: CreateJobDescription.Response = generateFixture {
+            it.set("jobDescriptionId", UUID.randomUUID())
+        }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.BASE_URL)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createJobDescriptionRequest))
+        given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willReturn(createJobDescriptionResponse)
         //when
         val result = mockMvc.perform(request)
         //then
@@ -52,6 +57,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("link").description("직무 공고 링크"),
                         fieldWithPath("startedAt").description("직무 공고 시작일"),
                         fieldWithPath("endedAt").description("직무 공고 종료일")
+                    ),
+                    responseFields(
+                        fieldWithPath("jobDescriptionId").description("직무 공고 ID")
                     )
                 )
             )
