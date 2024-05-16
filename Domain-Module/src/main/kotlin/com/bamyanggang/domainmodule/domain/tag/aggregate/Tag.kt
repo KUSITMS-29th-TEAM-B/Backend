@@ -10,12 +10,15 @@ data class Tag(
     val parentTagId: UUID?,
     val userId: UUID
 ) : DomainEntity{
+
+    fun isDuplicatedName(name: String): Boolean = this.name == name
+
     companion object {
-        fun create(name: String, parentTagId: UUID, userId: UUID): Tag {
+        fun create(name: String, parentTagId: UUID?, userId: UUID): Tag {
             return Tag(UuidCreator.create(), name, parentTagId, userId)
         }
 
-        fun toDomain(id : UUID, name: String, parentTagId: UUID, userId: UUID): Tag {
+        fun toDomain(id : UUID, name: String, parentTagId: UUID?, userId: UUID): Tag {
             return Tag(id, name, parentTagId, userId)
         }
     }
