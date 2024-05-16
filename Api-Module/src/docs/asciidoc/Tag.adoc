@@ -1,0 +1,12 @@
+[[Tag-API]]
+== Tag-API
+
+[[CreateParentTag]]
+=== 상위 태그 등록 API
+
+operation::TagControllerTest/createParentTag/[snippets='http-request,request-fields,http-response,response-fields']
+
+[[CreateChildTag]]
+=== 하위 태그 등록 API
+
+operation::TagControllerTest/createChildTag/[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
