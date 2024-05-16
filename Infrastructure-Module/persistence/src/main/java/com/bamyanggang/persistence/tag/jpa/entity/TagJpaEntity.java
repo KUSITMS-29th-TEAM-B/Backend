@@ -1,4 +1,4 @@
-package com.bamyanggang.persistence.experience.jpa.entity;
+package com.bamyanggang.persistence.tag.jpa.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class TagJpaEntity {
     @Id
     @Column(name = "tag_id")
-    private UUID id;
+    private UUID tagId;
 
     private String name;
 

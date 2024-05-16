@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class ExperienceContentJpaEntity {
     @Id
     @Column(name = "experience_content_id")
-    private UUID id;
+    private UUID experienceContentId;
 
     @Column(columnDefinition = "TEXT")
     private String question;

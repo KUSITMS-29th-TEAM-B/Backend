@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.experience.aggregate
+package com.bamyanggang.domainmodule.domain.tag.aggregate
 
 import com.bamyanggang.domainmodule.common.entity.DomainEntity
 import com.example.uuid.UuidCreator
