@@ -18,6 +18,7 @@ class TagCreateService(
         return getAuthenticationPrincipal()
             .also {
                 val userChildTags = tagReader.readAllChildTagsByUserId(it, parentTagId)
+                validateTagCountLimit(userChildTags.size)
                 validateDuplicatedName(userChildTags, request.name)
             }.let {
                 val newChildTagId = tagAppender.appendChildTag(request.name, parentTagId, it)
@@ -29,6 +30,7 @@ class TagCreateService(
         return getAuthenticationPrincipal()
             .also {
                 val userParentTags = tagReader.readAllParentTagsByUserId(it)
+                validateTagCountLimit(userParentTags.size)
                 validateDuplicatedName(userParentTags, request.name)
             }.let {
                 val newParentTagId = tagAppender.appendParentTag(request.name, it)
@@ -41,6 +43,13 @@ class TagCreateService(
             if (it.isDuplicatedName(name)) {
                 throw TagException.DuplicatedTagName()
             }
+        }
+    }
+
+    private fun validateTagCountLimit(size: Int) {
+        val limit = 10
+        if (size > limit) {
+            throw TagException.OverTagCountLimit()
         }
     }
 }

@@ -13,6 +13,9 @@ sealed class TagException(
     class DuplicatedTagName(message: String = "태그 이름이 중복됩니다.") :
         TagException(errorCode = 1, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
 
+    class OverTagCountLimit(message: String = "태그 개수가 제한 개수보다 많습니다.") :
+        TagException(errorCode = 2, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
+
     companion object {
         const val CODE_PREFIX = "TAG"
     }
