@@ -14,6 +14,6 @@ sealed class TagException(
         TagException(errorCode = 1, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
 
     companion object {
-        const val CODE_PREFIX = "Tag"
+        const val CODE_PREFIX = "TAG"
     }
 }

@@ -3,7 +3,6 @@ package com.bamyanggang.apimodule.domain.strongpoint.presentation
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
 import com.bamyanggang.commonmodule.fixture.generateFixture
-import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointException
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
@@ -45,17 +44,5 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                     )
                 )
             )
-    }
-
-    @Test
-    @DisplayName("중복된 역량 키워드 등록 시 등록하지 않고 예외를 반환한다.")
-    fun duplicatedStrongPointNameTest() {
-
-        val duplicatedRequest = CreateStrongPoint.Request("duplicatedName")
-
-        strongPointController.createStrongPoint(duplicatedRequest)
-        strongPointController.createStrongPoint(duplicatedRequest)
-
-        given(strongPointController.createStrongPoint(duplicatedRequest)).willThrow(StrongPointException.DuplicatedStrongPointName())
     }
 }

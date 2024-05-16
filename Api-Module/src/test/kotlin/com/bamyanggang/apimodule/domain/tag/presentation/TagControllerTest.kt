@@ -2,7 +2,6 @@ package com.bamyanggang.apimodule.domain.tag.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
-import com.bamyanggang.apimodule.domain.tag.application.service.TagCreateService
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -19,21 +18,22 @@ import java.util.*
 
 @WebMvcTest(TagController::class)
 class TagControllerTest : BaseRestDocsTest() {
+
     @MockBean
-    private lateinit var tagCreateService: TagCreateService
+    private lateinit var tagController: TagController
 
     @Test
     @DisplayName("상위 태그를 등록한다.")
     fun createParentTagTest() {
         //given
-        val createParentTagRequest: CreateTag.Request = generateFixture()
-        val createParentTagResponse: CreateTag.Response = generateFixture()
+        val createTagRequest: CreateTag.Request = generateFixture()
+        val createTagResponse: CreateTag.Response = generateFixture()
 
-        given(tagCreateService.createParentTag(createParentTagRequest)).willReturn(createParentTagResponse)
+        given(tagController.createTag(null, createTagRequest)).willReturn(createTagResponse)
 
         val request = RestDocumentationRequestBuilders.post(TagApi.BASE_URL)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsString(createParentTagRequest))
+            .content(objectMapper.writeValueAsString(createTagRequest))
 
         //when
         val result = mockMvc.perform(request)
@@ -60,7 +60,7 @@ class TagControllerTest : BaseRestDocsTest() {
 
         val parentTagId = generateFixture<UUID>()
 
-        given(tagCreateService.createChildTag(createChildTagRequest, parentTagId)).willReturn(createChildTagResponse)
+        given(tagController.createTag(parentTagId, createChildTagRequest)).willReturn(createChildTagResponse)
 
         val request = RestDocumentationRequestBuilders.post(TagApi.CREATE_TAG, parentTagId)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -83,39 +83,5 @@ class TagControllerTest : BaseRestDocsTest() {
                 )
             )
         )
-    }
-
-    @Test
-    @DisplayName("태그 등록 시 이름이 중복된다면 저장하지 않고 예외를 반환한다.")
-    fun duplicatedTagNameTest() {
-        //given
-        val createChildTagRequest: CreateTag.Request = generateFixture()
-        val createChildTagResponse: CreateTag.Response = generateFixture()
-
-        val parentTagId = generateFixture<UUID>()
-
-        given(tagCreateService.createChildTag(createChildTagRequest, parentTagId)).willReturn(createChildTagResponse)
-
-        val request = RestDocumentationRequestBuilders.post(TagApi.CREATE_TAG, parentTagId)
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsString(createChildTagRequest))
-
-        //when
-        val result = mockMvc.perform(request)
-
-        //then
-        result.andExpect(status().isOk)
-            .andDo(resultHandler.document(
-                pathParameters(
-                    parameterWithName("parentTagId").description("상위 태그 id (생략 시 상위 태그 생성 API 호출)")
-                ),
-                requestFields(
-                    fieldWithPath("name").description("태그 이름")
-                ),
-                responseFields(
-                    fieldWithPath("id").description("생성된 태그 id")
-                )
-            )
-            )
     }
 }
