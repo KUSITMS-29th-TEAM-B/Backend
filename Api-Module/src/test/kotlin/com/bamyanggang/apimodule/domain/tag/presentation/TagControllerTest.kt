@@ -35,7 +35,7 @@ class TagControllerTest : BaseRestDocsTest() {
         val createTagRequest: CreateTag.Request = generateFixture()
         val createTagResponse: CreateTag.Response = generateFixture()
 
-        given(tagController.createTag(null, createTagRequest)).willReturn(createTagResponse)
+        given(tagController.createParentTag(createTagRequest)).willReturn(createTagResponse)
 
         val request = RestDocumentationRequestBuilders.post(TagApi.BASE_URL)
             .header("Authorization", "Bearer Access Token")
@@ -70,7 +70,7 @@ class TagControllerTest : BaseRestDocsTest() {
 
         val parentTagId = generateFixture<UUID>()
 
-        given(tagController.createTag(parentTagId, createChildTagRequest)).willReturn(createChildTagResponse)
+        given(tagController.createChildTag(createChildTagRequest, parentTagId, )).willReturn(createChildTagResponse)
 
         val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
             .header("Authorization", "Bearer Access Token")
@@ -106,7 +106,7 @@ class TagControllerTest : BaseRestDocsTest() {
         val createParentTagRequest: CreateTag.Request = generateFixture()
 
 
-        given(tagController.createTag(null, createParentTagRequest)).willThrow(TagException.DuplicatedTagName())
+        given(tagController.createParentTag(createParentTagRequest)).willThrow(TagException.DuplicatedTagName())
 
         val request = RestDocumentationRequestBuilders.post(TagApi.BASE_URL)
             .header("Authorization", "Bearer Access Token")
@@ -140,8 +140,7 @@ class TagControllerTest : BaseRestDocsTest() {
         val createChildTagRequest: CreateTag.Request = generateFixture()
         val parentTagId: UUID  = generateFixture()
 
-
-        given(tagController.createTag(parentTagId, createChildTagRequest)).willThrow(TagException.DuplicatedTagName())
+        given(tagController.createChildTag(createChildTagRequest, parentTagId)).willThrow(TagException.DuplicatedTagName())
 
         val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
             .header("Authorization", "Bearer Access Token")
@@ -178,9 +177,8 @@ class TagControllerTest : BaseRestDocsTest() {
         val createChildTagRequest: CreateTag.Request = generateFixture()
         val parentTagId: UUID  = generateFixture()
 
-
-        given(tagController.createTag(parentTagId, createChildTagRequest)).willThrow(TagException.OverTagCountLimit())
-        given(tagController.createTag(null, createChildTagRequest)).willThrow(TagException.OverTagCountLimit())
+        given(tagController.createChildTag(createChildTagRequest, parentTagId)).willThrow(TagException.OverTagCountLimit())
+        given(tagController.createParentTag(createChildTagRequest)).willThrow(TagException.OverTagCountLimit())
 
         val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
             .header("Authorization", "Bearer Access Token")
