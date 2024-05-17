@@ -1,7 +1,9 @@
 package com.bamyanggang.persistence.user.jpa.entity;
 
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider;
+import com.bamyanggang.persistence.common.UUIDBinaryConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,6 +25,7 @@ import lombok.NoArgsConstructor;
 public class UserJpaEntity {
     @Id
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID userId;
 
     private String socialId;
