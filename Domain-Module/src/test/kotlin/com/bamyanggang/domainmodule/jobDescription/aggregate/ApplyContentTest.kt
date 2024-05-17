@@ -14,7 +14,7 @@ class ApplyContentTest : FunSpec({
         // arrange
         val question: String = generateBasicTypeFixture(10)
         val answer: String = generateBasicTypeFixture(10)
-        val applyId: UUID = generateFixture()
+        val applyId: UUID = UUID.randomUUID()
 
         // act
         val applyContent = ApplyContent.create(
@@ -32,7 +32,7 @@ class ApplyContentTest : FunSpec({
         // arrange
         val question: String = ""
         val answer: String = ""
-        val applyId: UUID = generateFixture()
+        val applyId: UUID = UUID.randomUUID()
 
         // act, assert
         shouldThrow<IllegalArgumentException> {
