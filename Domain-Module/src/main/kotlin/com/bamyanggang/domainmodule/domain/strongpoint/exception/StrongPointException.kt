@@ -18,7 +18,7 @@ sealed class StrongPointException(
         StrongPointException(errorCode = 2, httpStatusCode = HttpStatus.NOT_FOUND, message = message)
 
     class OverCountLimit (message: String = "역량 키워드는 최대 ${StrongPoint.LIMIT}개까지 등록 가능합니다.") :
-    StrongPointException(errorCode = 3, httpStatusCode = HttpStatus.NOT_FOUND, message = message)
+    StrongPointException(errorCode = 3, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
 
     companion object {
         const val CODE_PREFIX = "STRONG_POINT"

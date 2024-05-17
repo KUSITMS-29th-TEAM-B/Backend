@@ -91,6 +91,37 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     }
 
     @Test
+    @DisplayName("역량 키워드 개수 제한보다 더 많은 키워드 등록 시도 시 예외를 반환한다.")
+    fun overCountLimitTest(){
+        val overCountLimitRequest: CreateStrongPoint.Request = generateFixture()
+
+        given(strongPointController.createStrongPoint(overCountLimitRequest)).willThrow(StrongPointException.OverCountLimit())
+
+        val request = RestDocumentationRequestBuilders.post(StrongPointApi.BASE_URL)
+            .header("Authorization", "Bearer AccessToken")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(overCountLimitRequest))
+
+        val result = mockMvc.perform(request)
+
+        result.andExpect(status().isBadRequest)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                requestFields(
+                    fieldWithPath("name").description("역량 키워드 이름"),
+                ),
+                responseFields(
+                    fieldWithPath("code").description(StrongPointException.OverCountLimit().code),
+                    fieldWithPath("message").description(StrongPointException.OverCountLimit().message),
+                )
+            )
+        )
+    }
+
+
+    @Test
     @DisplayName("역량 키워드를 삭제한다.")
     fun deleteStrongPointTest() {
         val strongPointId: UUID = generateFixture()
