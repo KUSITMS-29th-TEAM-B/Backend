@@ -38,6 +38,7 @@ class TagControllerTest : BaseRestDocsTest() {
         given(tagController.createTag(null, createTagRequest)).willReturn(createTagResponse)
 
         val request = RestDocumentationRequestBuilders.post(TagApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createTagRequest))
 
@@ -47,6 +48,9 @@ class TagControllerTest : BaseRestDocsTest() {
         //then
         result.andExpect(status().isOk)
             .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
                 requestFields(
                     fieldWithPath("name").description("태그 이름")
                 ),
@@ -69,6 +73,7 @@ class TagControllerTest : BaseRestDocsTest() {
         given(tagController.createTag(parentTagId, createChildTagRequest)).willReturn(createChildTagResponse)
 
         val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
+            .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createChildTagRequest))
 
@@ -78,6 +83,9 @@ class TagControllerTest : BaseRestDocsTest() {
         //then
         result.andExpect(status().isOk)
             .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
                 pathParameters(
                     parameterWithName("tagId").description("상위 태그 id (생략 시 상위 태그 생성 API 호출)")
                 ),
@@ -97,11 +105,13 @@ class TagControllerTest : BaseRestDocsTest() {
         //given
         val createParentTagRequest: CreateTag.Request = generateFixture()
 
-        val request = RestDocumentationRequestBuilders.post(TagApi.BASE_URL)
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsString(createParentTagRequest))
 
         given(tagController.createTag(null, createParentTagRequest)).willThrow(TagException.DuplicatedTagName())
+
+        val request = RestDocumentationRequestBuilders.post(TagApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(createParentTagRequest))
 
         //when
         val result = mockMvc.perform(request)
@@ -109,6 +119,9 @@ class TagControllerTest : BaseRestDocsTest() {
         //then
         result.andExpect(status().isBadRequest)
             .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
                 requestFields(
                     fieldWithPath("name").description("태그 이름")
                 ),
@@ -127,11 +140,13 @@ class TagControllerTest : BaseRestDocsTest() {
         val createChildTagRequest: CreateTag.Request = generateFixture()
         val parentTagId: UUID  = generateFixture()
 
-        val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsString(createChildTagRequest))
 
         given(tagController.createTag(parentTagId, createChildTagRequest)).willThrow(TagException.DuplicatedTagName())
+
+        val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(createChildTagRequest))
 
         //when
         val result = mockMvc.perform(request)
@@ -139,6 +154,9 @@ class TagControllerTest : BaseRestDocsTest() {
         //then
         result.andExpect(status().isBadRequest)
             .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
                 pathParameters(
                     parameterWithName("tagId").description("상위 태그 id (생략 시 상위 태그 생성 API 호출)")
                 ),
@@ -160,12 +178,14 @@ class TagControllerTest : BaseRestDocsTest() {
         val createChildTagRequest: CreateTag.Request = generateFixture()
         val parentTagId: UUID  = generateFixture()
 
-        val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsString(createChildTagRequest))
 
         given(tagController.createTag(parentTagId, createChildTagRequest)).willThrow(TagException.OverTagCountLimit())
         given(tagController.createTag(null, createChildTagRequest)).willThrow(TagException.OverTagCountLimit())
+
+        val request = RestDocumentationRequestBuilders.post(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(createChildTagRequest))
 
         //when
         val result = mockMvc.perform(request)
@@ -173,6 +193,9 @@ class TagControllerTest : BaseRestDocsTest() {
         //then
         result.andExpect(status().isBadRequest)
             .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
                 pathParameters(
                     parameterWithName("tagId").description("상위 태그 id (생략 시 상위 태그 생성 API 호출)")
                 ),
@@ -194,6 +217,7 @@ class TagControllerTest : BaseRestDocsTest() {
         val deleteTagId = generateFixture<UUID>()
 
         val request = RestDocumentationRequestBuilders.delete(TagApi.TAG_PATH_VARIABLE_URL, deleteTagId)
+            .header("Authorization", "Bearer Access Token")
 
         //when
         val result = mockMvc.perform(request)
@@ -201,6 +225,9 @@ class TagControllerTest : BaseRestDocsTest() {
         //then
         result.andExpect(status().isOk)
             .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
                 pathParameters(
                     parameterWithName("tagId").description("태그 id(상위, 하위 둘 다 가능)")
                 ),
