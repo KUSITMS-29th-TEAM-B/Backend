@@ -16,6 +16,22 @@ operation::JobDescriptionControllerTest/createJobDescriptionWithEmptyValue[snipp
 
 operation::JobDescriptionControllerTest/createJobDescriptionWithInvalidDate[snippets='http-request,http-response']
 
+[[CREATE-APPLY]]
+=== JD 자소서 등록
+
+operation::JobDescriptionControllerTest/createApply[snippets='http-request,request-fields,http-response']
+
+[[CREATE-APPLY-EXCEPTION]]
+==== JD 자소서 등록 시 예외 (제목이 비어있는 경우)
+
+operation::JobDescriptionControllerTest/createApplyWithEmptyTitle[snippets='http-request,http-response']
+
+[[CREATE-APPLY-EXCEPTION-2]]
+==== JD 자소서 등록 시 예외 (내용이 비어있는 경우)
+
+operation::JobDescriptionControllerTest/createApplyWithEmptyContent[snippets='http-request,http-response']
+]
+
 
 
 
