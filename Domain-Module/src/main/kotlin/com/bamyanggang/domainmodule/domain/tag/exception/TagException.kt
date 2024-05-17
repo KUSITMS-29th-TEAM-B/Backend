@@ -16,6 +16,9 @@ sealed class TagException(
     class OverTagCountLimit(message: String = "태그 개수가 제한 개수보다 많습니다.") :
         TagException(errorCode = 2, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
 
+    class NotFoundTag(message: String = "존재하지 않는 태그 입니다.") :
+        TagException(errorCode = 3, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
+
     companion object {
         const val CODE_PREFIX = "TAG"
     }

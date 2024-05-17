@@ -44,4 +44,9 @@ public class TagRepositoryImpl implements TagRepository {
     public void deleteByTagId(UUID tagId) {
         tagJpaRepository.deleteById(tagId);
     }
+
+    @Override
+    public boolean isExistById(UUID tagId) {
+        return tagJpaRepository.existsById(tagId);
+    }
 }
