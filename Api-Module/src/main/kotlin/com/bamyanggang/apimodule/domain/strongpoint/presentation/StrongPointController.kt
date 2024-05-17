@@ -1,5 +1,6 @@
 package com.bamyanggang.apimodule.domain.strongpoint.presentation
 
+import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
 import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoint
 import com.bamyanggang.apimodule.domain.strongpoint.application.service.StrongPointCreateService
@@ -21,7 +22,8 @@ class StrongPointController(
 
     @PostMapping(StrongPointApi.BASE_URL)
     fun createStrongPoint(@RequestBody request: CreateStrongPoint.Request): CreateStrongPoint.Response {
-        return strongPointCreateService.createStrongPoint(request)
+        val currentUserId = getAuthenticationPrincipal()
+        return strongPointCreateService.createStrongPoint(request, currentUserId)
     }
 
     @DeleteMapping(StrongPointApi.STRONG_POINT_PATH_VARIABLE_URL)

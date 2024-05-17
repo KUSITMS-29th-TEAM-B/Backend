@@ -10,7 +10,7 @@ sealed class StrongPointException(
     message: String,
 ) : CustomException(CODE_PREFIX, errorCode, httpStatusCode , message) {
 
-    class DuplicatedStrongPointName(message: String = "역량 키워드 이름이 중복됩니다.") :
+    class DuplicatedName(message: String = "역량 키워드 이름이 중복됩니다.") :
         StrongPointException(errorCode = 1, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
 
     class NotFoundStrongPoint(message: String = "존재하지 않는 역량 키워드 입니다.") :
