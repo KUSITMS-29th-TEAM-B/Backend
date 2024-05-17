@@ -29,4 +29,5 @@ class JobDescriptionAppender(
             userId = userId
         ).also { jobDescriptionRepository.save(it) }
     }
+
 }

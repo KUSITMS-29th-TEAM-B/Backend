@@ -26,4 +26,5 @@ class JobDescriptionController(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
         @RequestBody request: CreateApply.Request
     ) = applyCreateService.createApply(request, jobDescriptionId)
+
 }

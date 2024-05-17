@@ -19,4 +19,5 @@ public class JobDescriptionRepositoryImpl implements JobDescriptionRepository {
         JobDescriptionJpaEntity jobDescriptionJpaEntity = jobDescriptionMapper.toJpaEntity(jobDescription);
         jobDescriptionJpaRepository.save(jobDescriptionJpaEntity);
     }
+
 }
