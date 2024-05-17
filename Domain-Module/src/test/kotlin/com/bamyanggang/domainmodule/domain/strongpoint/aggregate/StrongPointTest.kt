@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.strongpoint.aggregate
+package com.bamyanggang.domainmodule.domain.strongpoint.aggregate
 
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint
