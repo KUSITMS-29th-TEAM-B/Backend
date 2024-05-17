@@ -38,7 +38,7 @@ class AuthService(
                 tokenAppender.appendToken(it.id, refreshToken)
                 SocialLogin.Response.Success(accessToken, refreshToken)
             } ?: run {
-                val registrationToken = jwtProvider.generateRegistrationToken(Claims.RegistrationClaims(response.socialId))
+                val registrationToken = jwtProvider.generateRegistrationToken(Claims.RegistrationClaims(response.socialId, response.email))
                 SocialLogin.Response.UnRegistered(registrationToken, response.nickName)
             }
         }
