@@ -33,6 +33,8 @@ dependencies {
     implementation(project(":Infrastructure-Module:persistence"))
     implementation(project(":Support-Module:Jwt"))
     testImplementation(testFixtures(project(":Common-Module")))
+    implementation(project(":Support-Module:cache"))
+    implementation(project(":Support-Module:lock"))
 }
 
 

@@ -1,8 +1,5 @@
 package com.bamyanggang.jwt
 
-import com.bamyanggang.cache.CacheManager
-import com.bamyanggang.jwt.exception.JwtException
-import com.bamyanggang.lock.LockManager
 import io.jsonwebtoken.Jwts
 import org.springframework.stereotype.Component
 import java.util.*
@@ -11,8 +8,6 @@ import java.util.*
 class JwtProvider(
     private val jwtProperties: JwtProperties,
     private val jwtKeyGenerator: JwtKeyGenerator,
-    private val claimsExtractor: ClaimsExtractor,
-    private val jwtValidator: JwtValidator,
     private val jwtRegistry: JwtRegistry
 ) {
 
@@ -38,26 +33,6 @@ class JwtProvider(
             jwtProperties.registrationTokenExpirationTime
         )
     }
-
-    fun reissueToken(refreshToken: String): Pair<String, String> = LockManager.lockByKey(refreshToken) {
-        CacheManager.cacheByKey(refreshToken) {
-            if (jwtRegistry.isExists(refreshToken).not()) {
-                throw JwtException.TokenNotFoundException()
-            }
-            jwtValidator.validateToken(refreshToken, TokenType.REFRESH_TOKEN)
-            val userClaims: Claims.UserClaims = claimsExtractor.extractClaimsFromToken(
-                refreshToken, TokenType.REFRESH_TOKEN,
-                JwtConst.USER_CLAIMS, Claims.UserClaims::class.java
-            )
-            val accessToken = generateAccessToken(userClaims)
-            val newRefreshToken = generateRefreshToken(userClaims)
-
-            jwtRegistry.upsert(userClaims.userId to newRefreshToken)
-
-            return@cacheByKey Pair(accessToken, newRefreshToken)
-        }
-    }
-
 
     private fun generateToken(claims: PrivateClaims, expireTime: Long): String {
         val now = Date()
