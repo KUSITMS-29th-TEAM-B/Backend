@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 @Table(name = "user")
 public class UserJpaEntity {
@@ -34,6 +33,8 @@ public class UserJpaEntity {
 
     @Enumerated(value = EnumType.STRING)
     private SocialLoginProvider provider;
+
+    private String email;
 
     private String nickName;
 
@@ -51,11 +52,20 @@ public class UserJpaEntity {
 
     private LocalDateTime updatedAt;
 
-    public static UserJpaEntity of(UUID id, String socialId, String profileImgUrl, SocialLoginProvider provider, String nickName,
-                                     String jobSearchStatus, String desiredJob, String goal, String dream
-                                        , LocalDateTime createdAt, LocalDateTime updatedAt) {
-        return new UserJpaEntity(id, socialId, profileImgUrl, provider, nickName, jobSearchStatus,
-                desiredJob, goal, dream, createdAt, updatedAt);
+    public UserJpaEntity(UUID userId, String socialId, String profileImgUrl, SocialLoginProvider provider, String email,
+                         String nickName, String jobSearchStatus, String desiredJob, String goal, String dream, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.userId = userId;
+        this.socialId = socialId;
+        this.profileImgUrl = profileImgUrl;
+        this.provider = provider;
+        this.email = email;
+        this.nickName = nickName;
+        this.jobSearchStatus = jobSearchStatus;
+        this.desiredJob = desiredJob;
+        this.goal = goal;
+        this.dream = dream;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
 }

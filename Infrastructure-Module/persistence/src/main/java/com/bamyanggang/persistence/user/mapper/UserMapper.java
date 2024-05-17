@@ -10,11 +10,12 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
 
     public UserJpaEntity toJpaEntity(User user) {
-        return UserJpaEntity.of(
+        return new UserJpaEntity(
                 user.getId(),
                 user.getSocialId(),
                 user.getProfileImgUrl(),
                 user.getProvider(),
+                user.getEmail(),
                 user.getNickName(),
                 user.getJobSearchStatus(),
                 user.getDesiredJob(),
@@ -30,6 +31,7 @@ public class UserMapper {
                 userJpaEntity.getSocialId(),
                 userJpaEntity.getProfileImgUrl(),
                 userJpaEntity.getProvider(),
+                userJpaEntity.getEmail(),
                 userJpaEntity.getNickName(),
                 userJpaEntity.getJobSearchStatus(),
                 userJpaEntity.getDesiredJob(),
