@@ -1,6 +1,10 @@
 package com.bamyanggang.persistence.jobDescription.mapper;
 
+import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.Apply;
+import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.ApplyContent;
 import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.JobDescription;
+import com.bamyanggang.persistence.jobDescription.jpa.entity.ApplyContentJpaEntity;
+import com.bamyanggang.persistence.jobDescription.jpa.entity.ApplyJpaEntity;
 import com.bamyanggang.persistence.jobDescription.jpa.entity.JobDescriptionJpaEntity;
 import org.springframework.stereotype.Component;
 
@@ -37,4 +41,45 @@ public class JobDescriptionMapper {
                 jobDescriptionJpaEntity.getUserId()
         );
     }
+
+    public ApplyJpaEntity toApplyJpaEntity(Apply apply) {
+        return new ApplyJpaEntity(
+                apply.getId(),
+                apply.getTitle(),
+                apply.getWriteStatus(),
+                apply.getCreatedAt(),
+                apply.getUpdatedAt(),
+                apply.getJobDescriptionId()
+        );
+    }
+
+    public Apply toApplyDomainEntity(ApplyJpaEntity applyJpaEntity) {
+        return Apply.Companion.toDomain(
+                applyJpaEntity.getApplyId(),
+                applyJpaEntity.getTitle(),
+                applyJpaEntity.getWriteStatus(),
+                applyJpaEntity.getCreatedAt(),
+                applyJpaEntity.getUpdatedAt(),
+                applyJpaEntity.getJobDescriptionId()
+        );
+    }
+
+    public ApplyContentJpaEntity toApplyContentJpaEntity(ApplyContent applyContent) {
+        return new ApplyContentJpaEntity(
+                applyContent.getId(),
+                applyContent.getQuestion(),
+                applyContent.getAnswer(),
+                applyContent.getApplyId()
+        );
+    }
+
+    public ApplyContent toApplyContentDomainEntity(ApplyContentJpaEntity applyContentJpaEntity) {
+        return ApplyContent.Companion.toDomain(
+                applyContentJpaEntity.getApplyContentId(),
+                applyContentJpaEntity.getQuestion(),
+                applyContentJpaEntity.getAnswer(),
+                applyContentJpaEntity.getApplyId()
+        );
+    }
+
 }

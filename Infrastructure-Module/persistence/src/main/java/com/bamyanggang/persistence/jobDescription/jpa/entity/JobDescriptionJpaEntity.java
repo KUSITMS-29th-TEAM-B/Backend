@@ -1,6 +1,8 @@
 package com.bamyanggang.persistence.jobDescription.jpa.entity;
 
+import com.bamyanggang.persistence.common.UUIDBinaryConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -18,6 +20,7 @@ public class JobDescriptionJpaEntity {
 
     @Id
     @Column(name = "job_description_id", columnDefinition = "BINARY(16)")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID jobDescriptionId;
 
     private String enterpriseName;
@@ -38,6 +41,7 @@ public class JobDescriptionJpaEntity {
     private LocalDateTime endedAt;
 
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID userId;
 
 
