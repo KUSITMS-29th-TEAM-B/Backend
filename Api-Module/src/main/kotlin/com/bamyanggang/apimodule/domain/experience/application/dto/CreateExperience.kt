@@ -6,12 +6,12 @@ import java.util.*
 class CreateExperience {
     data class Request(
         val title: String,
+        val parentTagId: UUID,
+        val childTagId: UUID,
+        val strongPointIds: List<UUID>,
+        val contents: List<ExperienceContentRequest>,
         val startedAt: LocalDateTime,
         val endedAt: LocalDateTime,
-        val parentTag: UUID,
-        val childTag: UUID,
-        val strongPoints: List<UUID>,
-        val contents: List<ExperienceContentRequest>,
     )
 
     data class Response(val id: UUID)
