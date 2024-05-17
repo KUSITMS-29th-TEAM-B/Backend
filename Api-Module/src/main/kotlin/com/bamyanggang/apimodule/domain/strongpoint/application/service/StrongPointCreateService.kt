@@ -15,7 +15,7 @@ class StrongPointCreateService(
     fun createStrongPoint(request: CreateStrongPoint.Request): CreateStrongPoint.Response {
         return getAuthenticationPrincipal()
             .also {
-                strongPointReader.findAllByUserId(it).forEach { strongPoint ->
+                strongPointReader.readAllByUserId(it).forEach { strongPoint ->
                     if(strongPoint.isDuplicated(request.name))
                         throw StrongPointException.DuplicatedStrongPointName()
                 }
