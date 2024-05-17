@@ -1,6 +1,8 @@
 package com.bamyanggang.persistence.tag.jpa.entity;
 
+import com.bamyanggang.persistence.common.UUIDBinaryConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class TagJpaEntity {
     @Id
     @Column(name = "tag_id")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID tagId;
 
     private String name;

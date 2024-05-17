@@ -1,6 +1,8 @@
 package com.bamyanggang.persistence.experience.jpa.entity;
 
+import com.bamyanggang.persistence.common.UUIDBinaryConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class ExperienceTagJpaEntity {
     @Id
     @Column(name = "experience_tag_id")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceTagId;
 
     private UUID experienceId;

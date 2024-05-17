@@ -5,20 +5,20 @@ import com.bamyanggang.persistence.experience.jpa.entity.ExperienceContentJpaEnt
 import org.springframework.stereotype.Component;
 
 @Component
-class ExperienceContentMapper {
+public class ExperienceContentMapper {
     public ExperienceContentJpaEntity toJpaEntity(ExperienceContent experienceContent) {
         return ExperienceContentJpaEntity.of(
                 experienceContent.getId(),
                 experienceContent.getQuestion(),
-                experienceContent.getAnswer(),
-                experienceContent.getExperienceId());
+                experienceContent.getAnswer()
+        );
     }
 
     public ExperienceContent toDomainEntity(ExperienceContentJpaEntity experienceContentJpaEntity) {
         return ExperienceContent.Companion.toDomain(
                 experienceContentJpaEntity.getExperienceContentId(),
                 experienceContentJpaEntity.getQuestion(),
-                experienceContentJpaEntity.getAnswer(),
-                experienceContentJpaEntity.getExperienceId());
+                experienceContentJpaEntity.getAnswer()
+        );
     }
 }
