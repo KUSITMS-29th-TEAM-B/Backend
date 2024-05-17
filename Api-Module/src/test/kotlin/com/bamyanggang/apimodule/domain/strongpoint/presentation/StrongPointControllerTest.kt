@@ -65,7 +65,7 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     fun duplicatedStrongPointNameTest() {
         val duplicatedRequest = CreateStrongPoint.Request("duplicatedName")
 
-        given(strongPointController.createStrongPoint(duplicatedRequest)).willThrow(StrongPointException.DuplicatedStrongPointName())
+        given(strongPointController.createStrongPoint(duplicatedRequest)).willThrow(StrongPointException.DuplicatedName())
 
         val request = RestDocumentationRequestBuilders.post(StrongPointApi.BASE_URL)
             .header("Authorization", "Bearer AccessToken")
@@ -83,8 +83,8 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                     fieldWithPath("name").description("역량 키워드 이름"),
                 ),
                 responseFields(
-                    fieldWithPath("code").description(StrongPointException.DuplicatedStrongPointName().code),
-                    fieldWithPath("message").description(StrongPointException.DuplicatedStrongPointName().message),
+                    fieldWithPath("code").description(StrongPointException.DuplicatedName().code),
+                    fieldWithPath("message").description(StrongPointException.DuplicatedName().message),
                 )
             )
         )

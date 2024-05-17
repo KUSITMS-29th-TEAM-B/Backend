@@ -16,8 +16,8 @@ class StrongPointCreateService(
     fun createStrongPoint(request: CreateStrongPoint.Request, userId: UUID): CreateStrongPoint.Response {
         val userStrongPoints = strongPointReader.readAllByUserId(userId)
 
-        validateDuplicatedName(userStrongPoints, request)
         validateOverCountLimit(userStrongPoints)
+        validateDuplicatedName(userStrongPoints, request)
 
         val newStrongPointId = strongPointAppender.appendStrongPoint(request.name, userId)
 
@@ -25,7 +25,7 @@ class StrongPointCreateService(
     }
 
     private fun validateOverCountLimit(userStrongPoints: List<StrongPoint>) {
-        if (userStrongPoints.size > StrongPoint.LIMIT) {
+        if (userStrongPoints.size >= StrongPoint.LIMIT) {
             throw StrongPointException.OverCountLimit()
         }
     }
