@@ -16,7 +16,6 @@ data class JobDescription(
     val startedAt: LocalDateTime,
     val endedAt: LocalDateTime,
     val userId: UUID,
-    val applies: List<Apply> = emptyList()
     ) : AggregateRoot{
 
     init {
@@ -28,7 +27,6 @@ data class JobDescription(
     }
 
     companion object {
-
         fun create(
             enterpriseName: String,
             title: String,
@@ -77,4 +75,5 @@ data class JobDescription(
             )
         }
     }
+
 }
