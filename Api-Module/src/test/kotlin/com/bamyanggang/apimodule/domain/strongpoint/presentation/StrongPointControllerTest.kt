@@ -2,6 +2,7 @@ package com.bamyanggang.apimodule.domain.strongpoint.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
+import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointException
 import org.junit.jupiter.api.DisplayName
@@ -9,12 +10,19 @@ import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
+import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.util.*
 
 @WebMvcTest(StrongPointController::class)
+@Import(ExceptionHandler::class)
 class StrongPointControllerTest : BaseRestDocsTest() {
 
     @MockBean
@@ -29,6 +37,7 @@ class StrongPointControllerTest : BaseRestDocsTest() {
         given(strongPointController.createStrongPoint(createStrongPoint)).willReturn(createStrongPointResponse)
 
         val request = RestDocumentationRequestBuilders.post(StrongPointApi.BASE_URL)
+            .header("Authorization", "Bearer AccessToken")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createStrongPoint))
 
@@ -37,6 +46,9 @@ class StrongPointControllerTest : BaseRestDocsTest() {
         result.andExpect(status().isOk)
             .andDo(
                 resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
                     requestFields(
                         fieldWithPath("name").description("역량 키워드 이름"),
                     ),
@@ -50,12 +62,52 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("중복된 역량 키워드 등록 시 등록하지 않고 예외를 반환한다.")
     fun duplicatedStrongPointNameTest() {
-
         val duplicatedRequest = CreateStrongPoint.Request("duplicatedName")
 
-        strongPointController.createStrongPoint(duplicatedRequest)
-        strongPointController.createStrongPoint(duplicatedRequest)
-
         given(strongPointController.createStrongPoint(duplicatedRequest)).willThrow(StrongPointException.DuplicatedStrongPointName())
+
+        val request = RestDocumentationRequestBuilders.post(StrongPointApi.BASE_URL)
+            .header("Authorization", "Bearer AccessToken")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(duplicatedRequest))
+
+        val result = mockMvc.perform(request)
+
+        result.andExpect(status().isBadRequest)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                requestFields(
+                    fieldWithPath("name").description("역량 키워드 이름"),
+                ),
+                responseFields(
+                    fieldWithPath("code").description(StrongPointException.DuplicatedStrongPointName().code),
+                    fieldWithPath("message").description(StrongPointException.DuplicatedStrongPointName().message),
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("역량 키워드를 삭제한다.")
+    fun deleteStrongPointTest() {
+        val strongPointId: UUID = generateFixture()
+
+        val request = RestDocumentationRequestBuilders.delete(StrongPointApi.STRONG_POINT_PATH_VARIABLE_URL, strongPointId)
+            .header("Authorization", "Bearer AccessToken")
+
+        val result = mockMvc.perform(request)
+
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                  headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                pathParameters(
+                    parameterWithName("strongPointId").description("역량 키워드 id")
+                )
+            )
+        )
     }
 }
