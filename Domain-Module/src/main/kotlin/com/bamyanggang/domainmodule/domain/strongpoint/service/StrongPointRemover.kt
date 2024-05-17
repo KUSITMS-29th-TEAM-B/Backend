@@ -1,6 +1,6 @@
 package com.bamyanggang.domainmodule.domain.strongpoint.service
 
-import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointException
+import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointExceptionMessage
 import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRepository
 import org.springframework.stereotype.Service
 import java.util.*
@@ -11,7 +11,7 @@ class StrongPointRemover(
 ) {
     fun removeStrongPoint(strongPointId: UUID) {
         if (!strongPointRepository.isExistByStrongPointId(strongPointId)) {
-            throw StrongPointException.NotFoundStrongPoint()
+            throw IllegalArgumentException(StrongPointExceptionMessage.NOT_FOUND_STRONG_POINT.message)
         }
 
         strongPointRepository.deleteByStrongPointId(strongPointId)
