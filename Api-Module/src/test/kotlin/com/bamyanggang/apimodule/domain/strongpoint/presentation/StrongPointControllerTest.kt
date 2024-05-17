@@ -6,12 +6,14 @@ import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoi
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointException
+import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointExceptionMessage
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Import
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
@@ -61,11 +63,46 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     }
 
     @Test
+    @DisplayName("역량 키워드 등록 시 역량 키워드 이름이 비어있다면 예외를 반환한다.")
+    fun createStrongPointNameEmptyTest() {
+        val createStrongPoint: CreateStrongPoint.Request = generateFixture {
+            it.set("name", "")
+        }
+
+        given(strongPointController.createStrongPoint(createStrongPoint)).willThrow(IllegalArgumentException(
+            StrongPointExceptionMessage.NAME_NOT_EMPTY.message))
+
+        val request = RestDocumentationRequestBuilders.post(StrongPointApi.BASE_URL)
+            .header("Authorization", "Bearer AccessToken")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(createStrongPoint))
+
+        val result = mockMvc.perform(request)
+
+        result.andExpect(status().isBadRequest)
+            .andDo(
+                resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
+                    requestFields(
+                        fieldWithPath("name").description("역량 키워드 이름"),
+                    ),
+                    responseFields(
+                        fieldWithPath("code").description(HttpStatus.BAD_REQUEST),
+                        fieldWithPath("message").description(StrongPointExceptionMessage.NAME_NOT_EMPTY.message),
+                    )
+                )
+            )
+    }
+
+    @Test
     @DisplayName("중복된 역량 키워드 등록 시 등록하지 않고 예외를 반환한다.")
     fun duplicatedStrongPointNameTest() {
         val duplicatedRequest = CreateStrongPoint.Request("duplicatedName")
 
-        given(strongPointController.createStrongPoint(duplicatedRequest)).willThrow(StrongPointException.DuplicatedName())
+        given(strongPointController.createStrongPoint(duplicatedRequest)).willThrow(
+            IllegalArgumentException(StrongPointExceptionMessage.DUPLICATED_NAME.message))
 
         val request = RestDocumentationRequestBuilders.post(StrongPointApi.BASE_URL)
             .header("Authorization", "Bearer AccessToken")
@@ -83,8 +120,8 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                     fieldWithPath("name").description("역량 키워드 이름"),
                 ),
                 responseFields(
-                    fieldWithPath("code").description(StrongPointException.DuplicatedName().code),
-                    fieldWithPath("message").description(StrongPointException.DuplicatedName().message),
+                    fieldWithPath("code").description(HttpStatus.BAD_REQUEST),
+                    fieldWithPath("message").description(StrongPointExceptionMessage.DUPLICATED_NAME.message),
                 )
             )
         )
@@ -148,7 +185,8 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     fun deleteNotFoundStrongPointTest() {
         val notExistStrongPointId: UUID = generateFixture()
 
-        given(strongPointController.deleteStrongPoint(notExistStrongPointId)).willThrow(StrongPointException.NotFoundStrongPoint())
+        given(strongPointController.deleteStrongPoint(notExistStrongPointId)).willThrow(
+            IllegalArgumentException(StrongPointExceptionMessage.NOT_FOUND_STRONG_POINT.message))
 
         val request = RestDocumentationRequestBuilders.delete(StrongPointApi.STRONG_POINT_PATH_VARIABLE_URL, notExistStrongPointId)
             .header("Authorization", "Bearer AccessToken")
@@ -164,8 +202,8 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                     parameterWithName("strongPointId").description("역량 키워드 id")
                 ),
                 responseFields(
-                    fieldWithPath("code").description(StrongPointException.NotFoundStrongPoint().code),
-                    fieldWithPath("message").description(StrongPointException.NotFoundStrongPoint().message)
+                    fieldWithPath("code").description(HttpStatus.NOT_FOUND),
+                    fieldWithPath("message").description(StrongPointExceptionMessage.NOT_FOUND_STRONG_POINT.message)
                 )
             )
         )

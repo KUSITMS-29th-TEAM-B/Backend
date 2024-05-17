@@ -14,11 +14,9 @@ import io.mockk.every
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.security.test.context.support.WithMockUser
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
-@WithMockUser
 class StrongPointCreateServiceTest: DescribeSpec({
     describe("역량 키워드 저장 Service 테스트") {
         val strongPointReader: StrongPointReader = mockk(relaxed = true)
@@ -44,7 +42,7 @@ class StrongPointCreateServiceTest: DescribeSpec({
 
                 every { strongPointReader.readAllByUserId(userId) }.returnsMany(currentStrongPoints)
 
-                shouldThrow<StrongPointException.DuplicatedName> {
+                shouldThrow<IllegalArgumentException> {
                     strongPointCreateService.createStrongPoint(request, userId)
                 }
             }
@@ -57,7 +55,6 @@ class StrongPointCreateServiceTest: DescribeSpec({
                 every { strongPointReader.readAllByUserId(userId) } answers {
                     Array(StrongPoint.LIMIT) { StrongPoint.create("역량 키워드 $it", userId) }.toList()
                 }
-
                 shouldThrow<StrongPointException.OverCountLimit> {
                     strongPointCreateService.createStrongPoint(request, userId)
                 }
