@@ -77,6 +77,8 @@ class UserControllerTest : BaseRestDocsTest(){
                         responseFields(
                             fieldWithPath("nickName").description("닉네임"),
                             fieldWithPath("profileImgUrl").description("프로필 이미지 URL"),
+                            fieldWithPath("provider").description("소셜 로그인 플랫폼(GOOGLE, KAKAO)"),
+                            fieldWithPath("email").description("이메일"),
                             fieldWithPath("jobSearchStatus").description("구직 상태"),
                             fieldWithPath("desiredJob").description("희망 직무"),
                             fieldWithPath("goal").description("목표"),

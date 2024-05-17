@@ -20,13 +20,17 @@ class UserCreateService(
     @Transactional
     fun createUser(request: Register.Request): Register.Response.Success {
         jwtValidator.validateToken(request.registrationToken, TokenType.REGISTRATION_TOKEN)
-        val socialId = claimsExtractor.extractClaimsFromToken(request.registrationToken, TokenType.REGISTRATION_TOKEN
-        , JwtConst.REGISTRATION_CLAIMS, Claims.RegistrationClaims::class.java).socialId
+        val claims = claimsExtractor.extractClaimsFromToken(request.registrationToken, TokenType.REGISTRATION_TOKEN
+            , JwtConst.REGISTRATION_CLAIMS, Claims.RegistrationClaims::class.java)
+
+        val socialId = claims.socialId
+        val email = claims.email
 
         val user: User = userAppender.appendUser(
                 socialId = socialId,
                 profileImgUrl = request.profileImgUrl,
                 provider = request.provider,
+                email = email,
                 nickName = request.nickName,
                 jobSearchStatus = request.jobSearchStatus,
                 desiredJob = request.desiredJob,
