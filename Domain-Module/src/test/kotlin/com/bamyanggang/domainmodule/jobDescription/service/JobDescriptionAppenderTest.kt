@@ -22,7 +22,7 @@ class JobDescriptionAppenderTest : BehaviorSpec({
         val link : String = generateBasicTypeFixture(10)
         val startedAt: LocalDateTime = LocalDateTime.now()
         val endedAt: LocalDateTime = startedAt.plusDays(1)
-        val userId : UUID = generateFixture()
+        val userId : UUID = UUID.randomUUID()
 
         `when`("appendJobDescription이 호출되면") {
             jobDescriptionAppender.appendJobDescription(
