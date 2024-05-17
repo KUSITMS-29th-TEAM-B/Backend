@@ -4,33 +4,33 @@
 [[CREATE-JD]]
 === JD 등록
 
-operation::JobDescriptionControllerTest/createJobDescription[snippets='http-request,request-fields,http-response,response-fields']
+operation::JobDescriptionControllerTest/createJobDescription[snippets='http-request,request-headers,request-fields,http-response,response-fields']
 
 [[CREATE-JD-EXCEPTION]]
 ==== JD 등록 시 예외 (빈 값, 또는 NULL이 들어올 경우)
 
-operation::JobDescriptionControllerTest/createJobDescriptionWithEmptyValue[snippets='http-request,http-response']
+operation::JobDescriptionControllerTest/createJobDescriptionWithEmptyValue[snippets='http-request,request-headers,http-response']
 
 [[CREATE-JD-EXCEPTION-2]]
 ==== JD 등록 시 예외 (시작일이 종료일보다 늦을 경우)
 
-operation::JobDescriptionControllerTest/createJobDescriptionWithInvalidDate[snippets='http-request,http-response']
+operation::JobDescriptionControllerTest/createJobDescriptionWithInvalidDate[snippets='http-request,request-headers,http-response']
 
 [[CREATE-APPLY]]
 === JD 자소서 등록
 
-operation::JobDescriptionControllerTest/createApply[snippets='http-request,request-fields,http-response']
+operation::JobDescriptionControllerTest/createApply[snippets='http-request,request-headers,request-fields,http-response']
 
 [[CREATE-APPLY-EXCEPTION]]
 ==== JD 자소서 등록 시 예외 (제목이 비어있는 경우)
 
-operation::JobDescriptionControllerTest/createApplyWithEmptyTitle[snippets='http-request,http-response']
+operation::JobDescriptionControllerTest/createApplyWithEmptyTitle[snippets='http-request,request-headers,http-response']
 
 [[CREATE-APPLY-EXCEPTION-2]]
 ==== JD 자소서 등록 시 예외 (내용이 비어있는 경우)
 
-operation::JobDescriptionControllerTest/createApplyWithEmptyContent[snippets='http-request,http-response']
-]
+operation::JobDescriptionControllerTest/createApplyWithEmptyContent[snippets='http-request,request-headers,http-response']
+
 
 
 

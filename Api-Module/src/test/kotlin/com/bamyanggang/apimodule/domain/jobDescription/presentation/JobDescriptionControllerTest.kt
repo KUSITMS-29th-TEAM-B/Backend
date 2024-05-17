@@ -15,6 +15,8 @@ import org.springframework.http.MediaType
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Import
+import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -46,6 +48,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("jobDescriptionId", UUID.randomUUID())
         }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createJobDescriptionRequest))
         given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willReturn(createJobDescriptionResponse)
@@ -55,6 +58,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         result.andExpect(status().isOk)
             .andDo(
                 resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
                     requestFields(
                         fieldWithPath("enterpriseName").description("기업 이름"),
                         fieldWithPath("title").description("직무 공고 제목"),
@@ -83,6 +89,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("endedAt", LocalDateTime.now())
         }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createJobDescriptionRequest))
         given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willThrow(IllegalArgumentException("내용은 필수입니다."))
@@ -94,6 +101,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         result.andExpect(status().isBadRequest)
             .andDo(
                 resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
                     responseFields(
                         fieldWithPath("code").description("에러 코드"),
                         fieldWithPath("message").description("에러 메시지")
@@ -115,6 +125,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("endedAt", LocalDateTime.now().minusDays(1))
         }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createJobDescriptionRequest))
         given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willThrow(IllegalArgumentException("시작일은 종료일보다 빨라야 합니다."))
@@ -126,6 +137,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         result.andExpect(status().isBadRequest)
             .andDo(
                 resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
                     responseFields(
                         fieldWithPath("code").description("에러 코드"),
                         fieldWithPath("message").description("에러 메시지")
@@ -148,6 +162,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("contents", listOf(createApplyContentRequest))
         }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.APPLY, jobDescriptionId)
+            .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createApplyRequest))
         //when
@@ -156,6 +171,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         result.andExpect(status().isOk)
             .andDo(
                 resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
                     requestFields(
                         fieldWithPath("title").description("제목"),
                         fieldWithPath("contents").description("내용"),
@@ -180,6 +198,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("contents", listOf(createApplyContentRequest))
         }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.APPLY, jobDescriptionId)
+            .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createApplyRequest))
         given(applyCreateService.createApply(createApplyRequest, jobDescriptionId)).willThrow(IllegalArgumentException("제목은 필수입니다."))
@@ -191,6 +210,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         result.andExpect(status().isBadRequest)
             .andDo(
                 resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
                     responseFields(
                         fieldWithPath("code").description("에러 코드"),
                         fieldWithPath("message").description("에러 메시지")
@@ -213,6 +235,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("contents", listOf(createApplyContentRequest))
         }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.APPLY, jobDescriptionId)
+            .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createApplyRequest))
         given(applyCreateService.createApply(createApplyRequest, jobDescriptionId)).willThrow(IllegalArgumentException("답변은 필수입니다."))
@@ -224,6 +247,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         result.andExpect(status().isBadRequest)
             .andDo(
                 resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
                     responseFields(
                         fieldWithPath("code").description("에러 코드"),
                         fieldWithPath("message").description("에러 메시지")
