@@ -110,4 +110,32 @@ class StrongPointControllerTest : BaseRestDocsTest() {
             )
         )
     }
+
+    @Test
+    @DisplayName("존재하지 않는 역량 키워드 삭제 시도 시 예외를 반환한다.")
+    fun deleteNotFoundStrongPointTest() {
+        val notExistStrongPointId: UUID = generateFixture()
+
+        given(strongPointController.deleteStrongPoint(notExistStrongPointId)).willThrow(StrongPointException.NotFoundStrongPoint())
+
+        val request = RestDocumentationRequestBuilders.delete(StrongPointApi.STRONG_POINT_PATH_VARIABLE_URL, notExistStrongPointId)
+            .header("Authorization", "Bearer AccessToken")
+
+        val result = mockMvc.perform(request)
+
+        result.andExpect(status().isNotFound)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                pathParameters(
+                    parameterWithName("strongPointId").description("역량 키워드 id")
+                ),
+                responseFields(
+                    fieldWithPath("code").description(StrongPointException.NotFoundStrongPoint().code),
+                    fieldWithPath("message").description(StrongPointException.NotFoundStrongPoint().message)
+                )
+            )
+        )
+    }
 }
