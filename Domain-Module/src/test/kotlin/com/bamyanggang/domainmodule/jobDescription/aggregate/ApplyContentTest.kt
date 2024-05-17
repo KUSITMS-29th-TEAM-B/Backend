@@ -1,5 +1,6 @@
 package com.bamyanggang.domainmodule.jobDescription.aggregate
 
+import com.bamyanggang.commonmodule.fixture.generateBasicTypeFixture
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.ApplyContent
 import io.kotest.assertions.throwables.shouldThrow
@@ -11,8 +12,8 @@ class ApplyContentTest : FunSpec({
 
     test("ApplyContent 생성") {
         // arrange
-        val question: String = generateFixture()
-        val answer: String = generateFixture()
+        val question: String = generateBasicTypeFixture(10)
+        val answer: String = generateBasicTypeFixture(10)
         val applyId: UUID = generateFixture()
 
         // act

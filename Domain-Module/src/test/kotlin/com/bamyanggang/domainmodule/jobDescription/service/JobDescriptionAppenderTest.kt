@@ -1,5 +1,6 @@
 package com.bamyanggang.domainmodule.jobDescription.service
 
+import com.bamyanggang.commonmodule.fixture.generateBasicTypeFixture
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.JobDescriptionRepository
 import com.bamyanggang.domainmodule.domain.jobDescription.service.JobDescriptionAppender
@@ -15,12 +16,12 @@ class JobDescriptionAppenderTest : BehaviorSpec({
     val jobDescriptionAppender = JobDescriptionAppender(mockJobDescriptionRepository)
 
     given("JobDescriptionAppender.appendJobDescription") {
-        val enterpriseName : String = generateFixture()
-        val title : String = generateFixture()
-        val content : String = generateFixture()
-        val link : String = generateFixture()
-        val startedAt : LocalDateTime = generateFixture()
-        val endedAt : LocalDateTime = generateFixture()
+        val enterpriseName : String = generateBasicTypeFixture(10)
+        val title : String = generateBasicTypeFixture(10)
+        val content : String = generateBasicTypeFixture(10)
+        val link : String = generateBasicTypeFixture(10)
+        val startedAt: LocalDateTime = LocalDateTime.now()
+        val endedAt: LocalDateTime = startedAt.plusDays(1)
         val userId : UUID = generateFixture()
 
         `when`("appendJobDescription이 호출되면") {
