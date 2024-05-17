@@ -9,7 +9,7 @@ operation::UserControllerTest/register[snippets='http-request,request-fields,htt
 [[GetProfileImageUrl]]
 === 기본 제공 프로필 이미지 URL 조회 API
 
-operation::UserControllerTest/getProfileImages[snippets='http-request,snippets='http-response,response-fields']
+operation::UserControllerTest/getProfileImages[snippets='http-request,http-response,response-fields']
 
 [[GetUserInfo]]
 === 사용자 정보 조회 API
