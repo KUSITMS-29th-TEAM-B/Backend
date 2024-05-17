@@ -19,14 +19,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "tag")
 public class TagJpaEntity {
     @Id
-    @Column(name = "tag_id", columnDefinition = "BINARY(16)")
-    @Convert(converter = UUIDBinaryConverter.class)
+    @Column(name = "tag_id")
     private UUID tagId;
 
     private String name;
 
+    @Column(name = "parent_tag_id", columnDefinition = "BINARY(16)")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID parentTagId;
 
+    @Column(name = "user_id")
     private UUID userId;
 
     public static TagJpaEntity of(UUID id, String name, UUID parentTagId, UUID userId) {

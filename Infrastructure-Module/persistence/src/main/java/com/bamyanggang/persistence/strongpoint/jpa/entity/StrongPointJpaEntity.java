@@ -25,6 +25,8 @@ public class StrongPointJpaEntity {
 
     private String name;
 
+    @Column(name = "user_id")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID userId;
 
     public static StrongPointJpaEntity of(UUID id, String name, UUID userId) {
