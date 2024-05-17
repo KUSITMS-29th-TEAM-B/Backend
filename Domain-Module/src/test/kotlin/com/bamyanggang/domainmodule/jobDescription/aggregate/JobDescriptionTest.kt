@@ -19,7 +19,7 @@ class JobDescriptionTest : FunSpec({
         val link: String = generateBasicTypeFixture(10)
         val startedAt: LocalDateTime = LocalDateTime.now()
         val endedAt: LocalDateTime = startedAt.plusDays(1)
-        val userId : UUID = generateFixture()
+        val userId : UUID = UUID.randomUUID()
         // act
         val jobDescription = JobDescription.create(
             enterpriseName = enterpriseName,
@@ -49,7 +49,7 @@ class JobDescriptionTest : FunSpec({
         val link: String = ""
         val startedAt: LocalDateTime = generateFixture()
         val endedAt: LocalDateTime = generateFixture()
-        val userId : UUID = generateFixture()
+        val userId : UUID = UUID.randomUUID()
 
         // act, assert
         shouldThrow<IllegalArgumentException> {
@@ -74,7 +74,7 @@ class JobDescriptionTest : FunSpec({
         val link: String = generateBasicTypeFixture(10)
         val startedAt: LocalDateTime = LocalDateTime.now()
         val endedAt: LocalDateTime = startedAt.minusDays(1)
-        val userId : UUID = generateFixture()
+        val userId : UUID = UUID.randomUUID()
 
         // act, assert
         shouldThrow<IllegalArgumentException> {
