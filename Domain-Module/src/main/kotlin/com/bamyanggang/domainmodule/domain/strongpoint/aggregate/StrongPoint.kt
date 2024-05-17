@@ -13,6 +13,8 @@ data class StrongPoint(
     fun isDuplicated(name: String) : Boolean = this.name == name
 
     companion object {
+        const val LIMIT = 10
+
         fun create(name: String, userId: UUID?): StrongPoint {
             return StrongPoint(UuidCreator.create(), name, userId)
         }
