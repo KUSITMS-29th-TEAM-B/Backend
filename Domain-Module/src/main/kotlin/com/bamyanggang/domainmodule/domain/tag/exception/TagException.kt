@@ -17,7 +17,7 @@ sealed class TagException(
         TagException(errorCode = 2, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
 
     class NotFoundTag(message: String = "존재하지 않는 태그 입니다.") :
-        TagException(errorCode = 3, httpStatusCode = HttpStatus.BAD_REQUEST, message = message)
+        TagException(errorCode = 3, httpStatusCode = HttpStatus.NOT_FOUND, message = message)
 
     companion object {
         const val CODE_PREFIX = "TAG"

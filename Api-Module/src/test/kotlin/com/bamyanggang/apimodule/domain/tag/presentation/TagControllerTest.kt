@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
+import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
@@ -202,6 +204,37 @@ class TagControllerTest : BaseRestDocsTest() {
                 pathParameters(
                     parameterWithName("tagId").description("태그 id(상위, 하위 둘 다 가능)")
                 ),
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 태그를 삭제 시도할 경우 예외를 반환한다.")
+    fun deleteNotFoundTagTest() {
+        //given
+        val notFoundTagId = generateFixture<UUID>()
+
+        given(tagController.deleteTag(notFoundTagId)).willThrow(TagException.NotFoundTag())
+
+        val request = RestDocumentationRequestBuilders.delete(TagApi.TAG_PATH_VARIABLE_URL, notFoundTagId)
+            .header("Authorization", "Bearer Access Token")
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isNotFound)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                pathParameters(
+                    parameterWithName("tagId").description("태그 id(상위, 하위 둘 다 가능)")
+                ),
+                responseFields(
+                    fieldWithPath("code").description(TagException.NotFoundTag().code),
+                    fieldWithPath("message").description(TagException.NotFoundTag().message)
+                )
             )
         )
     }
