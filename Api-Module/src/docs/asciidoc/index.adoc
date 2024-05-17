@@ -9,5 +9,7 @@
 include::Auth.adoc[]
 include::User.adoc[]
 include::StrongPoint.adoc[]
+include::Tag.adoc[]
+include::JobDescription.adoc[]
 
 

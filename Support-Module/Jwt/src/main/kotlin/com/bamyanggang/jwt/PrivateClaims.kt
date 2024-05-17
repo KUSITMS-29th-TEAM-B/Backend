@@ -26,7 +26,11 @@ sealed interface Claims {
     data class RegistrationClaims(
         @param:JsonProperty("social_id")
         @get:JsonProperty("social_id")
-        val socialId: String
+        val socialId: String,
+
+        @param:JsonProperty("email")
+        @get:JsonProperty("email")
+        val email: String
     ) : Claims {
         override fun createPrivateClaims(tokenType: TokenType) = PrivateClaims(this, tokenType)
         override fun convertToClaims(): Map<String, Any> = mapOf(

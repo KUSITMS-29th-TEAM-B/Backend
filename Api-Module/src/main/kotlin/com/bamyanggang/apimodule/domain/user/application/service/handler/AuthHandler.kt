@@ -13,6 +13,7 @@ interface AuthHandler {
 
     data class Response(
         val socialId: String,
-        val nickName: String
+        val nickName: String,
+        val email: String
     )
 }

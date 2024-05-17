@@ -13,6 +13,6 @@ class GoogleOAuthHandler(
     override val provider: SocialLoginProvider = SocialLoginProvider.GOOGLE
     override fun handle(request: AuthHandler.Request): AuthHandler.Response {
         val googleUserInfo = googleOAuthClient.retrieveUserInfo(request.accessToken)?: throw AuthException.GoogleUserInfoRetrievalException()
-        return AuthHandler.Response(googleUserInfo.id, googleUserInfo.name)
+        return AuthHandler.Response(googleUserInfo.id, googleUserInfo.name, "email")
     }
 }

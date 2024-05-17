@@ -1,0 +1,27 @@
+[[Tag-API]]
+== Tag-API
+
+[[CreateParentTagTest]]
+=== 상위 태그 등록 API
+
+operation::TagControllerTest/createParentTagTest/[snippets='http-request,request-fields,http-response,response-fields']
+
+[[CreateChildTagTest]]
+=== 하위 태그 등록 API
+
+operation::TagControllerTest/createChildTagTest/[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+
+[[duplicatedParentTagTest]]
+=== 상위 태그 이름 중복 예외
+
+operation::TagControllerTest/duplicatedParentTagTest/[snippets='http-request,request-fields,http-response,response-fields']
+
+[[duplicatedChildTagTest]]
+=== 하위 태그 이름 중복 예외
+
+operation::TagControllerTest/duplicatedChildTagTest/[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+
+[[overTagCountLimitTest]]
+=== 태그 개수 제한 이상 등록 요청 예외
+
+operation::TagControllerTest/overTagCountLimitTest/[snippets='http-request,path-parameters,request-fields,http-response,response-fields']

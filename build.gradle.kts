@@ -64,7 +64,6 @@ subprojects {
         // fixture testing tool
         testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter-kotlin:1.0.14")
         testFixturesImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter-kotlin:1.0.14")
-        testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
 
         // mvc
         testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -72,6 +71,7 @@ subprojects {
 
         // mockk
         testImplementation("io.mockk:mockk:${mockkVersion}")
+        testFixturesImplementation("io.mockk:mockk:${mockkVersion}")
 
         //kotest
         testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")  // Test Framework

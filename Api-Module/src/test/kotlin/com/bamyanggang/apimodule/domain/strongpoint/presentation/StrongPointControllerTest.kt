@@ -61,7 +61,7 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                 )
             )
     }
-
+    
     @Test
     @DisplayName("역량 키워드 등록 시 역량 키워드 이름이 비어있다면 예외를 반환한다.")
     fun createStrongPointNameEmptyTest() {
@@ -156,7 +156,6 @@ class StrongPointControllerTest : BaseRestDocsTest() {
             )
         )
     }
-
 
     @Test
     @DisplayName("역량 키워드를 삭제한다.")

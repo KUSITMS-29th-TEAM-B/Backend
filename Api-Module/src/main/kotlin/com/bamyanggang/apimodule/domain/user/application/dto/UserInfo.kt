@@ -1,5 +1,7 @@
 package com.bamyanggang.apimodule.domain.user.application.dto
 
+import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
+
 class UserInfo {
 
     sealed class Request {
@@ -18,6 +20,8 @@ class UserInfo {
         data class Success(
             val nickName: String,
             val profileImgUrl: String,
+            val provider: SocialLoginProvider,
+            val email: String,
             val jobSearchStatus: String?,
             val desiredJob: String?,
             val goal: String?,

@@ -1,9 +1,7 @@
 package com.bamyanggang.apimodule.domain.user.presentation
 
-import com.bamyanggang.apimodule.domain.user.application.dto.ProfileImage
 import com.bamyanggang.apimodule.domain.user.application.dto.Register
 import com.bamyanggang.apimodule.domain.user.application.dto.UserInfo
-import com.bamyanggang.apimodule.domain.user.application.service.ProfileImageGetService
 import com.bamyanggang.apimodule.domain.user.application.service.UserCreateService
 import com.bamyanggang.apimodule.domain.user.application.service.UserInfoGetService
 import com.bamyanggang.apimodule.domain.user.application.service.UserInfoUpdateService
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class UserController(
     private val userCreateService: UserCreateService,
-    private val profileImageGetService: ProfileImageGetService,
     private val userInfoGetService: UserInfoGetService,
     private val userInfoUpdateService: UserInfoUpdateService
 ) {
@@ -25,10 +22,6 @@ class UserController(
     fun register(
         @RequestBody request: Register.Request
     ): Register.Response = userCreateService.createUser(request)
-
-    @GetMapping(UserApi.PROFILE_IMG)
-    fun getProfileImage(): ProfileImage.Response = profileImageGetService.getProfileImages()
-
     @GetMapping(UserApi.USER_INFO)
     fun getUserInfo(): UserInfo.Response.Success = userInfoGetService.getUserInfo()
 
