@@ -21,11 +21,11 @@ data class Experience(
 
     companion object {
         fun create(
+            title: String,
             userId: UUID,
             parentTagId: UUID,
             childTagId: UUID,
             strongPointIds: List<UUID>,
-            title: String,
             contentIds: List<UUID> = emptyList(),
             startedAt: LocalDateTime,
             endedAt: LocalDateTime,

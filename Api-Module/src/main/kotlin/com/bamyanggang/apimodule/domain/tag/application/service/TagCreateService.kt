@@ -7,6 +7,7 @@ import com.bamyanggang.domainmodule.domain.tag.exception.TagException
 import com.bamyanggang.domainmodule.domain.tag.service.TagAppender
 import com.bamyanggang.domainmodule.domain.tag.service.TagReader
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
@@ -14,6 +15,7 @@ class TagCreateService(
     private val tagAppender: TagAppender,
     private val tagReader: TagReader,
 ) {
+    @Transactional
     fun createChildTag(request: CreateTag.Request, parentTagId: UUID): CreateTag.Response {
         return getAuthenticationPrincipal()
             .also {
@@ -26,6 +28,7 @@ class TagCreateService(
             }
     }
 
+    @Transactional
     fun createParentTag(request: CreateTag.Request): CreateTag.Response {
         return getAuthenticationPrincipal()
             .also {

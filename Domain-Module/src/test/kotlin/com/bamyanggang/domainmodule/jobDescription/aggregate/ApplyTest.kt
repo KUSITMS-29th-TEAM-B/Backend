@@ -9,7 +9,8 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import java.util.*
 
-class ApplyTest : FunSpec({
+class
+ApplyTest : FunSpec({
     test("Apply.create 생성") {
         val title: String = generateBasicTypeFixture(10)
         val jobDescriptionId: UUID = generateFixture()

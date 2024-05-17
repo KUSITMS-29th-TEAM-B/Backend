@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tag")
 public class TagJpaEntity {
     @Id
-    @Column(name = "tag_id")
+    @Column(name = "tag_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID tagId;
 

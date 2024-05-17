@@ -7,12 +7,14 @@ import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointExce
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointAppender
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointReader
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class StrongPointCreateService(
     val strongPointAppender: StrongPointAppender,
     val strongPointReader: StrongPointReader,
 ) {
+    @Transactional
     fun createStrongPoint(request: CreateStrongPoint.Request): CreateStrongPoint.Response {
         return getAuthenticationPrincipal()
             .also {
