@@ -23,8 +23,8 @@ class TagCreateService(
                 validateTagCountLimit(userChildTags.size)
                 validateDuplicatedName(userChildTags, request.name)
             }.let {
-                val newChildTagId = tagAppender.appendChildTag(request.name, parentTagId, it)
-                CreateTag.Response(newChildTagId)
+                val newChildTag = tagAppender.appendChildTag(request.name, parentTagId, it)
+                CreateTag.Response(newChildTag.id)
             }
     }
 
@@ -36,8 +36,8 @@ class TagCreateService(
                 validateTagCountLimit(userParentTags.size)
                 validateDuplicatedName(userParentTags, request.name)
             }.let {
-                val newParentTagId = tagAppender.appendParentTag(request.name, it)
-                CreateTag.Response(newParentTagId)
+                val newParentTag = tagAppender.appendParentTag(request.name, it)
+                CreateTag.Response(newParentTag.id)
             }
     }
 

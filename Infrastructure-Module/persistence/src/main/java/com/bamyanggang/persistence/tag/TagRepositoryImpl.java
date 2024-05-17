@@ -17,11 +17,9 @@ public class TagRepositoryImpl implements TagRepository {
     private final TagJpaRepository tagJpaRepository;
 
     @Override
-    public UUID save(Tag newTag) {
+    public void save(Tag newTag) {
         TagJpaEntity newTagJpaEntity = tagMapper.toJpaEntity(newTag);
         tagJpaRepository.save(newTagJpaEntity);
-
-        return newTagJpaEntity.getTagId();
     }
 
     @Override
