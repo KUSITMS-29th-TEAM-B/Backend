@@ -26,9 +26,7 @@ public class ExperienceContentJpaEntity {
     @Column(columnDefinition = "TEXT")
     private String answer;
 
-    private UUID experienceId;
-
-    public static ExperienceContentJpaEntity of(UUID id, String question, String answer, UUID experienceId) {
-        return new ExperienceContentJpaEntity(id, question, answer, experienceId);
+    public static ExperienceContentJpaEntity of(UUID id, String question, String answer) {
+        return new ExperienceContentJpaEntity(id, question, answer);
     }
 }
