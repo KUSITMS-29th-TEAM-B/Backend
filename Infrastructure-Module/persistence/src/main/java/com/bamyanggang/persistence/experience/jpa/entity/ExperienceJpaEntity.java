@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class ExperienceJpaEntity{
     @Id
     @Column(name = "experience_id")
-    private UUID id;
+    private UUID experienceId;
 
     private String title;
 

@@ -1,5 +1,6 @@
 package com.bamyanggang.persistence.experience.jpa.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -11,7 +12,8 @@ import lombok.Getter;
 @Table(name = "experience_strong_point")
 public class ExperienceStrongPointJpaEntity {
     @Id
-    private UUID id;
+    @Column(name = "experience_strong_point_id")
+    private UUID experienceStrongPointId;
 
     private UUID experienceId;
 
