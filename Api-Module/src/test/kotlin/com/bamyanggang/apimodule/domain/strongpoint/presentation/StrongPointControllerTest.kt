@@ -2,6 +2,7 @@ package com.bamyanggang.apimodule.domain.strongpoint.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
+import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoint
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointException
@@ -134,6 +135,37 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                 responseFields(
                     fieldWithPath("code").description(StrongPointException.NotFoundStrongPoint().code),
                     fieldWithPath("message").description(StrongPointException.NotFoundStrongPoint().message)
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("유저가 등록한 역량 키워드를 전체 조회한다.")
+    fun getALlStrongPointTest() {
+
+        val strongPointInfo1 = GetStrongPoint.StrongPointInfo(generateFixture<UUID>(), "역량 키워드 1")
+        val strongPointInfo2 = GetStrongPoint.StrongPointInfo(generateFixture<UUID>(), "역량 키워드 2")
+
+        val strongPointInfos = arrayListOf(strongPointInfo1, strongPointInfo2)
+        val getStrongPointResponse = GetStrongPoint.Response(strongPointInfos.size, strongPointInfos)
+
+        given(strongPointController.getAllStrongPoints()).willReturn(getStrongPointResponse)
+
+        val request = RestDocumentationRequestBuilders.get(StrongPointApi.BASE_URL)
+            .header("Authorization", "Bearer AccessToken")
+
+        val result = mockMvc.perform(request)
+
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                responseFields(
+                    fieldWithPath("count").description("역량 키워드 개수"),
+                    fieldWithPath("strongPoints[].id").description("역량 키워드 id"),
+                    fieldWithPath("strongPoints[].name").description("역량 키워드 이름"),
                 )
             )
         )

@@ -14,7 +14,7 @@ class StrongPointGetService(
             val strongPointInfos = strongPointReader.readAllByUserId(it).map { strongPoint ->
                 GetStrongPoint.StrongPointInfo(strongPoint.id, strongPoint.name)
             }
-            
+
             GetStrongPoint.Response(strongPointInfos.size, strongPointInfos)
         }
     }
