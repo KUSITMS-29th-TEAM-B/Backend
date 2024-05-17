@@ -1,6 +1,6 @@
 package com.bamyanggang.persistence.strongpoint;
 
-import com.bamyanggang.domainmodule.domain.experience.repository.StrongPointRepository;
+import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRepository;
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint;
 import com.bamyanggang.persistence.strongpoint.jpa.entity.StrongPointJpaEntity;
 import com.bamyanggang.persistence.strongpoint.jpa.repository.StrongPointJpaRepository;
@@ -18,10 +18,10 @@ public class StrongPointRepositoryImpl implements StrongPointRepository {
 
     @Override
     public UUID save(StrongPoint strongPoint) {
-        StrongPointJpaEntity strongPointJpaEntity = strongPointMapper.toJpaEntity(strongPoint);
-        strongPointJpaRepository.save(strongPointJpaEntity);
+        StrongPointJpaEntity newStrongPointJpaEntity = strongPointMapper.toJpaEntity(strongPoint);
+        strongPointJpaRepository.save(newStrongPointJpaEntity);
 
-        return strongPointJpaEntity.getStrongPointId();
+        return newStrongPointJpaEntity.getStrongPointId();
     }
 
     @Override

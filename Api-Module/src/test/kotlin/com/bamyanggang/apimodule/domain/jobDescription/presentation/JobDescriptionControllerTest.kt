@@ -47,11 +47,13 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         val createJobDescriptionResponse: CreateJobDescription.Response = generateFixture {
             it.set("jobDescriptionId", UUID.randomUUID())
         }
+
+        given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willReturn(createJobDescriptionResponse)
+
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.BASE_URL)
             .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createJobDescriptionRequest))
-        given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willReturn(createJobDescriptionResponse)
         //when
         val result = mockMvc.perform(request)
         //then
@@ -88,11 +90,13 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("startedAt", LocalDateTime.now())
             it.set("endedAt", LocalDateTime.now())
         }
+
+        given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willThrow(IllegalArgumentException("내용은 필수입니다."))
+
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.BASE_URL)
             .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createJobDescriptionRequest))
-        given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willThrow(IllegalArgumentException("내용은 필수입니다."))
 
         //when
         val result = mockMvc.perform(request)
@@ -124,11 +128,13 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("startedAt", LocalDateTime.now())
             it.set("endedAt", LocalDateTime.now().minusDays(1))
         }
+
+        given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willThrow(IllegalArgumentException("시작일은 종료일보다 빨라야 합니다."))
+
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.BASE_URL)
             .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createJobDescriptionRequest))
-        given(jobDescriptionCreateService.createJobDescription(createJobDescriptionRequest)).willThrow(IllegalArgumentException("시작일은 종료일보다 빨라야 합니다."))
 
         //when
         val result = mockMvc.perform(request)
@@ -197,11 +203,13 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("title", "")
             it.set("contents", listOf(createApplyContentRequest))
         }
+
+        given(applyCreateService.createApply(createApplyRequest, jobDescriptionId)).willThrow(IllegalArgumentException("제목은 필수입니다."))
+
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.APPLY, jobDescriptionId)
             .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(createApplyRequest))
-        given(applyCreateService.createApply(createApplyRequest, jobDescriptionId)).willThrow(IllegalArgumentException("제목은 필수입니다."))
 
         //when
         val result = mockMvc.perform(request)
