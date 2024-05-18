@@ -21,8 +21,8 @@ class StrongPointCreateService(
                 val userStrongPoints = strongPointReader.readAllByUserId(it)
                 validateDuplicatedStrongPointName(userStrongPoints, request.name)
             }.let {
-                val newStrongPointId = strongPointAppender.appendStrongPoint(request.name, it)
-                CreateStrongPoint.Response(newStrongPointId)
+                val newStrongPoint = strongPointAppender.appendStrongPoint(request.name, it)
+                CreateStrongPoint.Response(newStrongPoint.id)
             }
     }
 
