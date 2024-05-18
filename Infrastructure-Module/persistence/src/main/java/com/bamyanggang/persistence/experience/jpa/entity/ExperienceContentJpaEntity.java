@@ -28,6 +28,7 @@ public class ExperienceContentJpaEntity {
     private String answer;
 
     @Column(name = "experience_id", columnDefinition = "BINARY(16)")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceId;
 
     public ExperienceContentJpaEntity(UUID id, String question, String answer, UUID experienceId) {
