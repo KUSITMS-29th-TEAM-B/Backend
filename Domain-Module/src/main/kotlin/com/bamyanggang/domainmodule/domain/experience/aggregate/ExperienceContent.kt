@@ -12,7 +12,7 @@ data class ExperienceContent(
 
     companion object {
         fun create(question: String, answer: String): ExperienceContent {
-            return ExperienceContent(UuidCreator.create(), question, answer)
+            return ExperienceContent(question = question, answer = answer)
         }
 
         fun toDomain(id: UUID, question: String, answer: String): ExperienceContent {

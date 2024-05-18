@@ -34,7 +34,6 @@ data class Experience(
             endedAt: LocalDateTime,
         ): Experience {
             return Experience(
-                id = UuidCreator.create(),
                 userId = userId,
                 parentTagId = parentTagId,
                 childTagId = childTagId,
