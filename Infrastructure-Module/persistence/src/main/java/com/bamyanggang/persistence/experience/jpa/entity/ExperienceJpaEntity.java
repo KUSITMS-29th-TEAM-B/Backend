@@ -35,6 +35,8 @@ public class ExperienceJpaEntity{
 
     @Column(name = "child_tag_tid", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
+
+
     private UUID childTagId;
 
     @ElementCollection(fetch = FetchType.EAGER)
