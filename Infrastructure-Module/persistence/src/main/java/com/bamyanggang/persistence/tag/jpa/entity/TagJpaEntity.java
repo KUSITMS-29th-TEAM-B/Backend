@@ -1,8 +1,6 @@
 package com.bamyanggang.persistence.tag.jpa.entity;
 
-import com.bamyanggang.persistence.common.UUIDBinaryConverter;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -19,16 +17,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "tag")
 public class TagJpaEntity {
     @Id
-    @Column(name = "tag_id")
+    @Column(name = "tag_id", columnDefinition = "BINARY(16)")
     private UUID tagId;
 
     private String name;
 
     @Column(name = "parent_tag_id", columnDefinition = "BINARY(16)")
-    @Convert(converter = UUIDBinaryConverter.class)
     private UUID parentTagId;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", columnDefinition = "BINARY(16)")
     private UUID userId;
 
     public static TagJpaEntity of(UUID id, String name, UUID parentTagId, UUID userId) {

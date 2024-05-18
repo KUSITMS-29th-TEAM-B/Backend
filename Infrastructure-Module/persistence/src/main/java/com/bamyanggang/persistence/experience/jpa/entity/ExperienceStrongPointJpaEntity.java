@@ -14,7 +14,7 @@ import lombok.Getter;
 @Table(name = "experience_strong_point")
 public class ExperienceStrongPointJpaEntity {
     @Id
-    @Column(name = "experience_strong_point_id")
+    @Column(name = "experience_strong_point_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceStrongPointId;
 

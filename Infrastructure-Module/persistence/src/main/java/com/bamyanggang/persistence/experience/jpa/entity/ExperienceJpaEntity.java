@@ -20,9 +20,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "experience")
 public class ExperienceJpaEntity{
     @Id
-    @Column(name = "experience_id")
+    @Column(name = "experience_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
-
     private UUID experienceId;
 
     private String title;

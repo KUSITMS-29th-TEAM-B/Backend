@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "strong_point")
 public class StrongPointJpaEntity {
     @Id
-    @Column(name = "strong_point_id")
+    @Column(name = "strong_point_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID strongPointId;
 
     private String name;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID userId;
 

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExperienceTagJpaEntity {
     @Id
-    @Column(name = "experience_tag_id")
+    @Column(name = "experience_tag_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceTagId;
 
