@@ -18,15 +18,13 @@ class ApplyAppenderTest : BehaviorSpec({
 
         `when`("appendApply이 호출되면") {
             applyAppender.appendApply(
-                title = title,
                 jobDescriptionId = jobDescriptionId
             )
 
             then("Apply.create와 applyRepository.save가 호출된다.") {
                 verify {
                     mockApplyRepository.save(match { apply ->
-                        apply.title == title &&
-                                apply.jobDescriptionId == jobDescriptionId
+                        apply.jobDescriptionId == jobDescriptionId
                     })
                 }
             }
