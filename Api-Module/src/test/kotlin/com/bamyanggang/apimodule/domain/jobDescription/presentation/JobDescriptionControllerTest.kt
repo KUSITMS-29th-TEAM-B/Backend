@@ -164,7 +164,6 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("answer", "답변")
         }
         val createApplyRequest: CreateApply.Request = generateFixture {
-            it.set("title", "제목")
             it.set("contents", listOf(createApplyContentRequest))
         }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.APPLY, jobDescriptionId)
@@ -181,49 +180,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         headerWithName("Authorization").description("엑세스 토큰")
                     ),
                     requestFields(
-                        fieldWithPath("title").description("제목"),
                         fieldWithPath("contents").description("내용"),
                         fieldWithPath("contents[].question").description("질문"),
                         fieldWithPath("contents[].answer").description("답변")
-                    )
-                )
-            )
-    }
-
-    @Test
-    @DisplayName("자기소개서를 등록시, 제목이 비어있으면 에러를 반환한다")
-    fun createApplyWithEmptyTitle() {
-        //given
-        val jobDescriptionId = UUID.randomUUID()
-        val createApplyContentRequest: CreateApplyContent = generateFixture {
-            it.set("question", "질문")
-            it.set("answer", "답변")
-        }
-        val createApplyRequest: CreateApply.Request = generateFixture {
-            it.set("title", "")
-            it.set("contents", listOf(createApplyContentRequest))
-        }
-
-        given(applyCreateService.createApply(createApplyRequest, jobDescriptionId)).willThrow(IllegalArgumentException("제목은 필수입니다."))
-
-        val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.APPLY, jobDescriptionId)
-            .header("Authorization", "Bearer Access Token")
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsString(createApplyRequest))
-
-        //when
-        val result = mockMvc.perform(request)
-
-        //then
-        result.andExpect(status().isBadRequest)
-            .andDo(
-                resultHandler.document(
-                    requestHeaders(
-                        headerWithName("Authorization").description("엑세스 토큰")
-                    ),
-                    responseFields(
-                        fieldWithPath("code").description("에러 코드"),
-                        fieldWithPath("message").description("에러 메시지")
                     )
                 )
             )
@@ -239,7 +198,6 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("answer", "")
         }
         val createApplyRequest: CreateApply.Request = generateFixture {
-            it.set("title", "제목")
             it.set("contents", listOf(createApplyContentRequest))
         }
         val request = RestDocumentationRequestBuilders.post(JobDescriptionApi.APPLY, jobDescriptionId)
