@@ -28,11 +28,13 @@ public class ExperienceJpaEntity{
 
     private LocalDateTime endedAt;
 
-    private UUID userId;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @Column(name = "user_id", columnDefinition = "BINARY(16)")
+    @Convert(converter = UUIDBinaryConverter.class)
+    private UUID userId;
 
     public ExperienceJpaEntity(
             UUID id,
