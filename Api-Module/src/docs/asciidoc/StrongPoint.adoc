@@ -5,3 +5,30 @@
 === 역량 키워드 등록 API
 
 operation::StrongPointControllerTest/createStrongPointTest/[snippets='http-request,request-fields,http-response,response-fields']
+
+[[DeleteStrongPoint]]
+=== 역량 키워드 삭제 API
+
+operation::StrongPointControllerTest/deleteStrongPointTest/[snippets='http-request,request-headers,request-fields,http-response,response-fields']
+
+[[GetStrongPoint]]
+=== 역량 키워드 조회 API
+
+operation::StrongPointControllerTest/getAllStrongPointTest/[snippets='http-request,request-headers,http-response,response-fields']
+
+[[DuplicatedNameException]]
+=== 중복 역량 키워드 등록 예외
+
+operation::StrongPointControllerTest/duplicatedStrongPointNameTest/[snippets='http-request,request-headers,request-fields,http-response,response-fields']
+
+[[OverCountLimitException]]
+=== 역량 키워드 개수 제한 초과 등록 시도 예외
+
+operation::StrongPointControllerTest/overCountLimitTest/[snippets='http-request,request-headers,http-response,response-fields']
+
+[[DeleteNotFoundTagException]]
+=== 존재하지 않는 태그 삭제 시도 예외
+
+operation::StrongPointControllerTest/deleteNotFoundStrongPointTest/[snippets='http-request,request-headers,http-response,response-fields']
+
+

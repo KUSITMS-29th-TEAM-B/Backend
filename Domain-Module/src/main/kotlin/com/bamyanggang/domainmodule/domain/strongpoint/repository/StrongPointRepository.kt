@@ -5,6 +5,7 @@ import java.util.*
 
 interface StrongPointRepository {
     fun save(newStrongPoint: StrongPoint)
-
     fun findAllByUserId(userId: UUID): List<StrongPoint>
+    fun deleteByStrongPointId(strongPointId: UUID)
+    fun isExistByStrongPointId(strongPointId: UUID): Boolean
 }
