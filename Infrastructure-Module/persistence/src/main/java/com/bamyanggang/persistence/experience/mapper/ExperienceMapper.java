@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExperienceMapper {
     public ExperienceJpaEntity toJpaEntity(Experience experience) {
-        return ExperienceJpaEntity.of(
+        return new ExperienceJpaEntity(
                 experience.getId(),
                 experience.getTitle(),
                 experience.getStartedAt(),

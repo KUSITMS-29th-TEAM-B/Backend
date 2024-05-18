@@ -20,10 +20,10 @@ class StrongPointController(
     }
 
     @PostMapping(StrongPointApi.BASE_URL)
-    fun createStrongPoint(@RequestBody request: CreateStrongPoint.Request): CreateStrongPoint.Response {
+    fun createStrongPoint(@RequestBody request: CreateStrongPoint.Request): CreateStrongPoint.Response{
         return strongPointCreateService.createStrongPoint(request)
     }
-
+    
     @DeleteMapping(StrongPointApi.STRONG_POINT_PATH_VARIABLE_URL)
     fun deleteStrongPoint(@PathVariable("strongPointId") strongPointId: UUID) {
         strongPointDeleteService.deleteStrongPoint(strongPointId)

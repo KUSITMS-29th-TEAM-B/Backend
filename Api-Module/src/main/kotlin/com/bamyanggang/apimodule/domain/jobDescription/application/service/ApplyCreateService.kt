@@ -16,7 +16,6 @@ class ApplyCreateService(
     fun createApply(request: CreateApply.Request, jobDescriptionId: UUID) {
         applyAppender.appendApply(
             jobDescriptionId = jobDescriptionId,
-            title = request.title
         ).also { apply ->
             request.contents.forEach { content ->
                 applyContentAppender.appendApplyContent(

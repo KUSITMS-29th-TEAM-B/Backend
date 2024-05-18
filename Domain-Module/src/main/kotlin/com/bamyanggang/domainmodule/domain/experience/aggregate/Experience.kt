@@ -18,20 +18,22 @@ data class Experience(
     val createdAt : LocalDateTime,
     val updatedAt : LocalDateTime,
 ) : AggregateRoot {
-
+    init {
+        require(title.length < 50) { "제목의 글자 수는 50자 제한입니다." }
+        require(strongPointIds.size <= 5) { "역량 키워드는 최대 5개까지 붙일 수 있습니다."}
+    }
     companion object {
         fun create(
+            title: String,
             userId: UUID,
             parentTagId: UUID,
             childTagId: UUID,
             strongPointIds: List<UUID>,
-            title: String,
             contentIds: List<UUID> = emptyList(),
             startedAt: LocalDateTime,
             endedAt: LocalDateTime,
         ): Experience {
             return Experience(
-                id = UuidCreator.create(),
                 userId = userId,
                 parentTagId = parentTagId,
                 childTagId = childTagId,

@@ -11,15 +11,17 @@ class TagController(
     private val tagCreateService: TagCreateService,
     private val tagDeleteService: TagDeleteService
 ) {
-    @PostMapping(TagApi.BASE_URL, TagApi.TAG_PATH_VARIABLE_URL)
-    fun createTag(
-        @PathVariable("tagId", required = false) parentTagId: UUID?,
+    @PostMapping(TagApi.BASE_URL)
+    fun createParentTag(@RequestBody request: CreateTag.Request): CreateTag.Response {
+        return tagCreateService.createParentTag(request)
+    }
+
+    @PostMapping(TagApi.TAG_PATH_VARIABLE_URL)
+    fun createChildTag(
         @RequestBody request: CreateTag.Request,
+        @PathVariable("tagId") parentTagId : UUID
     ): CreateTag.Response {
-        return when {
-            parentTagId == null -> tagCreateService.createParentTag(request)
-            else -> tagCreateService.createChildTag(request, parentTagId)
-        }
+        return tagCreateService.createChildTag(request, parentTagId)
     }
 
     @DeleteMapping(TagApi.TAG_PATH_VARIABLE_URL)

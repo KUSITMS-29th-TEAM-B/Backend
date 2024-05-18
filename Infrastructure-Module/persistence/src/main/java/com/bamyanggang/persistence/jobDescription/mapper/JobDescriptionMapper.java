@@ -45,7 +45,6 @@ public class JobDescriptionMapper {
     public ApplyJpaEntity toApplyJpaEntity(Apply apply) {
         return new ApplyJpaEntity(
                 apply.getId(),
-                apply.getTitle(),
                 apply.getWriteStatus(),
                 apply.getCreatedAt(),
                 apply.getUpdatedAt(),
@@ -56,7 +55,6 @@ public class JobDescriptionMapper {
     public Apply toApplyDomainEntity(ApplyJpaEntity applyJpaEntity) {
         return Apply.Companion.toDomain(
                 applyJpaEntity.getApplyId(),
-                applyJpaEntity.getTitle(),
                 applyJpaEntity.getWriteStatus(),
                 applyJpaEntity.getCreatedAt(),
                 applyJpaEntity.getUpdatedAt(),
