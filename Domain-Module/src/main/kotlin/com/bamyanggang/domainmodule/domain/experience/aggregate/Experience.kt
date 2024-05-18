@@ -18,6 +18,30 @@ data class Experience(
     val createdAt : LocalDateTime,
     val updatedAt : LocalDateTime,
 ) : AggregateRoot {
+    fun update(
+        title: String,
+        userId: UUID,
+        parentTagId: UUID,
+        childTagId: UUID,
+        contents: List<ExperienceContent>,
+        strongPointInfos: List<StrongPointInfo>,
+        startedAt: LocalDateTime,
+        endedAt: LocalDateTime,
+    ): Experience {
+        return copy(
+            title = title ?: this.title,
+            userId = userId ?: this.userId,
+            parentTagId = parentTagId ?: this.parentTagId,
+            childTagId = childTagId ?: this.childTagId,
+            contents = contents ?: this.contents,
+            strongPointInfos = strongPointInfos ?: this.strongPointInfos,
+            startedAt = startedAt ?: this.startedAt,
+            endedAt = endedAt ?: this.endedAt,
+            createdAt = createdAt ?: this.createdAt,
+            updatedAt = LocalDateTime.now(),
+        )
+    }
+
     init {
         require(title.length < 50) { "제목의 글자 수는 50자 제한입니다." }
     }
