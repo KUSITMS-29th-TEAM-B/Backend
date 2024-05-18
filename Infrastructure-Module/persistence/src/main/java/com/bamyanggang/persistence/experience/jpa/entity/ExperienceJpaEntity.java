@@ -35,8 +35,6 @@ public class ExperienceJpaEntity{
 
     @Column(name = "child_tag_tid", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
-
-
     private UUID childTagId;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -80,6 +78,10 @@ public class ExperienceJpaEntity{
     ) {
         this.experienceId = id;
         this.title = title;
+        this.parentTagId = parentTagId;
+        this.childTagId = childTagId;
+        this.contents = contents;
+        this.strongPointInfos = strongPointInfoJpaEntities;
         this.startedAt = startedAt;
         this.endedAt = endedAt;
         this.userId = userId;
