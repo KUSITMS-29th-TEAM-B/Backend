@@ -3,20 +3,18 @@ package com.bamyanggang.persistence.experience.jpa.entity;
 import com.bamyanggang.persistence.common.UUIDBinaryConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Embeddable
 @Table(name = "experience_content")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ExperienceContentJpaEntity {
-    @Id
     @Column(name = "experience_content_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceContentId;
@@ -27,14 +25,9 @@ public class ExperienceContentJpaEntity {
     @Column(columnDefinition = "VARCHAR(6000)")
     private String answer;
 
-    @Column(name = "experience_id", columnDefinition = "BINARY(16)")
-    @Convert(converter = UUIDBinaryConverter.class)
-    private UUID experienceId;
-
-    public ExperienceContentJpaEntity(UUID id, String question, String answer, UUID experienceId) {
+    public ExperienceContentJpaEntity(UUID id, String question, String answer) {
         this.experienceContentId = id;
         this.question = question;
         this.answer = answer;
-        this.experienceId = experienceId;
     }
 }
