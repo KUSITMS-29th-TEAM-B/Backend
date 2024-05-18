@@ -212,10 +212,10 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     @DisplayName("유저가 등록한 역량 키워드를 전체 조회한다.")
     fun getAllStrongPointTest() {
 
-        val strongPointInfo1 = GetStrongPoint.StrongPointInfo(generateFixture<UUID>(), "역량 키워드 1")
-        val strongPointInfo2 = GetStrongPoint.StrongPointInfo(generateFixture<UUID>(), "역량 키워드 2")
+        val strongPoint1 = GetStrongPoint.StrongPoint(generateFixture<UUID>(), "역량 키워드 1")
+        val strongPoint2 = GetStrongPoint.StrongPoint(generateFixture<UUID>(), "역량 키워드 2")
 
-        val strongPointInfos = arrayListOf(strongPointInfo1, strongPointInfo2)
+        val strongPointInfos = arrayListOf(strongPoint1, strongPoint2)
         val getStrongPointResponse = GetStrongPoint.Response(strongPointInfos.size, strongPointInfos)
 
         given(strongPointController.getAllStrongPoints()).willReturn(getStrongPointResponse)

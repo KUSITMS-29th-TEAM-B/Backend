@@ -5,10 +5,10 @@ import java.util.*
 class GetStrongPoint {
     data class Response(
         val count: Int,
-        val strongPoints: List<StrongPointInfo>
+        val strongPoints: List<StrongPoint>
     )
 
-    data class StrongPointInfo(
+    data class StrongPoint(
         val id : UUID,
         val name : String,
     )
