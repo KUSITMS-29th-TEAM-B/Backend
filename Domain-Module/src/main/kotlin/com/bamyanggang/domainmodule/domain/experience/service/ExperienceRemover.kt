@@ -11,8 +11,8 @@ class ExperienceRemover(
     private val experienceContentRemover: ExperienceContentRemover
 ) {
     fun remove(experienceId: UUID) {
-        val experienceContentIds = experienceContentReader.readByExperienceId(experienceId).map { it.id }
-        experienceContentRemover.removeAllByIds(experienceContentIds)
+        val experienceContents = experienceContentReader.readByExperienceId(experienceId)
+        experienceContentRemover.removeAllByIds(experienceContents)
 
         experienceRepository.deleteByExperienceId(experienceId)
     }

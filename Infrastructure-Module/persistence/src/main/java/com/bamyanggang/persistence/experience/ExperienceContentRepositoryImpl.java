@@ -30,7 +30,10 @@ public class ExperienceContentRepositoryImpl implements ExperienceContentReposit
     }
 
     @Override
-    public void deleteAllByIds(List<UUID> experienceIds) {
-        experienceContentJpaRepository.deleteAllByExperienceId(experienceIds);
+    public void deleteAllByIds(List<ExperienceContent> experienceContents) {
+        List<ExperienceContentJpaEntity> experienceContentJpaEntities = experienceContents.stream()
+                .map(experienceMapper::toExperienceContentJpaEntity).toList();
+
+        experienceContentJpaRepository.deleteAll(experienceContentJpaEntities);
     }
 }
