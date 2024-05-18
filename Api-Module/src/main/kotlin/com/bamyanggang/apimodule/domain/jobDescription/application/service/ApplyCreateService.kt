@@ -17,7 +17,7 @@ class ApplyCreateService(
         applyAppender.appendApply(
             jobDescriptionId = jobDescriptionId,
             title = request.title
-        ).also { apply -> 
+        ).also { apply ->
             request.contents.forEach { content ->
                 applyContentAppender.appendApplyContent(
                     applyId = apply.id,

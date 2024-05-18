@@ -16,6 +16,8 @@ class UserInfoGetService(
                 return UserInfo.Response.Success(
                     nickName = it.nickName,
                     profileImgUrl = it.profileImgUrl,
+                    provider = it.provider,
+                    email = it.email,
                     jobSearchStatus = it.jobSearchStatus,
                     desiredJob = it.desiredJob,
                     goal = it.goal,

@@ -26,10 +26,11 @@ class KakaoOAuthClient {
 
     data class KakaoAccount(
         val profile: Map<String, Any?>,
+        @field:JsonAlias("email")
+        val email: String
     ) {
         val nickname: String
             get() = profile["nickname"] as String
     }
-
 
 }

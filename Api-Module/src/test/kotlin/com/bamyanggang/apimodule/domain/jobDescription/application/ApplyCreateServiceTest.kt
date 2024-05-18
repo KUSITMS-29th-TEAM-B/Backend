@@ -23,13 +23,13 @@ class ApplyCreateServiceTest : BehaviorSpec({
             val request: CreateApply.Request = generateFixture()
             val jobDescriptionId: UUID = generateFixture()
             val apply: Apply = generateFixture()
-            every { applyAppender.appendApply(any(), any()) } returns apply
+            every { applyAppender.appendApply(any()) } returns apply
             every { applyContentAppender.appendApplyContent(any(), any(), any()) } returns Unit
 
             applyCreateService.createApply(request, jobDescriptionId)
 
             then("appendApply가 호출된다.") {
-                verify { applyAppender.appendApply( request.title,jobDescriptionId) }
+                verify { applyAppender.appendApply( jobDescriptionId) }
             }
 
             then("appendApplyContent가 호출된다.") {
