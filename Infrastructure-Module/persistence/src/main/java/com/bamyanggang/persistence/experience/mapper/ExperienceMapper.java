@@ -36,7 +36,8 @@ public class ExperienceMapper {
         return new ExperienceContentJpaEntity(
                 experienceContent.getId(),
                 experienceContent.getQuestion(),
-                experienceContent.getAnswer()
+                experienceContent.getAnswer(),
+                experienceContent.getExperienceId()
         );
     }
 
@@ -44,7 +45,8 @@ public class ExperienceMapper {
         return ExperienceContent.Companion.toDomain(
                 experienceContentJpaEntity.getExperienceContentId(),
                 experienceContentJpaEntity.getQuestion(),
-                experienceContentJpaEntity.getAnswer()
+                experienceContentJpaEntity.getAnswer(),
+                experienceContentJpaEntity.getExperienceId()
         );
     }
 }

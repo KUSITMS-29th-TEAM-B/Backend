@@ -10,27 +10,23 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ExperienceCreateService(
     val experienceAppender: ExperienceAppender,
-    val experienceContentAppender: ExperienceContentAppender
+    val experienceContentAppender: ExperienceContentAppender,
 ) {
     @Transactional
     fun createExperience(request: CreateExperience.Request):CreateExperience.Response {
         val currentUserId = getAuthenticationPrincipal()
 
-        return request.contents.map {
-                    experienceContentAppender.appendExperienceContent(it.question, it.answer).id
-                }.let {
-                    experienceAppender.appendExperience(
-                        title = request.title,
-                        userId = currentUserId,
-                        parentTagId = request.parentTagId,
-                        childTagId = request.childTagId,
-                        strongPointIds = request.strongPointIds,
-                        contentIds = it,
-                        startedAt = request.startedAt,
-                        endedAt = request.endedAt
-                    )
-                }.let {
-                    CreateExperience.Response(it.id)
-                }
+        val newExperience = experienceAppender.appendExperience(
+            title = request.title,
+            userId = currentUserId,
+            startedAt = request.startedAt,
+            endedAt = request.endedAt
+        )
+        
+        request.contents.forEach {
+            experienceContentAppender.appendExperienceContent(it.question, it.answer, newExperience.id)
+        }
+
+        return CreateExperience.Response(newExperience.id)
     }
 }
