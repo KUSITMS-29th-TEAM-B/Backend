@@ -10,12 +10,10 @@ class ApplyAppender(
     private val applyRepository: ApplyRepository
 ) {
     fun appendApply(
-        title: String,
         jobDescriptionId: UUID
     ): Apply {
         return Apply.create(
-            jobDescriptionId = jobDescriptionId,
-            title = title
+            jobDescriptionId = jobDescriptionId
         ).also { applyRepository.save(it) }
     }
 
