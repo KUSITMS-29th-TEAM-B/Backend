@@ -5,4 +5,6 @@ import java.util.*
 
 interface ExperienceRepository {
     fun save(experience: Experience)
+    fun deleteByExperienceId(experienceId: UUID)
+    fun findByExperienceId(id: UUID): Experience
 }

@@ -12,20 +12,12 @@ class ExperienceAppender(
 ) {
     fun appendExperience(title: String,
                          userId: UUID,
-                         parentTagId: UUID,
-                         childTagId: UUID,
-                         strongPointIds: List<UUID>,
-                         contentIds: List<UUID>,
                          startedAt: LocalDateTime,
                          endedAt: LocalDateTime,
     ): Experience {
         return Experience.create(
             title = title,
             userId = userId,
-            parentTagId = parentTagId,
-            childTagId = childTagId,
-            strongPointIds = strongPointIds,
-            contentIds = contentIds,
             startedAt = startedAt,
             endedAt = endedAt
         ).also {

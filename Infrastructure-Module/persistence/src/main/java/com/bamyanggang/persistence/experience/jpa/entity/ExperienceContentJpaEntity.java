@@ -12,24 +12,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "experience_content")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class ExperienceContentJpaEntity {
     @Id
     @Column(name = "experience_content_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceContentId;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String question;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "VARCHAR(6000)")
     private String answer;
 
-    public ExperienceContentJpaEntity(UUID id, String question, String answer) {
+    @Column(name = "experience_id", columnDefinition = "BINARY(16)")
+    @Convert(converter = UUIDBinaryConverter.class)
+    private UUID experienceId;
+
+    public ExperienceContentJpaEntity(UUID id, String question, String answer, UUID experienceId) {
         this.experienceContentId = id;
         this.question = question;
         this.answer = answer;
+        this.experienceId = experienceId;
     }
 }
