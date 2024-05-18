@@ -19,12 +19,4 @@ class ApplyTest : FunSpec({
         apply.writeStatus shouldBe WriteStatus.WRITING
     }
 
-    test("Apply.create 입력값으로 공백이 들어오면 에러 반환") {
-        val title = ""
-        val jobDescriptionId: UUID = UUID.randomUUID()
-
-        shouldThrow<IllegalArgumentException> {
-            Apply.create(jobDescriptionId)
-        }
-    }
 })
