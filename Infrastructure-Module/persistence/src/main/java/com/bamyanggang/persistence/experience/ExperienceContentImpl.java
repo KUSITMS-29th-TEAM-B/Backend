@@ -5,7 +5,6 @@ import com.bamyanggang.domainmodule.domain.experience.repository.ExperienceConte
 import com.bamyanggang.persistence.experience.jpa.entity.ExperienceContentJpaEntity;
 import com.bamyanggang.persistence.experience.jpa.repository.ExperienceContentJpaRepository;
 import com.bamyanggang.persistence.experience.mapper.ExperienceContentMapper;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +15,8 @@ public class ExperienceContentImpl implements ExperienceContentRepository {
     private final ExperienceContentMapper experienceContentMapper;
 
     @Override
-    public UUID save(ExperienceContent experienceContent) {
+    public void save(ExperienceContent experienceContent) {
         ExperienceContentJpaEntity experienceContentJpaEntity = experienceContentMapper.toJpaEntity(experienceContent);
         experienceContentJpaRepository.save(experienceContentJpaEntity);
-
-        return experienceContentJpaEntity.getExperienceContentId();
     }
 }

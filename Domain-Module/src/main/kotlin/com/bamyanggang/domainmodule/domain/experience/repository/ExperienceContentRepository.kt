@@ -4,5 +4,5 @@ import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceConten
 import java.util.*
 
 interface ExperienceContentRepository {
-    fun save(experienceContent: ExperienceContent): UUID
+    fun save(experienceContent: ExperienceContent)
 }
