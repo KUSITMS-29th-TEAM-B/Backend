@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExperienceContentMapper {
     public ExperienceContentJpaEntity toJpaEntity(ExperienceContent experienceContent) {
-        return ExperienceContentJpaEntity.of(
+        return new ExperienceContentJpaEntity(
                 experienceContent.getId(),
                 experienceContent.getQuestion(),
                 experienceContent.getAnswer()

@@ -9,14 +9,12 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "experience")
 public class ExperienceJpaEntity{
     @Id
@@ -36,7 +34,7 @@ public class ExperienceJpaEntity{
 
     private LocalDateTime updatedAt;
 
-    public static ExperienceJpaEntity of(
+    public ExperienceJpaEntity(
             UUID id,
             String title,
             LocalDateTime startedAt,
@@ -45,7 +43,13 @@ public class ExperienceJpaEntity{
             LocalDateTime createdAt,
             LocalDateTime updatedAt
     ) {
-        return new ExperienceJpaEntity(id, title, startedAt, endedAt, userId, createdAt, updatedAt);
+        this.experienceId = id;
+        this.title = title;
+        this.startedAt = startedAt;
+        this.endedAt = endedAt;
+        this.userId = userId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }
 

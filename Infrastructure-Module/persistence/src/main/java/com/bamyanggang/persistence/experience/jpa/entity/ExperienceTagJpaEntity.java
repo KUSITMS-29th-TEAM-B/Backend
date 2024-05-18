@@ -23,7 +23,9 @@ public class ExperienceTagJpaEntity {
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceTagId;
 
+    @Column(name = "experience_id", columnDefinition = "BINARY(16)")
     private UUID experienceId;
 
+    @Column(name = "tag_id", columnDefinition = "BINARY(16)")
     private UUID tagId;
 }

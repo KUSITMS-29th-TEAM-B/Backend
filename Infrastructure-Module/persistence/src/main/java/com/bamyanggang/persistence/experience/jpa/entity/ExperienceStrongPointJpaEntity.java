@@ -18,7 +18,9 @@ public class ExperienceStrongPointJpaEntity {
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceStrongPointId;
 
+    @Column(name = "experience_id", columnDefinition = "BINARY(16)")
     private UUID experienceId;
 
+    @Column(name = "strong_point_id", columnDefinition = "BINARY(16)")
     private UUID strongPointId;
 }
