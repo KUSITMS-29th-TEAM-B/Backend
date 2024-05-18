@@ -8,16 +8,15 @@ data class ExperienceContent(
     override val id: UUID = UuidCreator.create(),
     val question: String,
     val answer: String,
-    val experienceId: UUID
 ) : DomainEntity {
 
     companion object {
         fun create(question: String, answer: String, experienceId: UUID): ExperienceContent {
-            return ExperienceContent(question = question, answer = answer, experienceId = experienceId)
+            return ExperienceContent(question = question, answer = answer)
         }
 
-        fun toDomain(id: UUID, question: String, answer: String, experienceId: UUID): ExperienceContent {
-            return ExperienceContent(id, question, answer, experienceId)
+        fun toDomain(id: UUID, question: String, answer: String): ExperienceContent {
+            return ExperienceContent(id, question, answer)
         }
     }
 }
