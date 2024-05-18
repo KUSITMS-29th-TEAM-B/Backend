@@ -34,6 +34,6 @@ public class ExperienceContentRepositoryImpl implements ExperienceContentReposit
         List<ExperienceContentJpaEntity> experienceContentJpaEntities = experienceContents.stream()
                 .map(experienceMapper::toExperienceContentJpaEntity).toList();
 
-        experienceContentJpaRepository.deleteAll(experienceContentJpaEntities);
+        experienceContentJpaRepository.deleteAllByQuery(experienceContentJpaEntities);
     }
 }

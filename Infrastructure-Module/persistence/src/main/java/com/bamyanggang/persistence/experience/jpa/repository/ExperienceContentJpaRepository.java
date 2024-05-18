@@ -1,6 +1,5 @@
 package com.bamyanggang.persistence.experience.jpa.repository;
 
-import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceContent;
 import com.bamyanggang.persistence.experience.jpa.entity.ExperienceContentJpaEntity;
 import java.util.List;
 import java.util.UUID;
@@ -14,5 +13,5 @@ public interface ExperienceContentJpaRepository extends JpaRepository<Experience
 
     @Modifying
     @Query("delete from ExperienceContentJpaEntity ec where ec in :experienceContents")
-    void deleteAll(@Param("experienceContents") List<ExperienceContent> experienceContents);
+    void deleteAllByQuery(@Param("experienceContents") List<ExperienceContentJpaEntity> experienceContents);
 }
