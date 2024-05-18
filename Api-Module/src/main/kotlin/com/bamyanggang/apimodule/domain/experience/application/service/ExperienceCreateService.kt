@@ -2,6 +2,7 @@ package com.bamyanggang.apimodule.domain.experience.application.service
 
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
+import com.bamyanggang.domainmodule.domain.experience.aggregate.StrongPointInfo
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceAppender
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceContentAppender
 import org.springframework.stereotype.Service
@@ -16,17 +17,25 @@ class ExperienceCreateService(
     fun createExperience(request: CreateExperience.Request):CreateExperience.Response {
         val currentUserId = getAuthenticationPrincipal()
 
-        val newExperience = experienceAppender.appendExperience(
-            title = request.title,
-            userId = currentUserId,
-            startedAt = request.startedAt,
-            endedAt = request.endedAt
-        )
-
-        request.contents.forEach {
-            experienceContentAppender.appendExperienceContent(it.question, it.answer, newExperience.id)
+        val newContents = request.contents.map {
+            experienceContentAppender.appendExperienceContent(it.question, it.answer)
         }
 
-        return CreateExperience.Response(newExperience.id)
+        val newStrongPointInfos = request.strongPointIds.map {
+            StrongPointInfo.create(it)
+        }
+
+        return experienceAppender.appendExperience(
+            title = request.title,
+            userId = currentUserId,
+            parentTagId = request.parentTagId,
+            childTagId = request.childTagId,
+            contents = newContents,
+            strongPointInfos = newStrongPointInfos,
+            startedAt = request.startedAt,
+            endedAt = request.endedAt
+        ).let {
+            CreateExperience.Response(it.id)
+        }
     }
 }

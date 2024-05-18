@@ -11,7 +11,7 @@ data class ExperienceContent(
 ) : DomainEntity {
 
     companion object {
-        fun create(question: String, answer: String, experienceId: UUID): ExperienceContent {
+        fun create(question: String, answer: String): ExperienceContent {
             return ExperienceContent(question = question, answer = answer)
         }
 
