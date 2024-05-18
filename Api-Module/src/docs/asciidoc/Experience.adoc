@@ -15,3 +15,8 @@ operation::ExperienceControllerTest/createOverTitleLengthTest/[snippets='http-re
 === 역량 키워드 제한(5개) 초과 예외
 
 operation::ExperienceControllerTest/createOverStrongPointCountTest/[snippets='http-request,request-headers,request-body,http-response,response-body,response-fields']
+
+[[DeleteExperienceTest]]
+=== 경험 삭제 API
+
+operation::ExperienceControllerTest/deleteExperienceTest/[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-body']

@@ -3,6 +3,7 @@ package com.bamyanggang.apimodule.domain.experience.presentation
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
+import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import org.junit.jupiter.api.DisplayName
@@ -17,6 +18,8 @@ import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDateTime
 import java.util.*
@@ -27,6 +30,9 @@ class ExperienceControllerTest : BaseRestDocsTest() {
 
     @MockBean
     private lateinit var experienceCreateService: ExperienceCreateService
+
+    @MockBean
+    private lateinit var experienceDeleteService: ExperienceDeleteService
 
     @Test
     @DisplayName("경험을 등록한다.")
@@ -186,6 +192,30 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                 responseFields(
                     fieldWithPath("code").description(HttpStatus.BAD_REQUEST),
                     fieldWithPath("message").description("역량 키워드는 최대 5개까지 붙일 수 있습니다.")
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("경험을 삭제한다.")
+    fun deleteExperienceTest() {
+        //given
+        val request = RestDocumentationRequestBuilders.delete(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL, generateFixture<UUID>())
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk).andDo(
+            resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                pathParameters(
+                    parameterWithName("experienceId").description("경험 id")
                 )
             )
         )
