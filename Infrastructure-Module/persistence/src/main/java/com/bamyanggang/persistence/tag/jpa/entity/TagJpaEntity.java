@@ -6,27 +6,30 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "tag")
 public class TagJpaEntity {
     @Id
-    @Column(name = "tag_id")
+    @Column(name = "tag_id", columnDefinition = "BINARY(16)")
     private UUID tagId;
 
     private String name;
 
+    @Column(name = "parent_tag_id", columnDefinition = "BINARY(16)")
     private UUID parentTagId;
 
+    @Column(name = "user_id", columnDefinition = "BINARY(16)")
     private UUID userId;
 
-    public static TagJpaEntity of(UUID id, String name, UUID parentTagId, UUID userId) {
-        return new TagJpaEntity(id, name, parentTagId, userId);
+    public TagJpaEntity (UUID id, String name, UUID parentTagId, UUID userId) {
+        this.tagId = id;
+        this.name = name;
+        this.parentTagId = parentTagId;
+        this.userId = userId;
     }
 }

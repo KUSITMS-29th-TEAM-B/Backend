@@ -17,11 +17,9 @@ public class StrongPointRepositoryImpl implements StrongPointRepository {
     private final StrongPointMapper strongPointMapper;
 
     @Override
-    public UUID save(StrongPoint strongPoint) {
+    public void save(StrongPoint strongPoint) {
         StrongPointJpaEntity newStrongPointJpaEntity = strongPointMapper.toJpaEntity(strongPoint);
         strongPointJpaRepository.save(newStrongPointJpaEntity);
-
-        return newStrongPointJpaEntity.getStrongPointId();
     }
 
     @Override

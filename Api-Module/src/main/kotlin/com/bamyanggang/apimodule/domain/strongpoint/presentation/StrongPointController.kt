@@ -11,7 +11,7 @@ class StrongPointController(
     private val strongPointCreateService: StrongPointCreateService,
 ) {
     @PostMapping(StrongPointApi.BASE_URL)
-    fun createStrongPoint(@RequestBody request: CreateStrongPoint.Request): CreateStrongPoint.Response {
+    fun createStrongPoint(@RequestBody request: CreateStrongPoint.Request): CreateStrongPoint.Response{
         return strongPointCreateService.createStrongPoint(request)
     }
 }

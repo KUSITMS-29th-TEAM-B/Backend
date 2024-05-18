@@ -1,7 +1,7 @@
 package com.bamyanggang.domainmodule.domain.strongpoint.service
 
-import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRepository
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint
+import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -9,8 +9,8 @@ import java.util.*
 class StrongPointAppender(
     private val strongPointRepository: StrongPointRepository
 ) {
-    fun appendStrongPoint(name: String, userId: UUID): UUID {
-        return StrongPoint.create(name, userId).let {
+    fun appendStrongPoint(name: String, userId: UUID): StrongPoint {
+        return StrongPoint.create(name, userId).also {
             strongPointRepository.save(it)
         }
     }

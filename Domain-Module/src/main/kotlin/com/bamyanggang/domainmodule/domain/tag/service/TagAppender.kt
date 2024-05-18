@@ -9,14 +9,14 @@ import java.util.*
 class TagAppender(
     private val tagRepository: TagRepository
 ) {
-    fun appendParentTag(name: String, userId: UUID): UUID {
+    fun appendParentTag(name: String, userId: UUID) : Tag {
         return Tag.create(name, null, userId)
-            .let { tagRepository.save(it) }
+            .also { tagRepository.save(it) }
     }
 
-    fun appendChildTag(name: String, parentTagId: UUID, userId: UUID): UUID {
+    fun appendChildTag(name: String, parentTagId: UUID, userId: UUID): Tag {
         return Tag.create(name, parentTagId, userId)
-            .let { tagRepository.save(it)
+            .also { tagRepository.save(it)
         }
     }
 }

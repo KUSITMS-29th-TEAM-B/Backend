@@ -7,6 +7,7 @@ import com.bamyanggang.domainmodule.domain.tag.exception.TagException
 import com.bamyanggang.domainmodule.domain.tag.service.TagAppender
 import com.bamyanggang.domainmodule.domain.tag.service.TagReader
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
@@ -14,6 +15,7 @@ class TagCreateService(
     private val tagAppender: TagAppender,
     private val tagReader: TagReader,
 ) {
+    @Transactional
     fun createChildTag(request: CreateTag.Request, parentTagId: UUID): CreateTag.Response {
         return getAuthenticationPrincipal()
             .also {
@@ -21,20 +23,21 @@ class TagCreateService(
                 validateTagCountLimit(userChildTags.size)
                 validateDuplicatedName(userChildTags, request.name)
             }.let {
-                val newChildTagId = tagAppender.appendChildTag(request.name, parentTagId, it)
-                CreateTag.Response(newChildTagId)
-            }
+                val newTag = tagAppender.appendChildTag(request.name, parentTagId, it)
+                CreateTag.Response(newTag.id)
+        }
     }
 
-    fun createParentTag(request: CreateTag.Request): CreateTag.Response {
+    @Transactional
+    fun createParentTag(request: CreateTag.Request) : CreateTag.Response {
         return getAuthenticationPrincipal()
             .also {
                 val userParentTags = tagReader.readAllParentTagsByUserId(it)
                 validateTagCountLimit(userParentTags.size)
                 validateDuplicatedName(userParentTags, request.name)
             }.let {
-                val newParentTagId = tagAppender.appendParentTag(request.name, it)
-                CreateTag.Response(newParentTagId)
+                val newTag = tagAppender.appendParentTag(request.name, it)
+                CreateTag.Response(newTag.id)
             }
     }
 

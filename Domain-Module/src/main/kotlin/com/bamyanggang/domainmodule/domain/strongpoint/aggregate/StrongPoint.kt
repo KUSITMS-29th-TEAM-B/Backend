@@ -14,7 +14,7 @@ data class StrongPoint(
 
     companion object {
         fun create(name: String, userId: UUID?): StrongPoint {
-            return StrongPoint(UuidCreator.create(), name, userId)
+            return StrongPoint(name = name, userId = userId)
         }
 
         fun toDomain(id: UUID, name: String, userId: UUID?): StrongPoint {

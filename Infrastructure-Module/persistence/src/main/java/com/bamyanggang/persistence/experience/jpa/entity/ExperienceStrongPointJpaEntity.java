@@ -1,6 +1,8 @@
 package com.bamyanggang.persistence.experience.jpa.entity;
 
+import com.bamyanggang.persistence.common.UUIDBinaryConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,10 +14,13 @@ import lombok.Getter;
 @Table(name = "experience_strong_point")
 public class ExperienceStrongPointJpaEntity {
     @Id
-    @Column(name = "experience_strong_point_id")
+    @Column(name = "experience_strong_point_id", columnDefinition = "BINARY(16)")
+    @Convert(converter = UUIDBinaryConverter.class)
     private UUID experienceStrongPointId;
 
+    @Column(name = "experience_id", columnDefinition = "BINARY(16)")
     private UUID experienceId;
 
+    @Column(name = "strong_point_id", columnDefinition = "BINARY(16)")
     private UUID strongPointId;
 }
