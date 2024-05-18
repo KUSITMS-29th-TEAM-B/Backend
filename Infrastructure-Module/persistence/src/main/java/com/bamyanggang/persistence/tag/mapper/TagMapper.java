@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TagMapper {
     public TagJpaEntity toJpaEntity(Tag tag) {
-        return TagJpaEntity.of(tag.getId(), tag.getName(), tag.getParentTagId(), tag.getUserId());
+        return new TagJpaEntity(tag.getId(), tag.getName(), tag.getParentTagId(), tag.getUserId());
     }
 
     public Tag toDomainEntity(TagJpaEntity tagJpaEntity) {

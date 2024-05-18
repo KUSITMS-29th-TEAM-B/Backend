@@ -12,7 +12,7 @@ class TagController(
     private val tagDeleteService: TagDeleteService
 ) {
     @PostMapping(TagApi.BASE_URL)
-    fun createParentTag(@RequestBody request: CreateTag.Request, ): CreateTag.Response {
+    fun createParentTag(@RequestBody request: CreateTag.Request): CreateTag.Response {
         return tagCreateService.createParentTag(request)
     }
 

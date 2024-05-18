@@ -23,21 +23,21 @@ class TagCreateService(
                 validateTagCountLimit(userChildTags.size)
                 validateDuplicatedName(userChildTags, request.name)
             }.let {
-                val newChildTag = tagAppender.appendChildTag(request.name, parentTagId, it)
-                CreateTag.Response(newChildTag.id)
-            }
+                val newTag = tagAppender.appendChildTag(request.name, parentTagId, it)
+                CreateTag.Response(newTag.id)
+        }
     }
 
     @Transactional
-    fun createParentTag(request: CreateTag.Request): CreateTag.Response {
+    fun createParentTag(request: CreateTag.Request) : CreateTag.Response {
         return getAuthenticationPrincipal()
             .also {
                 val userParentTags = tagReader.readAllParentTagsByUserId(it)
                 validateTagCountLimit(userParentTags.size)
                 validateDuplicatedName(userParentTags, request.name)
             }.let {
-                val newParentTag = tagAppender.appendParentTag(request.name, it)
-                CreateTag.Response(newParentTag.id)
+                val newTag = tagAppender.appendParentTag(request.name, it)
+                CreateTag.Response(newTag.id)
             }
     }
 
