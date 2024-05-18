@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "strong_point_info")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class StrongPointInfo {
+public class StrongPointInfoJpaEntity {
     @Column(name = "strong_point_info_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID strongPointInfoId;
@@ -22,4 +22,9 @@ public class StrongPointInfo {
     @Column(name = "strong_point_id", columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID strongPointId;
+
+    public StrongPointInfoJpaEntity(UUID strongPointInfoId, UUID strongPointId) {
+        this.strongPointInfoId = strongPointInfoId;
+        this.strongPointId = strongPointId;
+    }
 }

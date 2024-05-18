@@ -49,7 +49,7 @@ public class ExperienceJpaEntity{
             name = "strong_point_info",
             joinColumns = {@JoinColumn(name = "experience_id")}
     )
-    private List<StrongPointInfo> strongPointInfos;
+    private List<StrongPointInfoJpaEntity> strongPointInfos;
 
     private LocalDateTime startedAt;
 
@@ -66,6 +66,10 @@ public class ExperienceJpaEntity{
     public ExperienceJpaEntity(
             UUID id,
             String title,
+            UUID parentTagId,
+            UUID childTagId,
+            List<ExperienceContentJpaEntity> contents,
+            List<StrongPointInfoJpaEntity> strongPointInfoJpaEntities,
             LocalDateTime startedAt,
             LocalDateTime endedAt,
             UUID userId,
