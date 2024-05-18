@@ -22,7 +22,7 @@ class ExperienceCreateService(
             startedAt = request.startedAt,
             endedAt = request.endedAt
         )
-        
+
         request.contents.forEach {
             experienceContentAppender.appendExperienceContent(it.question, it.answer, newExperience.id)
         }
