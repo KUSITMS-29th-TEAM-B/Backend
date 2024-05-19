@@ -17,18 +17,25 @@ class StrongPointCreateService(
 ) {
     @Transactional
     fun createStrongPoint(request: CreateStrongPoint.Request): CreateStrongPoint.Response {
-        return getAuthenticationPrincipal().also {
-            val userStrongPoints = strongPointReader.readAllByUserId(it)
-            validateOverCountLimit(userStrongPoints)
-            validateDuplicatedName(userStrongPoints, request.name)
-        }.let {
-            val newStrongPoint = strongPointAppender.appendStrongPoint(request.name, it)
-            CreateStrongPoint.Response(newStrongPoint.id)
+        val currentUserId = getAuthenticationPrincipal()
+        val newStrongPointNames = request.names.map { it.name }
+        val currentUserStrongPoints = strongPointReader.readAllByUserId(currentUserId)
+
+        validateOverCountLimit(currentUserStrongPoints, newStrongPointNames.size)
+
+        newStrongPointNames.forEach {
+            validateDuplicatedName(currentUserStrongPoints, it)
         }
+
+        val newStrongPoints = strongPointAppender.appendAllStrongPoint(newStrongPointNames, currentUserId).map {
+            CreateStrongPoint.DetailStrongPoint(it.id, it.name)
+        }
+
+        return CreateStrongPoint.Response(newStrongPoints)
     }
 
-    private fun validateOverCountLimit(userStrongPoints: List<StrongPoint>) {
-        if (userStrongPoints.size >= StrongPoint.LIMIT) {
+    private fun validateOverCountLimit(userStrongPoints: List<StrongPoint>, count: Int) {
+        if (userStrongPoints.size >= StrongPoint.LIMIT || (userStrongPoints.size + count) > StrongPoint.LIMIT) {
             throw StrongPointException.OverCountLimit()
         }
     }

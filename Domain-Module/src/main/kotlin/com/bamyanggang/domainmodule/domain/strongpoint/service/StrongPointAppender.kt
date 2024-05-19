@@ -14,4 +14,14 @@ class StrongPointAppender(
             strongPointRepository.save(it)
         }
     }
+
+    fun appendAllStrongPoint(names: List<String>, userId: UUID): List<StrongPoint> {
+        val newStrongPoints = names.map { name ->
+            StrongPoint.create(name, userId)
+        }
+
+        strongPointRepository.saveAll(newStrongPoints)
+        return newStrongPoints
+
+    }
 }

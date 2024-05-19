@@ -43,4 +43,12 @@ public class StrongPointRepositoryImpl implements StrongPointRepository {
         List<StrongPointJpaEntity> strongPointJpaEntities = strongPointJpaRepository.findByIds(strongPointIds);
         return strongPointJpaEntities.stream().map(strongPointMapper::toDomainEntity).toList();
     }
+
+    @Override
+    public void saveAll(List<StrongPoint> strongPoints) {
+        List<StrongPointJpaEntity> strongPointJpaEntities = strongPoints.stream()
+                .map(strongPointMapper::toJpaEntity).toList();
+
+        strongPointJpaRepository.saveAll(strongPointJpaEntities);
+    }
 }

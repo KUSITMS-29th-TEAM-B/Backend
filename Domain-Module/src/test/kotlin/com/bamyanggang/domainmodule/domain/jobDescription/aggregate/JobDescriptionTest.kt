@@ -2,23 +2,21 @@ package com.bamyanggang.domainmodule.domain.jobDescription.aggregate
 
 import com.bamyanggang.commonmodule.fixture.generateBasicTypeFixture
 import com.bamyanggang.commonmodule.fixture.generateFixture
-import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.JobDescription
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 class JobDescriptionTest : FunSpec({
 
     test("JobDescription 생성") {
         // arrange
-        val enterpriseName: String = generateBasicTypeFixture(10)
-        val title: String = generateBasicTypeFixture(10)
-        val content: String = generateBasicTypeFixture(10)
-        val link: String = generateBasicTypeFixture(10)
+        val enterpriseName: String = "기업 명"
+        val title: String = "제목"
+        val content: String = "내용"
+        val link: String = "링크"
         val startedAt: LocalDateTime = LocalDateTime.now()
         val endedAt: LocalDateTime = startedAt.plusDays(1)
         val userId : UUID = UUID.randomUUID()
