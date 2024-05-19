@@ -4,10 +4,19 @@ import java.util.*
 
 class CreateStrongPoint {
     data class Request(
-        val name: String,
+        val names: List<StrongPointName>,
     )
 
     data class Response(
-        val id: UUID,
+        val strongPoints: List<DetailStrongPoint>,
+    )
+
+    data class StrongPointName(
+        val name: String
+    )
+
+    data class DetailStrongPoint(
+        val id : UUID,
+        val name : String,
     )
 }

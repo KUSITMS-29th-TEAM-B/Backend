@@ -8,4 +8,6 @@ interface StrongPointRepository {
     fun findAllByUserId(userId: UUID): List<StrongPoint>
     fun deleteByStrongPointId(strongPointId: UUID)
     fun isExistByStrongPointId(strongPointId: UUID): Boolean
+    fun findByIds(strongPointIds: List<UUID>) : List<StrongPoint>
+    fun saveAll(strongPoints: List<StrongPoint>)
 }

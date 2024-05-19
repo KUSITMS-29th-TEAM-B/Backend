@@ -32,10 +32,16 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     private lateinit var strongPointController: StrongPointController
 
     @Test
-    @DisplayName("역량 키워드를 저장한 뒤 생성된 역량 키워드 ID를 반환한다.")
+    @DisplayName("역량 키워드를 저장한 뒤 생성된 역량 키워드 정보를 반환한다.")
     fun createStrongPointTest() {
         val createStrongPoint: CreateStrongPoint.Request = generateFixture()
-        val createStrongPointResponse: CreateStrongPoint.Response = generateFixture()
+
+        val strongPoints = arrayListOf(
+            CreateStrongPoint.DetailStrongPoint(generateFixture(), "역량 키워드 이름 1"),
+            CreateStrongPoint.DetailStrongPoint(generateFixture(), "역량 키워드 이름 2")
+        )
+
+        val createStrongPointResponse: CreateStrongPoint.Response = CreateStrongPoint.Response(strongPoints)
 
         given(strongPointController.createStrongPoint(createStrongPoint)).willReturn(createStrongPointResponse)
 
@@ -53,10 +59,13 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                         headerWithName("Authorization").description("엑세스 토큰")
                     ),
                     requestFields(
-                        fieldWithPath("name").description("역량 키워드 이름"),
+                        fieldWithPath("names").description("역량 키워드 이름 배열"),
+                        fieldWithPath("names[].name").description("역량 키워드 이름"),
                     ),
                     responseFields(
-                        fieldWithPath("id").description("생성된 역량 키워드 id"),
+                        fieldWithPath("strongPoints").description("생성된 역량 키워드 배열"),
+                        fieldWithPath("strongPoints[].id").description("생성된 역량 키워드 id"),
+                        fieldWithPath("strongPoints[].name").description("생성된 역량 키워드 이름"),
                     )
                 )
             )
@@ -65,8 +74,13 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("역량 키워드 등록 시 역량 키워드 이름이 비어있다면 예외를 반환한다.")
     fun createStrongPointNameEmptyTest() {
+        val strongPointNames = arrayListOf(
+            CreateStrongPoint.StrongPointName(""),
+            CreateStrongPoint.StrongPointName("공백 아님")
+        )
+
         val createStrongPoint: CreateStrongPoint.Request = generateFixture {
-            it.set("name", "")
+            it.set("names", strongPointNames)
         }
 
         given(strongPointController.createStrongPoint(createStrongPoint)).willThrow(IllegalArgumentException(
@@ -86,7 +100,8 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                         headerWithName("Authorization").description("엑세스 토큰")
                     ),
                     requestFields(
-                        fieldWithPath("name").description("역량 키워드 이름"),
+                        fieldWithPath("names").description("역량 키워드 이름 배열"),
+                        fieldWithPath("names[].name").description("역량 키워드 이름"),
                     ),
                     responseFields(
                         fieldWithPath("code").description(HttpStatus.BAD_REQUEST),
@@ -99,7 +114,11 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("중복된 역량 키워드 등록 시 등록하지 않고 예외를 반환한다.")
     fun duplicatedStrongPointNameTest() {
-        val duplicatedRequest = CreateStrongPoint.Request("duplicatedName")
+        val duplicatedNames = arrayListOf(
+            CreateStrongPoint.StrongPointName("DuplicatedName"),
+        )
+
+        val duplicatedRequest = CreateStrongPoint.Request(duplicatedNames)
 
         given(strongPointController.createStrongPoint(duplicatedRequest)).willThrow(
             IllegalArgumentException(StrongPointExceptionMessage.DUPLICATED_NAME.message))
@@ -117,7 +136,8 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                     headerWithName("Authorization").description("엑세스 토큰")
                 ),
                 requestFields(
-                    fieldWithPath("name").description("역량 키워드 이름"),
+                    fieldWithPath("names").description("역량 키워드 이름 배열"),
+                    fieldWithPath("names[].name").description("역량 키워드 이름"),
                 ),
                 responseFields(
                     fieldWithPath("code").description(HttpStatus.BAD_REQUEST),
@@ -147,7 +167,8 @@ class StrongPointControllerTest : BaseRestDocsTest() {
                     headerWithName("Authorization").description("엑세스 토큰")
                 ),
                 requestFields(
-                    fieldWithPath("name").description("역량 키워드 이름"),
+                    fieldWithPath("names").description("역량 키워드 이름 배열"),
+                    fieldWithPath("names[].name").description("역량 키워드 이름"),
                 ),
                 responseFields(
                     fieldWithPath("code").description(StrongPointException.OverCountLimit().code),
@@ -212,10 +233,10 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     @DisplayName("유저가 등록한 역량 키워드를 전체 조회한다.")
     fun getAllStrongPointTest() {
 
-        val strongPoint1 = GetStrongPoint.StrongPoint(generateFixture<UUID>(), "역량 키워드 1")
-        val strongPoint2 = GetStrongPoint.StrongPoint(generateFixture<UUID>(), "역량 키워드 2")
+        val detailStrongPoint1 = GetStrongPoint.DetailStrongPoint(generateFixture<UUID>(), "역량 키워드 1")
+        val detailStrongPoint2 = GetStrongPoint.DetailStrongPoint(generateFixture<UUID>(), "역량 키워드 2")
 
-        val strongPointInfos = arrayListOf(strongPoint1, strongPoint2)
+        val strongPointInfos = arrayListOf(detailStrongPoint1, detailStrongPoint2)
         val getStrongPointResponse = GetStrongPoint.Response(strongPointInfos.size, strongPointInfos)
 
         given(strongPointController.getAllStrongPoints()).willReturn(getStrongPointResponse)

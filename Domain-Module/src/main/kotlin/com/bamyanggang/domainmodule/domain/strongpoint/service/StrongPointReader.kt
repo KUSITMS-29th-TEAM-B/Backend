@@ -12,4 +12,8 @@ class StrongPointReader(
     fun readAllByUserId(userId: UUID): List<StrongPoint> {
         return strongPointRepository.findAllByUserId(userId)
     }
+
+    fun readByIds(strongPointIds: List<UUID>) : List<StrongPoint> {
+        return strongPointRepository.findByIds(strongPointIds)
+    }
 }
