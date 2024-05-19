@@ -17,8 +17,8 @@ class JobDescriptionAppenderTest : BehaviorSpec({
         val title: String = generateFixture { it.set("title", "직무 공고 제목") }
         val content: String = generateFixture { it.set("content", "직무 공고 내용") }
         val link: String = generateFixture { it.set("link", "직무 공고 링크") }
-        val startedAt: LocalDateTime = generateFixture{ it.set("startedAt", LocalDateTime.now()) }
-        val endedAt: LocalDateTime = generateFixture { it.set("endedAt", startedAt.plusDays(1))}
+        val startedAt: LocalDateTime = LocalDateTime.now()
+        val endedAt: LocalDateTime = startedAt.plusDays(1)
         val userId : UUID = UUID.randomUUID()
 
         `when`("appendJobDescription이 호출되면") {
