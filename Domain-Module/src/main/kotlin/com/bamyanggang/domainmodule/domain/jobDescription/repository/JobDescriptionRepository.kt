@@ -8,6 +8,8 @@ interface JobDescriptionRepository {
 
     fun save(jobDescription: JobDescription)
 
+    fun findById(jobDescriptionId: UUID): JobDescription
+
     fun findAllByUserIdAndSortByCreatedAt(userId: UUID, page: Int, size: Int): SliceDomain<JobDescription>
 
     fun findAllByUserId(userId: UUID, page: Int, size: Int): SliceDomain<JobDescription>

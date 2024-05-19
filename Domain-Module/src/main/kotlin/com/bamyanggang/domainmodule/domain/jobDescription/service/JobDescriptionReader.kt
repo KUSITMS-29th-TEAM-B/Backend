@@ -22,5 +22,8 @@ class JobDescriptionReader(
         }
     }
 
+    fun readJobDescriptionById(jobDescriptionId: UUID): JobDescription {
+        return jobDescriptionRepository.findById(jobDescriptionId)
+    }
 
 }
