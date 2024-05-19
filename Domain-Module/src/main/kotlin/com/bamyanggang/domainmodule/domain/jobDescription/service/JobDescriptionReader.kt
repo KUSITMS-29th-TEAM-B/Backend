@@ -12,9 +12,6 @@ import java.util.*
 class JobDescriptionReader(
     private val jobDescriptionRepository: JobDescriptionRepository
 ) {
-    /**
-     * TODO: 마감순 필터링 추가
-     */
     fun readJobDescriptionByUserIdAndSortType(userId: UUID, page: Int, size: Int, sortType: SortType?, writeStatus: WriteStatus?): PageDomain<JobDescription> {
         return when(sortType) {
             SortType.CREATED -> jobDescriptionRepository.findAllByUserIdAndSortByCreatedAt(userId, page, size, writeStatus)

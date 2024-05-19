@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.jobDescription.service
+package com.bamyanggang.domainmodule.domain.jobDescription.service
 
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.ApplyContentRepository
