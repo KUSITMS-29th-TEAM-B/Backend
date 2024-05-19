@@ -323,6 +323,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("title", "직무 공고 제목")
             it.set("content", "직무 공고 내용")
             it.set("link", "직무 공고 링크")
+            it.set("writeStatus", WriteStatus.WRITING)
             it.set("startedAt", LocalDateTime.now())
             it.set("endedAt", LocalDateTime.now())
         }
@@ -351,6 +352,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("title").description("직무 공고 제목"),
                         fieldWithPath("content").description("직무 공고 내용"),
                         fieldWithPath("link").description("직무 공고 링크"),
+                        fieldWithPath("writeStatus").description("작성 상태. NOT_APPLIED(칩 없음, 작성 전), WRITING(작성 중), WRITTEN(작성 완료), CLOSED(마감)"),
                         fieldWithPath("startedAt").description("시작일"),
                         fieldWithPath("endedAt").description("종료일")
                     )
