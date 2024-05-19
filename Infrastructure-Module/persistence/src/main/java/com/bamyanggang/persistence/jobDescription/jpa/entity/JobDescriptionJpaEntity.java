@@ -30,6 +30,7 @@ public class JobDescriptionJpaEntity {
 
     private String title;
 
+    @Column(name = "write_status", columnDefinition = "VARCHAR(255)")
     @Enumerated(EnumType.STRING)
     private WriteStatus writeStatus;
 
