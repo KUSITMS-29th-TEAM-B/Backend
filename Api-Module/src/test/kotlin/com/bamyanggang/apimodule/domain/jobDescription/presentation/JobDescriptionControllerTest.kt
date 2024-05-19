@@ -2,11 +2,9 @@ package com.bamyanggang.apimodule.domain.jobDescription.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.common.dto.PageResponse
-import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApply
-import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApplyContent
-import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateJobDescription
-import com.bamyanggang.apimodule.domain.jobDescription.application.dto.GetJobDescriptionInfo
+import com.bamyanggang.apimodule.domain.jobDescription.application.dto.*
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.ApplyCreateService
+import com.bamyanggang.apimodule.domain.jobDescription.application.service.ApplyInfoGetService
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.JobDescriptionCreateService
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.JobDescriptionInfoGetService
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
@@ -44,6 +42,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
 
     @MockBean
     private lateinit var jobDescriptionInfoGetService: JobDescriptionInfoGetService
+
+    @MockBean
+    private lateinit var applyInfoGetService: ApplyInfoGetService
 
     @Test
     @DisplayName("직무 공고를 등록한다.")
@@ -353,6 +354,46 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("link").description("직무 공고 링크"),
                         fieldWithPath("startedAt").description("시작일"),
                         fieldWithPath("endedAt").description("종료일")
+                    )
+                )
+            )
+    }
+
+    @Test
+    @DisplayName("JD 공고 자기소개서 정보를 조회한다")
+    fun getApplyInfo() {
+        // given
+        val jobDescriptionId = UUID.randomUUID()
+        val contentInfo: GetApplyInfo.ContentInfo = generateFixture {
+            it.set("question", "질문")
+            it.set("answer", "답변")
+        }
+        val getApplyInfoResponse: GetApplyInfo.Response = generateFixture {
+            it.set("applyContentList", listOf(contentInfo))
+        }
+
+        given(applyInfoGetService.getApplyInfo(jobDescriptionId)).willReturn(getApplyInfoResponse)
+
+        val request = RestDocumentationRequestBuilders.get(JobDescriptionApi.APPLY, jobDescriptionId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(
+                resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
+                    pathParameters(
+                        RequestDocumentation.parameterWithName("jobDescriptionId").description("jd 공고 ID")
+                    ),
+                    responseFields(
+                        fieldWithPath("applyContentList[].question").description("질문"),
+                        fieldWithPath("applyContentList[].answer").description("답변")
                     )
                 )
             )
