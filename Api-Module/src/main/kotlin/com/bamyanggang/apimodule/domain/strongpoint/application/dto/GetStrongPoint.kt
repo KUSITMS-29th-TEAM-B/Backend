@@ -5,7 +5,7 @@ import java.util.*
 class GetStrongPoint {
     data class Response(
         val count: Int,
-        val detailStrongPoints: List<DetailStrongPoint>
+        val strongPoints: List<DetailStrongPoint>
     )
 
     data class DetailStrongPoint(

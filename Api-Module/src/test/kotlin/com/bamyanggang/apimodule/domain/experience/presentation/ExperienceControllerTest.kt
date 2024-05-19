@@ -2,10 +2,13 @@ package com.bamyanggang.apimodule.domain.experience.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.DetailExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
+import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceGetService
+import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoint.DetailStrongPoint
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import org.junit.jupiter.api.DisplayName
@@ -38,6 +41,9 @@ class ExperienceControllerTest : BaseRestDocsTest() {
 
     @MockBean
     private lateinit var experienceEditService: ExperienceEditService
+
+    @MockBean
+    private lateinit var experienceGetService: ExperienceGetService
 
     @Test
     @DisplayName("경험을 등록한다.")
@@ -281,6 +287,63 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                 responseFields(
                     fieldWithPath("id").description("경험 id")
                 )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("경험을 상세조회한다.")
+    fun getExperienceDetailTest() {
+        val content1 = DetailExperience.DetailExperienceContent("질문1", "답변1")
+        val content2 = DetailExperience.DetailExperienceContent("질문2", "답변2")
+
+        val contentResponse = arrayListOf(content1, content2)
+
+        val experienceId: UUID = UUID.randomUUID()
+        val experienceDetailResponse : DetailExperience.Response = generateFixture {
+            it.set("id", experienceId)
+            it.set("title", "제목")
+            it.set("contents", contentResponse)
+            it.set("strongPoints", generateFixture<List<DetailStrongPoint>>())
+            it.set("parentTagId", generateFixture<UUID>())
+            it.set("childTagId", generateFixture<UUID>())
+            it.set("startedAt", generateFixture<LocalDateTime>())
+            it.set("endedAt", generateFixture<LocalDateTime>())
+        }
+
+        given(experienceGetService.getExperienceDetailById(experienceId)).willReturn(experienceDetailResponse)
+
+        //given
+        val request = RestDocumentationRequestBuilders.get(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL, experienceId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk).andDo(
+            resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                pathParameters(
+                    parameterWithName("experienceId").description("경험 id")
+                ),
+                responseFields(
+                    fieldWithPath("id").description("경험 id"),
+                    fieldWithPath("title").description("경험 제목"),
+                    fieldWithPath("contents").description("경험 내용"),
+                    fieldWithPath("contents[].question").description("경험 내용 질문"),
+                    fieldWithPath("contents[].answer").description("경험 내용 답변"),
+                    fieldWithPath("strongPoints").description("관련된 역량 키워드"),
+                    fieldWithPath("strongPoints[].id").description("역량 키워드 id"),
+                    fieldWithPath("strongPoints[].name").description("역량 키워드 이름"),
+                    fieldWithPath("parentTagId").description("속한 상위 태그"),
+                    fieldWithPath("childTagId").description("속한 하위 태그"),
+                    fieldWithPath("startedAt").description("경험 시작 날짜"),
+                    fieldWithPath("endedAt").description("경험 종료 날짜"),
+                ),
             )
         )
     }
