@@ -27,6 +27,7 @@ import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation
+import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDateTime
 import java.util.*
@@ -197,6 +198,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                     requestHeaders(
                         headerWithName("Authorization").description("엑세스 토큰")
                     ),
+                    pathParameters(
+                        RequestDocumentation.parameterWithName("jobDescriptionId").description("jd 공고 ID")
+                    ),
                     requestFields(
                         fieldWithPath("contents").description("내용"),
                         fieldWithPath("contents[].question").description("질문"),
@@ -234,6 +238,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                     requestHeaders(
                         headerWithName("Authorization").description("엑세스 토큰")
                     ),
+                    pathParameters(
+                        RequestDocumentation.parameterWithName("jobDescriptionId").description("jd 공고 ID")
+                    ),
                     responseFields(
                         fieldWithPath("code").description("에러 코드"),
                         fieldWithPath("message").description("에러 메시지")
@@ -247,7 +254,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
     fun getJobDescription() {
         // given
         val pageRequest = PageRequest.of(0, 6)
-        val getJobDescriptionInfoResponse: GetJobDescriptionInfo.Response = generateFixture {
+        val getJobDescriptionInfoResponse: GetJobDescriptionInfo.Response.Basic = generateFixture {
             it.set("jobDescriptionId", UUID.randomUUID())
             it.set("remainingDate", 1)
             it.set("enterpriseName", "기업 이름")
@@ -301,6 +308,51 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("size").description("요청 사이즈"),
                         fieldWithPath("totalPage").description("전체 페이지 수"),
                         fieldWithPath("hasNext").description("다음 데이터 존재 여부")
+                    )
+                )
+            )
+    }
+
+    @Test
+    @DisplayName("JD 공고 상세를 조회한다")
+    fun getJobDescriptionDetail() {
+        // given
+        val jobDescriptionId = UUID.randomUUID()
+        val getJobDescriptionInfoResponse: GetJobDescriptionInfo.Response.Detail = generateFixture {
+            it.set("enterpriseName", "기업 이름")
+            it.set("title", "직무 공고 제목")
+            it.set("content", "직무 공고 내용")
+            it.set("link", "직무 공고 링크")
+            it.set("startedAt", LocalDateTime.now())
+            it.set("endedAt", LocalDateTime.now())
+        }
+
+        given(jobDescriptionInfoGetService.getJobDescriptionDetail(jobDescriptionId)).willReturn(getJobDescriptionInfoResponse)
+
+        val request = RestDocumentationRequestBuilders.get(JobDescriptionApi.DETAIL, jobDescriptionId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(
+                resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
+                    pathParameters(
+                        RequestDocumentation.parameterWithName("jobDescriptionId").description("jd 공고 ID")
+                    ),
+                    responseFields(
+                        fieldWithPath("enterpriseName").description("기업 이름"),
+                        fieldWithPath("title").description("직무 공고 제목"),
+                        fieldWithPath("content").description("직무 공고 내용"),
+                        fieldWithPath("link").description("직무 공고 링크"),
+                        fieldWithPath("startedAt").description("시작일"),
+                        fieldWithPath("endedAt").description("종료일")
                     )
                 )
             )
