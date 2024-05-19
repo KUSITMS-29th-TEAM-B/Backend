@@ -3,7 +3,9 @@ package com.bamyanggang.domainmodule.domain.jobDescription.aggregate
 import com.bamyanggang.domainmodule.common.entity.AggregateRoot
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import com.example.uuid.UuidCreator
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 data class JobDescription(
@@ -29,7 +31,7 @@ data class JobDescription(
     }
 
     fun getRemainingDate(): Int {
-        return LocalDateTime.now().until(endedAt, java.time.temporal.ChronoUnit.DAYS).toInt()
+        return LocalDate.now().until(endedAt.toLocalDate(), ChronoUnit.DAYS).toInt()
     }
 
     fun changeWriteStatus(writeStatus: WriteStatus): JobDescription {
