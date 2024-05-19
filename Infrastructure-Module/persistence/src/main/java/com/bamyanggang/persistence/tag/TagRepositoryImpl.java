@@ -43,4 +43,10 @@ public class TagRepositoryImpl implements TagRepository {
     public boolean isExistById(UUID tagId) {
         return tagJpaRepository.existsById(tagId);
     }
+
+    @Override
+    public List<Tag> findByParentTagIds(List<UUID> parentTagIds) {
+        List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findAllById(parentTagIds);
+        return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
+    }
 }

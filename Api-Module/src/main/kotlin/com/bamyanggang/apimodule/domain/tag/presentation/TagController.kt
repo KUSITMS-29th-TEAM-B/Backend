@@ -15,7 +15,21 @@ class TagController(
     private val tagGetService: TagGetService
 ) {
     @GetMapping(TagApi.BASE_URL)
-    fun getAllParentTags(): GetTag.Response {
+    fun getParentTagsByYear(@RequestParam("year") year: Int) {
+        tagGetService.getAllParentTagsByYear(year)
+    }
+
+    @GetMapping(TagApi.TOP_RANK_TAG_URL)
+    fun getTopRankTagsByLimit(
+        @RequestParam("year") year: Int,
+        @RequestParam("limit") limit: Int
+    ): GetTag.Response  {
+        return tagGetService.getParentTagsByYearAndLimit(year, limit)
+    }
+
+
+    @GetMapping(TagApi.MY_TAG_URL)
+    fun getUserParentTags(): GetTag.Response {
         return tagGetService.getAllParentTagByUserId()
     }
 
