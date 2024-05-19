@@ -2,8 +2,10 @@ package com.bamyanggang.apimodule.domain.experience.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
+import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import org.junit.jupiter.api.DisplayName
@@ -33,6 +35,9 @@ class ExperienceControllerTest : BaseRestDocsTest() {
 
     @MockBean
     private lateinit var experienceDeleteService: ExperienceDeleteService
+
+    @MockBean
+    private lateinit var experienceEditService: ExperienceEditService
 
     @Test
     @DisplayName("경험을 등록한다.")
@@ -216,6 +221,65 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                 ),
                 pathParameters(
                     parameterWithName("experienceId").description("경험 id")
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("경험을 수정한다.")
+    fun editExperienceTest() {
+        //given
+        val content1 = EditExperience.ExperienceContentRequest("질문1", "답변1")
+        val content2 = EditExperience.ExperienceContentRequest("질문2", "답변2")
+
+        val contentRequest = arrayListOf(content1, content2)
+
+        val editExperienceRequest : EditExperience.Request = generateFixture {
+            it.set("title", "제목")
+            it.set("contents", contentRequest)
+            it.set("strongPointIds", generateFixture<List<UUID>>())
+            it.set("parentTagId", generateFixture<UUID>())
+            it.set("childTagId", generateFixture<UUID>())
+            it.set("startedAt", generateFixture<LocalDateTime>())
+            it.set("endedAt", generateFixture<LocalDateTime>())
+        }
+
+        val editedExperienceId : UUID = UUID.randomUUID()
+        val editExperienceResponse : EditExperience.Response = generateFixture()
+
+        given(experienceEditService.editExperience(editExperienceRequest, editedExperienceId)).willReturn(editExperienceResponse)
+
+        val request = RestDocumentationRequestBuilders.patch(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL, editedExperienceId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(editExperienceRequest))
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk).andDo(
+            resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                pathParameters(
+                    parameterWithName("experienceId").description("경험 id")
+                ),
+                requestFields(
+                    fieldWithPath("title").description("경험 제목"),
+                    fieldWithPath("contents").description("경험 내용"),
+                    fieldWithPath("contents[].question").description("경험 내용 질문"),
+                    fieldWithPath("contents[].answer").description("경험 내용 답변"),
+                    fieldWithPath("strongPointIds").description("관련된 역량 키워드"),
+                    fieldWithPath("parentTagId").description("속한 상위 태그"),
+                    fieldWithPath("childTagId").description("속한 하위 태그"),
+                    fieldWithPath("startedAt").description("경험 시작 날짜"),
+                    fieldWithPath("endedAt").description("경험 종료 날짜"),
+                ),
+                responseFields(
+                    fieldWithPath("id").description("경험 id")
                 )
             )
         )

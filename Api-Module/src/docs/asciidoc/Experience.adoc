@@ -16,6 +16,11 @@ operation::ExperienceControllerTest/createOverTitleLengthTest/[snippets='http-re
 
 operation::ExperienceControllerTest/createOverStrongPointCountTest/[snippets='http-request,request-headers,request-body,http-response,response-body,response-fields']
 
+[[EditExperienceTest]]
+=== 경험 수정 API
+
+operation::ExperienceControllerTest/editExperienceTest/[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-body']
+
 [[DeleteExperienceTest]]
 === 경험 삭제 API
 
