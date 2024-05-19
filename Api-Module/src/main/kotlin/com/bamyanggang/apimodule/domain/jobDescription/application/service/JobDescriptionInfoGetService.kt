@@ -1,6 +1,6 @@
 package com.bamyanggang.apimodule.domain.jobDescription.application.service
 
-import com.bamyanggang.apimodule.common.dto.SliceResponse
+import com.bamyanggang.apimodule.common.dto.PageResponse
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.GetJobDescriptionInfo
 import com.bamyanggang.domainmodule.common.pagination.PageDomain
@@ -18,7 +18,7 @@ class JobDescriptionInfoGetService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getJobDescriptionInfo(pageable: Pageable, writeStatus: WriteStatus?, sortType: SortType?): SliceResponse<GetJobDescriptionInfo.Response> {
+    fun getJobDescriptionInfo(pageable: Pageable, writeStatus: WriteStatus?, sortType: SortType?): PageResponse<GetJobDescriptionInfo.Response> {
         return getAuthenticationPrincipal().let{ userId ->
             val jobDescriptions = jobDescriptionReader.readJobDescriptionByUserIdAndSortType(userId, pageable.pageNumber, pageable.pageSize, sortType, writeStatus)
 
@@ -37,7 +37,7 @@ class JobDescriptionInfoGetService(
 
             val jobDescriptionsSlice = PageDomain(jobDescriptionInfoResponses, jobDescriptions.pageNumber, jobDescriptions.pageSize, jobDescriptions.totalPage,
                 jobDescriptions.hasNext)
-            SliceResponse.from(jobDescriptionsSlice)
+            PageResponse.from(jobDescriptionsSlice)
         }
     }
 
