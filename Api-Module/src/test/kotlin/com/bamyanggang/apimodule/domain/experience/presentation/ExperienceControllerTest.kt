@@ -4,6 +4,7 @@ import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.DetailExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
@@ -315,8 +316,8 @@ class ExperienceControllerTest : BaseRestDocsTest() {
 
         //given
         val request = RestDocumentationRequestBuilders.get(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL, experienceId)
-            .header("Authorization", "Bearer Access Token")
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
+              .header("Authorization", "Bearer Access Token")
+                  .contentType(MediaType.APPLICATION_JSON_VALUE)
 
         //when
         val result = mockMvc.perform(request)
@@ -328,7 +329,7 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                     headerWithName("Authorization").description("엑세스 토큰")
                 ),
                 pathParameters(
-                    parameterWithName("experienceId").description("경험 id")
+                  parameterWithName("experienceId").description("경험 id")
                 ),
                 responseFields(
                     fieldWithPath("id").description("경험 id"),
@@ -344,6 +345,31 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                     fieldWithPath("startedAt").description("경험 시작 날짜"),
                     fieldWithPath("endedAt").description("경험 종료 날짜"),
                 ),
+            )
+        )
+    }
+    
+    @DisplayName("유저의 경험 내 존재하는 연도들을 중복 제거한 리스트를 반환한다.")
+    fun getExperienceYearsTest() {
+        //given
+        val userId: UUID = generateFixture()
+        val years = arrayListOf(2023, 2024, 2025)
+        val yearResponse = ExperienceYear.Response(years)
+
+        given(experienceGetService.getAllYearsByExistExperience()).willReturn(yearResponse)
+
+        val request = RestDocumentationRequestBuilders.get(ExperienceApi.ALL_YEARS)
+              .header("Authorization", "Bearer Access Token")
+                  .contentType(MediaType.APPLICATION_JSON_VALUE)
+
+        //when
+        val result = mockMvc.perform(request)
+        
+        result.andExpect(status().isOk).andDo(
+            resultHandler.document(
+                responseFields(
+                    fieldWithPath("years").description("경험이 존재하는 연도 배열(활동 시작 일시 기준)")
+                )
             )
         )
     }

@@ -31,7 +31,9 @@ operation::JobDescriptionControllerTest/createApplyWithEmptyTitle[snippets='http
 
 operation::JobDescriptionControllerTest/createApplyWithEmptyContent[snippets='http-request,request-headers,http-response']
 
+[[GET-JD-LIST]]
+=== JD 목록 조회
 
-
+operation::JobDescriptionControllerTest/getJobDescription[snippets='http-request,request-headers,query-parameters,http-response,response-fields']
 
 

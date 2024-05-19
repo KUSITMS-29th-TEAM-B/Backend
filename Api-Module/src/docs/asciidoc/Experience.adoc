@@ -21,6 +21,11 @@ operation::ExperienceControllerTest/deleteExperienceTest/[snippets='http-request
 
 operation::ExperienceControllerTest/getExperienceDetailTest/[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-body']
 
+[[getExperienceYearsTest]]
+=== 유저 경험 내 존재 연도 조회 API
+
+operation::ExperienceControllerTest/getExperienceYearsTest/[snippets='http-request,request-headers,request-body,http-response,response-body']
+
 [[CreateOverTitleLengthTest]]
 === 경험 등록 시 제목 글자 수 제한(50자) 예외
 

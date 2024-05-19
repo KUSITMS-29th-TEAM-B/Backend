@@ -43,4 +43,11 @@ class ExperienceGetService(
             )
         }
     }
-}
+    
+    fun getAllYearsByExistExperience(): ExperienceYear.Response {
+        val currentUserId = getAuthenticationPrincipal()
+
+        return experienceReader.readAllYearsByExistExperience(currentUserId)
+            .let { ExperienceYear.Response(it) }
+    }
+}   
