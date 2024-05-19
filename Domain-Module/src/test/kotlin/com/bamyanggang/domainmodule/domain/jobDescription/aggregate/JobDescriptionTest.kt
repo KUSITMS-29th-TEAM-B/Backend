@@ -1,11 +1,13 @@
-package com.bamyanggang.domainmodule.jobDescription.aggregate
+package com.bamyanggang.domainmodule.domain.jobDescription.aggregate
 
 import com.bamyanggang.commonmodule.fixture.generateBasicTypeFixture
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.JobDescription
+import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -88,6 +90,46 @@ class JobDescriptionTest : FunSpec({
                 userId = userId
             )
         }
+    }
+
+    test("남은 날짜 계산") {
+        // arrange
+        val startedAt: LocalDateTime = LocalDateTime.now()
+        val endedAt: LocalDateTime = startedAt.plusDays(1)
+        val jobDescription = JobDescription.create(
+            enterpriseName = generateBasicTypeFixture(10),
+            title = generateBasicTypeFixture(10),
+            content = generateBasicTypeFixture(10),
+            link = generateBasicTypeFixture(10),
+            startedAt = startedAt,
+            endedAt = endedAt,
+            userId = UUID.randomUUID()
+        )
+
+        // act
+        val remainingDate = jobDescription.getRemainingDate()
+
+        // assert
+        remainingDate shouldBe 1
+    }
+
+    test("상태 변경") {
+        // arrange
+        val jobDescription = JobDescription.create(
+            enterpriseName = generateBasicTypeFixture(10),
+            title = generateBasicTypeFixture(10),
+            content = generateBasicTypeFixture(10),
+            link = generateBasicTypeFixture(10),
+            startedAt = LocalDateTime.now(),
+            endedAt = LocalDateTime.now().plusDays(1),
+            userId = UUID.randomUUID()
+        )
+
+        // act
+        val changedJobDescription = jobDescription.changeWriteStatus(WriteStatus.WRITING)
+
+        // assert
+        changedJobDescription.writeStatus shouldBe WriteStatus.WRITING
     }
 
 })
