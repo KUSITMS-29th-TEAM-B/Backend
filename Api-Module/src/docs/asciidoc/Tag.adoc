@@ -11,6 +11,16 @@ operation::TagControllerTest/createParentTagTest/[snippets='http-request,request
 
 operation::TagControllerTest/createChildTagTest/[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
+[[GetParentTagTest]]
+=== 상위 태그 조회 API
+
+operation::TagControllerTest/getAllParentTagTest/[snippets='http-request,http-response,response-fields']
+
+[[GetChildTagTest]]
+=== 하위 태그 조회 API
+
+operation::TagControllerTest/getAllChildTagTest/[snippets='http-request,path-parameters,http-response,response-fields']
+
 [[duplicatedParentTagTest]]
 === 상위 태그 이름 중복 예외
 
