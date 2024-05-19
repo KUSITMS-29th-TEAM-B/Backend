@@ -8,4 +8,5 @@ interface ExperienceRepository {
     fun deleteByExperienceId(experienceId: UUID)
     fun findByExperienceId(id: UUID): Experience
     fun findAllByUserId(userId: UUID): List<Experience>
+    fun findByYearDesc(year: Int): List<Experience>
 }

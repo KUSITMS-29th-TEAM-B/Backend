@@ -6,6 +6,7 @@ import com.bamyanggang.persistence.common.exception.PersistenceException.NotFoun
 import com.bamyanggang.persistence.experience.jpa.entity.ExperienceJpaEntity;
 import com.bamyanggang.persistence.experience.jpa.repository.ExperienceJpaRepository;
 import com.bamyanggang.persistence.experience.mapper.ExperienceMapper;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,15 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
     public List<Experience> findAllByUserId(UUID userId) {
         List<ExperienceJpaEntity> userExperienceJpaEntities = experienceJpaRepository.findAllByUserId(userId);
         return userExperienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
+
+    @Override
+    public List<Experience> findByYearDesc(int year) {
+        LocalDateTime startYear = LocalDateTime.of(year, 1, 1, 0, 0);
+        LocalDateTime endYear = LocalDateTime.of(year, 12, 31, 23, 59);
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository
+                .findByCreatedAtBetweenOrderByCreatedAtDesc(startYear, endYear);
+
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
 }
