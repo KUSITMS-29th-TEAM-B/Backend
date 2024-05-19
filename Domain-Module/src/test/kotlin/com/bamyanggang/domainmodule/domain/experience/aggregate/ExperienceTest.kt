@@ -11,12 +11,20 @@ import java.util.*
 class ExperienceTest : FunSpec({
     test("Experience 정상 생성 테스트"){
         val title: String = generateBasicTypeFixture(15)
+        val parentTagId: UUID = generateFixture()
+        val childTagId: UUID = generateFixture()
+        val contents: List<ExperienceContent> = generateFixture()
+        val experienceStrongPoints: List<ExperienceStrongPoint> = generateFixture()
         val startedAt: LocalDateTime = generateFixture()
         val endedAt: LocalDateTime = generateFixture()
         val userId : UUID = generateFixture()
 
         val newExperience = Experience.create(
             title = title,
+            parentTagId = parentTagId,
+            childTagId = childTagId,
+            contents = contents,
+            experienceStrongPoints = experienceStrongPoints,
             userId = userId,
             startedAt = startedAt,
             endedAt = endedAt,
@@ -24,6 +32,10 @@ class ExperienceTest : FunSpec({
 
         title shouldBe newExperience.title
         userId shouldBe newExperience.userId
+        parentTagId shouldBe newExperience.parentTagId
+        childTagId shouldBe newExperience.childTagId
+        contents shouldBe contents
+        experienceStrongPoints shouldBe experienceStrongPoints
         startedAt shouldBe startedAt
         endedAt shouldBe endedAt
     }
@@ -35,6 +47,10 @@ class ExperienceTest : FunSpec({
             Experience.create(
                 title = title,
                 userId = generateFixture(),
+                parentTagId = generateFixture(),
+                childTagId = generateFixture(),
+                contents = generateFixture<List<ExperienceContent>>(),
+                experienceStrongPoints = generateFixture<List<ExperienceStrongPoint>>(),
                 startedAt = generateFixture(),
                 endedAt = generateFixture(),
             )

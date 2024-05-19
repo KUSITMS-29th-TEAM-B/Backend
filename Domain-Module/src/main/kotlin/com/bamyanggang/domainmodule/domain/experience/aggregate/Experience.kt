@@ -7,13 +7,41 @@ import java.util.*
 
 data class Experience(
     override val id: UUID = UuidCreator.create(),
-    val userId : UUID,
     val title : String,
+    val userId : UUID,
+    val parentTagId: UUID,
+    val childTagId: UUID,
+    val experienceStrongPoints: List<ExperienceStrongPoint> = emptyList(),
+    val contents: List<ExperienceContent>,
     val startedAt : LocalDateTime,
     val endedAt : LocalDateTime,
     val createdAt : LocalDateTime,
     val updatedAt : LocalDateTime,
 ) : AggregateRoot {
+    fun update(
+        title: String,
+        userId: UUID,
+        parentTagId: UUID,
+        childTagId: UUID,
+        contents: List<ExperienceContent>,
+        experienceStrongPoints: List<ExperienceStrongPoint>,
+        startedAt: LocalDateTime,
+        endedAt: LocalDateTime,
+    ): Experience {
+        return copy(
+            title = title,
+            userId = userId,
+            parentTagId = parentTagId,
+            childTagId = childTagId,
+            contents = contents,
+            experienceStrongPoints = experienceStrongPoints,
+            startedAt = startedAt,
+            endedAt = endedAt,
+            createdAt = createdAt,
+            updatedAt = LocalDateTime.now(),
+        )
+    }
+
     init {
         require(title.length < 50) { "제목의 글자 수는 50자 제한입니다." }
     }
@@ -21,12 +49,20 @@ data class Experience(
         fun create(
             title: String,
             userId: UUID,
+            parentTagId: UUID,
+            childTagId: UUID,
+            contents: List<ExperienceContent>,
+            experienceStrongPoints: List<ExperienceStrongPoint>,
             startedAt: LocalDateTime,
             endedAt: LocalDateTime,
         ): Experience {
             return Experience(
                 userId = userId,
                 title = title,
+                parentTagId = parentTagId,
+                childTagId = childTagId,
+                contents = contents,
+                experienceStrongPoints = experienceStrongPoints,
                 startedAt = startedAt,
                 endedAt = endedAt,
                 createdAt = LocalDateTime.now(),
@@ -38,6 +74,10 @@ data class Experience(
             id: UUID,
             userId: UUID,
             title: String,
+            parentTagId: UUID,
+            childTagId: UUID,
+            contents: List<ExperienceContent>,
+            experienceStrongPoints: List<ExperienceStrongPoint>,
             startedAt: LocalDateTime,
             endedAt: LocalDateTime,
             createdAt: LocalDateTime,
@@ -47,6 +87,10 @@ data class Experience(
                 id = id,
                 userId = userId,
                 title = title,
+                parentTagId = parentTagId,
+                childTagId = childTagId,
+                contents = contents,
+                experienceStrongPoints = experienceStrongPoints,
                 startedAt = startedAt,
                 endedAt = endedAt,
                 createdAt = createdAt,
