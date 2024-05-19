@@ -6,4 +6,9 @@ class CreateApply {
         val contents : List<CreateApplyContent>
     )
 
+    data class CreateApplyContent (
+        val question: String,
+        val answer: String
+    )
+
 }

@@ -1,7 +1,6 @@
 package com.bamyanggang.apimodule.domain.jobDescription.application
 
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApply
-import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApplyContent
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.ApplyCreateService
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.JobDescription
@@ -26,7 +25,7 @@ class ApplyCreateServiceTest : BehaviorSpec({
     given("ApplyCreateService.createApply") {
         val request: CreateApply.Request = generateFixture {
             it.set("contents", listOf(
-                CreateApplyContent(
+                CreateApply.CreateApplyContent(
                     question = "질문1",
                     answer = "답변1"
                 )
