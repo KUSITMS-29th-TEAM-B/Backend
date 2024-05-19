@@ -320,10 +320,13 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         // given
         val jobDescriptionId = UUID.randomUUID()
         val getJobDescriptionInfoResponse: GetJobDescriptionInfo.Response.Detail = generateFixture {
+            it.set("remainingDate", 1)
             it.set("enterpriseName", "기업 이름")
             it.set("title", "직무 공고 제목")
             it.set("content", "직무 공고 내용")
             it.set("link", "직무 공고 링크")
+            it.set("writeStatus", WriteStatus.WRITING)
+            it.set("createdAt", LocalDateTime.now())
             it.set("startedAt", LocalDateTime.now())
             it.set("endedAt", LocalDateTime.now())
         }
@@ -353,6 +356,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("title").description("직무 공고 제목"),
                         fieldWithPath("content").description("직무 공고 내용"),
                         fieldWithPath("link").description("직무 공고 링크"),
+                        fieldWithPath("writeStatus").description("작성 상태. NOT_APPLIED(칩 없음, 작성 전), WRITING(작성 중), WRITTEN(작성 완료), CLOSED(마감)"),
                         fieldWithPath("createdAt").description("생성일"),
                         fieldWithPath("startedAt").description("시작일"),
                         fieldWithPath("endedAt").description("종료일")

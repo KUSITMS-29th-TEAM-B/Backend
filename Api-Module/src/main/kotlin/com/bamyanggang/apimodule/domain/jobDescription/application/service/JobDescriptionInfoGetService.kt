@@ -51,6 +51,7 @@ class JobDescriptionInfoGetService(
                 jobDescription.title,
                 jobDescription.content,
                 jobDescription.link,
+                jobDescription.writeStatus,
                 jobDescription.createdAt,
                 jobDescription.startedAt,
                 jobDescription.endedAt
