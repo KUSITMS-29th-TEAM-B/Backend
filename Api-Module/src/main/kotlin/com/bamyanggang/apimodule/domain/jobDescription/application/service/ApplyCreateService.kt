@@ -4,6 +4,7 @@ import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApp
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import com.bamyanggang.domainmodule.domain.jobDescription.service.ApplyAppender
 import com.bamyanggang.domainmodule.domain.jobDescription.service.ApplyContentAppender
+import com.bamyanggang.domainmodule.domain.jobDescription.service.JobDescriptionModifier
 import com.bamyanggang.domainmodule.domain.jobDescription.service.JobDescriptionReader
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,12 +14,13 @@ import java.util.*
 class ApplyCreateService(
     private val applyAppender: ApplyAppender,
     private val applyContentAppender: ApplyContentAppender,
-    private val jobDescriptionReader: JobDescriptionReader
+    private val jobDescriptionReader: JobDescriptionReader,
+    private val jobDescriptionModifier: JobDescriptionModifier
 ) {
     @Transactional
     fun createApply(request: CreateApply.Request, jobDescriptionId: UUID) {
         jobDescriptionReader.readJobDescriptionById(jobDescriptionId).also {
-            it.changeWriteStatus(WriteStatus.WRITING)
+            jobDescriptionModifier.modifyWriteStatus(it, WriteStatus.WRITING)
              applyAppender.appendApply(it.id).also { apply ->
                  request.contents.forEach { content ->
                      applyContentAppender.appendApplyContent(
