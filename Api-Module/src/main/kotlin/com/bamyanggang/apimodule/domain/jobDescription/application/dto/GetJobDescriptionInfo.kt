@@ -23,6 +23,7 @@ class GetJobDescriptionInfo {
             val title: String,
             val content: String,
             val link: String,
+            val writeStatus: WriteStatus,
             val startedAt: LocalDateTime,
             val endedAt: LocalDateTime
         ): Response()
