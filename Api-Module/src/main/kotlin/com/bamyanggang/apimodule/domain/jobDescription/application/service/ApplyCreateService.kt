@@ -26,7 +26,7 @@ class ApplyCreateService(
         }
 
         val jobDescription = jobDescriptionReader.readJobDescriptionById(jobDescriptionId)
-        jobDescriptionModifier.modifyWriteStatus(jobDescription, WriteStatus.WRITING)
+        jobDescriptionModifier.modifyWriteStatus(jobDescription)
         applyAppender.appendApply(contents = applyContents, jobDescriptionId = jobDescriptionId)
     }
 

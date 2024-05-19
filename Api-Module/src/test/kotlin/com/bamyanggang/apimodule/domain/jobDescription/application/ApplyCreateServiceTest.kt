@@ -50,7 +50,7 @@ class ApplyCreateServiceTest : BehaviorSpec({
 
             then("modifyWriteStatus와 appendApply가 호출된다.") {
                 verify {
-                    jobDescriptionModifier.modifyWriteStatus(any(), any())
+                    jobDescriptionModifier.modifyWriteStatus(any())
                     applyAppender.appendApply(any(), any())
                 }
             }
