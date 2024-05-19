@@ -10,6 +10,7 @@ import com.bamyanggang.domainmodule.domain.jobDescription.service.JobDescription
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 
 @Service
@@ -18,12 +19,12 @@ class JobDescriptionInfoGetService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getJobDescriptionInfo(pageable: Pageable, writeStatus: WriteStatus?, sortType: SortType?): PageResponse<GetJobDescriptionInfo.Response> {
+    fun getJobDescriptionInfo(pageable: Pageable, writeStatus: WriteStatus?, sortType: SortType?): PageResponse<GetJobDescriptionInfo.Response.Basic> {
         return getAuthenticationPrincipal().let{ userId ->
             val jobDescriptions = jobDescriptionReader.readJobDescriptionByUserIdAndSortType(userId, pageable.pageNumber, pageable.pageSize, sortType, writeStatus)
 
             val jobDescriptionInfoResponses = jobDescriptions.content.map{ jobDescription ->
-                GetJobDescriptionInfo.Response(
+                GetJobDescriptionInfo.Response.Basic(
                     jobDescription.id,
                     jobDescription.getRemainingDate(),
                     jobDescription.enterpriseName,
@@ -38,6 +39,20 @@ class JobDescriptionInfoGetService(
             val jobDescriptionsSlice = PageDomain(jobDescriptionInfoResponses, jobDescriptions.pageNumber, jobDescriptions.pageSize, jobDescriptions.totalPage,
                 jobDescriptions.hasNext)
             PageResponse.from(jobDescriptionsSlice)
+        }
+    }
+
+    @Transactional(readOnly = true)
+    fun getJobDescriptionDetail(jobDescriptionId: UUID): GetJobDescriptionInfo.Response.Detail {
+        return jobDescriptionReader.readJobDescriptionById(jobDescriptionId).let{ jobDescription ->
+            GetJobDescriptionInfo.Response.Detail(
+                jobDescription.enterpriseName,
+                jobDescription.title,
+                jobDescription.content,
+                jobDescription.link,
+                jobDescription.startedAt,
+                jobDescription.endedAt
+            )
         }
     }
 

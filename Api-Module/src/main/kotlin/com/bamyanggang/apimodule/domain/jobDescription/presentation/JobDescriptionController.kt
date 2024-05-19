@@ -41,8 +41,13 @@ class JobDescriptionController(
         pageable: Pageable,
         @RequestParam writeStatus: WriteStatus?,
         @RequestParam sortType: SortType?
-    ): PageResponse<GetJobDescriptionInfo.Response> {
+    ): PageResponse<GetJobDescriptionInfo.Response.Basic> {
         return jobDescriptionInfoGetService.getJobDescriptionInfo(pageable, writeStatus, sortType)
     }
+
+    @GetMapping(JobDescriptionApi.DETAIL)
+    fun getJobDescriptionDetail(
+        @PathVariable("jobDescriptionId") jobDescriptionId: UUID
+    ): GetJobDescriptionInfo.Response.Detail = jobDescriptionInfoGetService.getJobDescriptionDetail(jobDescriptionId)
 
 }
