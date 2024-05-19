@@ -6,6 +6,6 @@ import java.util.*
 interface ApplyRepository {
     fun save(apply: Apply)
 
-    fun findByJobDescriptionId(jobDescriptionId: UUID): Apply?
+    fun findByJobDescriptionId(jobDescriptionId: UUID): Apply
 
 }
