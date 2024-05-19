@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.jobDescription.aggregate
+package com.bamyanggang.domainmodule.domain.jobDescription.aggregate
 
 import com.bamyanggang.commonmodule.fixture.generateBasicTypeFixture
 import com.bamyanggang.commonmodule.fixture.generateFixture
