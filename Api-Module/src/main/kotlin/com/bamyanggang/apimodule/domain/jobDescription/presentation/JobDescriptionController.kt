@@ -7,6 +7,7 @@ import com.bamyanggang.domainmodule.domain.jobDescription.enums.SortType
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -21,7 +22,8 @@ class JobDescriptionController(
     private val applyCreateService: ApplyCreateService,
     private val jobDescriptionInfoGetService: JobDescriptionInfoGetService,
     private val applyInfoGetService: ApplyInfoGetService,
-    private val applyUpdateService: ApplyUpdateService
+    private val applyUpdateService: ApplyUpdateService,
+    private val jobDescriptionUpdateService: JobDescriptionUpdateService
 ) {
 
     @PostMapping(JobDescriptionApi.BASE_URL)
@@ -59,5 +61,10 @@ class JobDescriptionController(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
         @RequestBody request: ApplyInfo.Request
     ) = applyUpdateService.updateApplyInfo(jobDescriptionId, request)
+
+    @PatchMapping(JobDescriptionApi.UPDATE)
+    fun updateJobDescription(
+        @PathVariable("jobDescriptionId") jobDescriptionId: UUID
+    ) = jobDescriptionUpdateService.updateWriteStatus(jobDescriptionId)
 
 }
