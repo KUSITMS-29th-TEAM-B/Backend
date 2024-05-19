@@ -36,5 +36,12 @@ operation::JobDescriptionControllerTest/getJobDescription[snippets='http-request
 
 operation::JobDescriptionControllerTest/getJobDescriptionDetail[snippets='http-request,request-headers,path-parameters,http-response,response-fields']
 
+[[GET-APPLY-INFO]]
+=== 자기소개서 조회
+
+operation::JobDescriptionControllerTest/getApplyInfo[snippets='http-request,request-headers,path-parameters,http-response,response-fields']
+
+
+
 
 
