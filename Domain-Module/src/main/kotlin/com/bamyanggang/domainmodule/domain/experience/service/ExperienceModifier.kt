@@ -2,7 +2,7 @@ package com.bamyanggang.domainmodule.domain.experience.service
 
 import com.bamyanggang.domainmodule.domain.experience.aggregate.Experience
 import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceContent
-import com.bamyanggang.domainmodule.domain.experience.aggregate.StrongPointInfo
+import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceStrongPoint
 import com.bamyanggang.domainmodule.domain.experience.repository.ExperienceRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -19,7 +19,7 @@ class ExperienceModifier(
         parentTagId: UUID,
         childTagId: UUID,
         contents: List<ExperienceContent>,
-        strongPointInfos: List<StrongPointInfo>,
+        experienceStrongPoints: List<ExperienceStrongPoint>,
         startedAt: LocalDateTime,
         endedAt: LocalDateTime,
     ): Experience {
@@ -31,7 +31,7 @@ class ExperienceModifier(
                     parentTagId = parentTagId,
                     childTagId = childTagId,
                     contents = contents,
-                    strongPointInfos = strongPointInfos,
+                    experienceStrongPoints = experienceStrongPoints,
                     startedAt = startedAt,
                     endedAt = endedAt
                 ).also {
