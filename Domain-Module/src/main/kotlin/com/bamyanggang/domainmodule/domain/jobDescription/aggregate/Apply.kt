@@ -15,6 +15,16 @@ data class Apply(
     val jobDescriptionId: UUID,
     ): DomainEntity {
 
+    fun update(
+        contents: List<ApplyContent>,
+    ): Apply {
+        return copy(
+            contents = contents,
+            jobDescriptionId = jobDescriptionId,
+            updatedAt = LocalDateTime.now()
+        )
+    }
+
     companion object {
         fun create(
             contents: List<ApplyContent>,
