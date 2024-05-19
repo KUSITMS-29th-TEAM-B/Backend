@@ -1,6 +1,6 @@
 package com.bamyanggang.apimodule.common.dto
 
-import com.bamyanggang.domainmodule.common.pagination.SliceDomain
+import com.bamyanggang.domainmodule.common.pagination.PageDomain
 
 data class SliceResponse<T>(
     val content: List<T>,
@@ -9,7 +9,7 @@ data class SliceResponse<T>(
     val hasNext: Boolean
 ) {
     companion object {
-        fun <T> from(slice: SliceDomain<T>): SliceResponse<T> {
+        fun <T> from(slice: PageDomain<T>): SliceResponse<T> {
             return SliceResponse(
                 content = slice.content,
                 page = slice.pageNumber,
