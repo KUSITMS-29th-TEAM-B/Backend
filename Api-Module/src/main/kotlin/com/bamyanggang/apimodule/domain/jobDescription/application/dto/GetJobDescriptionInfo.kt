@@ -19,11 +19,13 @@ class GetJobDescriptionInfo {
         ) : Response()
 
         data class Detail(
+            val remainingDate: Int,
             val enterpriseName: String,
             val title: String,
             val content: String,
             val link: String,
             val writeStatus: WriteStatus,
+            val createdAt: LocalDateTime,
             val startedAt: LocalDateTime,
             val endedAt: LocalDateTime
         ): Response()

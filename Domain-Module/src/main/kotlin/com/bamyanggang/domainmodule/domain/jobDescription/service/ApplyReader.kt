@@ -10,7 +10,7 @@ class ApplyReader(
     private val applyRepository: ApplyRepository
 ) {
 
-    fun readApplyByJobDescriptionId(JobDescriptionId: UUID): Apply?{
+    fun readApplyByJobDescriptionId(JobDescriptionId: UUID): Apply{
         return applyRepository.findByJobDescriptionId(JobDescriptionId)
     }
 

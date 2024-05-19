@@ -3,8 +3,10 @@ package com.bamyanggang.apimodule.domain.jobDescription.presentation
 import com.bamyanggang.apimodule.common.dto.PageResponse
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApply
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateJobDescription
+import com.bamyanggang.apimodule.domain.jobDescription.application.dto.GetApplyInfo
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.GetJobDescriptionInfo
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.ApplyCreateService
+import com.bamyanggang.apimodule.domain.jobDescription.application.service.ApplyInfoGetService
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.JobDescriptionCreateService
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.JobDescriptionInfoGetService
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.SortType
@@ -22,7 +24,8 @@ import java.util.UUID
 class JobDescriptionController(
     private val jobDescriptionCreateService: JobDescriptionCreateService,
     private val applyCreateService: ApplyCreateService,
-    private val jobDescriptionInfoGetService: JobDescriptionInfoGetService
+    private val jobDescriptionInfoGetService: JobDescriptionInfoGetService,
+    private val applyInfoGetService: ApplyInfoGetService
 ) {
 
     @PostMapping(JobDescriptionApi.BASE_URL)
@@ -49,5 +52,10 @@ class JobDescriptionController(
     fun getJobDescriptionDetail(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID
     ): GetJobDescriptionInfo.Response.Detail = jobDescriptionInfoGetService.getJobDescriptionDetail(jobDescriptionId)
+
+    @GetMapping(JobDescriptionApi.APPLY)
+    fun getApplyInfo(
+        @PathVariable("jobDescriptionId") jobDescriptionId: UUID
+    ): GetApplyInfo.Response = applyInfoGetService.getApplyInfo(jobDescriptionId)
 
 }

@@ -26,6 +26,6 @@ public class ApplyRepositoryImpl implements ApplyRepository {
     public Apply findByJobDescriptionId(UUID jobDescriptionId) {
         return applyJpaRepository.findByJobDescriptionId(jobDescriptionId)
                 .map(jobDescriptionMapper::toApplyDomainEntity)
-                .orElse(null);
+                .orElseThrow(() -> new PersistenceException.NotFound());
     }
 }
