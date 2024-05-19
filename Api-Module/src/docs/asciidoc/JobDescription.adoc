@@ -41,6 +41,12 @@ operation::JobDescriptionControllerTest/getJobDescriptionDetail[snippets='http-r
 
 operation::JobDescriptionControllerTest/getApplyInfo[snippets='http-request,request-headers,path-parameters,http-response,response-fields']
 
+[[UPDATE-APPLY]]
+=== 자기소개서 수정
+
+operation::JobDescriptionControllerTest/updateApplyInfo[snippets='http-request,path-parameters,request-headers,request-fields,http-response']
+
+
 
 
 
