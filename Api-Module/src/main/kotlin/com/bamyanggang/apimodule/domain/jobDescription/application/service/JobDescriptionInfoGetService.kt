@@ -46,10 +46,12 @@ class JobDescriptionInfoGetService(
     fun getJobDescriptionDetail(jobDescriptionId: UUID): GetJobDescriptionInfo.Response.Detail {
         return jobDescriptionReader.readJobDescriptionById(jobDescriptionId).let{ jobDescription ->
             GetJobDescriptionInfo.Response.Detail(
+                jobDescription.getRemainingDate(),
                 jobDescription.enterpriseName,
                 jobDescription.title,
                 jobDescription.content,
                 jobDescription.link,
+                jobDescription.createdAt,
                 jobDescription.startedAt,
                 jobDescription.endedAt
             )

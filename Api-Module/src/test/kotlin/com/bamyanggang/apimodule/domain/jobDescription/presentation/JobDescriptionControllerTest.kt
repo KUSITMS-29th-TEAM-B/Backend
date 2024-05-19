@@ -348,10 +348,12 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         RequestDocumentation.parameterWithName("jobDescriptionId").description("jd 공고 ID")
                     ),
                     responseFields(
+                        fieldWithPath("remainingDate").description("디데이"),
                         fieldWithPath("enterpriseName").description("기업 이름"),
                         fieldWithPath("title").description("직무 공고 제목"),
                         fieldWithPath("content").description("직무 공고 내용"),
                         fieldWithPath("link").description("직무 공고 링크"),
+                        fieldWithPath("createdAt").description("생성일"),
                         fieldWithPath("startedAt").description("시작일"),
                         fieldWithPath("endedAt").description("종료일")
                     )
