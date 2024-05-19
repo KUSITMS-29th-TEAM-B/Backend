@@ -26,9 +26,6 @@ public class ApplyJpaEntity {
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID applyId;
 
-    @Enumerated(EnumType.STRING)
-    private WriteStatus writeStatus;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -37,9 +34,8 @@ public class ApplyJpaEntity {
     @Convert(converter = UUIDBinaryConverter.class)
     private UUID jobDescriptionId;
 
-    public ApplyJpaEntity(UUID applyId, WriteStatus writeStatus, LocalDateTime createdAt, LocalDateTime updatedAt, UUID jobDescriptionId) {
+    public ApplyJpaEntity(UUID applyId, LocalDateTime createdAt, LocalDateTime updatedAt, UUID jobDescriptionId) {
         this.applyId = applyId;
-        this.writeStatus = writeStatus;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.jobDescriptionId = jobDescriptionId;
