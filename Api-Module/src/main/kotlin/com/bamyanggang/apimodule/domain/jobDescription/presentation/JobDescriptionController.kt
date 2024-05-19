@@ -62,7 +62,7 @@ class JobDescriptionController(
         @RequestBody request: ApplyInfo.Request
     ) = applyUpdateService.updateApplyInfo(jobDescriptionId, request)
 
-    @PatchMapping(JobDescriptionApi.UPDATE)
+    @PatchMapping(JobDescriptionApi.STATUS)
     fun updateJobDescription(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID
     ) = jobDescriptionUpdateService.updateWriteStatus(jobDescriptionId)
