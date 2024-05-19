@@ -33,7 +33,8 @@ class TagGetService(
     }
 
     fun getParentTagsByYearAndLimit(year: Int, limit: Int): GetTag.Response {
-        val topParentTagIds = experienceReader.readByYearDesc(year)
+        val currentUserId = getAuthenticationPrincipal()
+        val topParentTagIds = experienceReader.readByYearDesc(year, currentUserId)
             .distinctBy { it.parentTagId }
             .take(limit)
             .map { it.parentTagId }
@@ -45,8 +46,33 @@ class TagGetService(
         }
     }
 
-    fun getAllParentTagsByYear(year: Int): GetTag.Response {
-        experienceReader.readByYearDesc(year)
-        return GetTag.Response(emptyList())
+    fun getAllParentTagsByYear(year: Int): GetTag.TotalTagInfo {
+        val currentUserId = getAuthenticationPrincipal()
+        val experiences = experienceReader.readByYearDesc(year, currentUserId)
+
+        val experienceGroup = experiences.groupBy { it.parentTagId }
+
+        val tagSummaries = experienceGroup.map {
+            val parentTag = tagReader.readById(it.key)
+            val strongPoints = TreeSet<UUID>()
+
+            it.value.forEach { experience ->
+                experience.strongPoints.forEach { strongPoint ->
+                    strongPoints.add(strongPoint.id)
+                }
+            }
+
+            GetTag.TagSummary(
+                parentTag.id,
+                parentTag.name,
+                strongPoints.size,
+                it.value.size
+            )
+        }
+
+        return GetTag.TotalTagInfo(
+            experiences.size,
+            tagSummaries
+        )
     }
 }
