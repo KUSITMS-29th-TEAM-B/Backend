@@ -15,7 +15,7 @@ public class ExperienceMapper {
         List<ExperienceContentJpaEntity> experienceContentJpaEntities = experience.getContents().stream()
                 .map(this::toExperienceContentJpaEntity).toList();
 
-        List<ExperienceStrongPointJpaEntity> strongPointInfoJpaEntities = experience.getExperienceStrongPoints().stream()
+        List<ExperienceStrongPointJpaEntity> strongPointInfoJpaEntities = experience.getStrongPoints().stream()
                 .map(this::toExperienceStrongPointJpaEntity).toList();
 
         return new ExperienceJpaEntity(
