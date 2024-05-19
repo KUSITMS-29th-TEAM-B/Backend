@@ -26,6 +26,10 @@ data class JobDescription(
         require(startedAt.isBefore(endedAt)) { "시작일은 종료일보다 빨라야 합니다." }
     }
 
+    fun getRemainingDate(): Int {
+        return LocalDateTime.now().until(endedAt, java.time.temporal.ChronoUnit.DAYS).toInt()
+    }
+
     companion object {
         fun create(
             enterpriseName: String,

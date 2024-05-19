@@ -2,9 +2,11 @@ package com.bamyanggang.persistence.jobDescription;
 
 import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.Apply;
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.ApplyRepository;
+import com.bamyanggang.persistence.common.exception.PersistenceException;
 import com.bamyanggang.persistence.jobDescription.jpa.entity.ApplyJpaEntity;
 import com.bamyanggang.persistence.jobDescription.jpa.repository.ApplyJpaRepository;
 import com.bamyanggang.persistence.jobDescription.mapper.JobDescriptionMapper;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +22,10 @@ public class ApplyRepositoryImpl implements ApplyRepository {
         applyJpaRepository.save(applyJpaEntity);
     }
 
+    @Override
+    public Apply findByJobDescriptionId(UUID jobDescriptionId) {
+        return applyJpaRepository.findByJobDescriptionId(jobDescriptionId)
+                .map(jobDescriptionMapper::toApplyDomainEntity)
+                .orElse(null);
+    }
 }
