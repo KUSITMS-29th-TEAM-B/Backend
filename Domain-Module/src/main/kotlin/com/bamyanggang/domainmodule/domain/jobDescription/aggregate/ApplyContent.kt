@@ -4,7 +4,7 @@ import com.bamyanggang.domainmodule.common.entity.DomainEntity
 import com.example.uuid.UuidCreator
 import java.util.*
 
-class ApplyContent(
+data class ApplyContent(
     override val id: UUID = UuidCreator.create(),
     val question: String,
     val answer: String
