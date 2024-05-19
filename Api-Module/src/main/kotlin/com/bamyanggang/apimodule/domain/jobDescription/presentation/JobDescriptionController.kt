@@ -1,6 +1,6 @@
 package com.bamyanggang.apimodule.domain.jobDescription.presentation
 
-import com.bamyanggang.apimodule.common.dto.SliceResponse
+import com.bamyanggang.apimodule.common.dto.PageResponse
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApply
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateJobDescription
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.GetJobDescriptionInfo
@@ -41,7 +41,7 @@ class JobDescriptionController(
         pageable: Pageable,
         @RequestParam writeStatus: WriteStatus?,
         @RequestParam sortType: SortType?
-    ): SliceResponse<GetJobDescriptionInfo.Response> {
+    ): PageResponse<GetJobDescriptionInfo.Response> {
         return jobDescriptionInfoGetService.getJobDescriptionInfo(pageable, writeStatus, sortType)
     }
 

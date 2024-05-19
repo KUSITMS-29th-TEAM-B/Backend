@@ -16,6 +16,7 @@ public class JobDescriptionMapper {
                 jobDescription.getId(),
                 jobDescription.getEnterpriseName(),
                 jobDescription.getTitle(),
+                jobDescription.getWriteStatus(),
                 jobDescription.getContent(),
                 jobDescription.getLink(),
                 jobDescription.getCreatedAt(),
@@ -28,10 +29,11 @@ public class JobDescriptionMapper {
 
 
     public JobDescription toDomainEntity(JobDescriptionJpaEntity jobDescriptionJpaEntity) {
-        return JobDescription.Companion.toDomain(
+        return new JobDescription(
                 jobDescriptionJpaEntity.getJobDescriptionId(),
                 jobDescriptionJpaEntity.getEnterpriseName(),
                 jobDescriptionJpaEntity.getTitle(),
+                jobDescriptionJpaEntity.getWriteStatus(),
                 jobDescriptionJpaEntity.getContent(),
                 jobDescriptionJpaEntity.getLink(),
                 jobDescriptionJpaEntity.getCreatedAt(),
@@ -40,12 +42,12 @@ public class JobDescriptionMapper {
                 jobDescriptionJpaEntity.getEndedAt(),
                 jobDescriptionJpaEntity.getUserId()
         );
+
     }
 
     public ApplyJpaEntity toApplyJpaEntity(Apply apply) {
         return new ApplyJpaEntity(
                 apply.getId(),
-                apply.getWriteStatus(),
                 apply.getCreatedAt(),
                 apply.getUpdatedAt(),
                 apply.getJobDescriptionId()
@@ -55,7 +57,6 @@ public class JobDescriptionMapper {
     public Apply toApplyDomainEntity(ApplyJpaEntity applyJpaEntity) {
         return Apply.Companion.toDomain(
                 applyJpaEntity.getApplyId(),
-                applyJpaEntity.getWriteStatus(),
                 applyJpaEntity.getCreatedAt(),
                 applyJpaEntity.getUpdatedAt(),
                 applyJpaEntity.getJobDescriptionId()

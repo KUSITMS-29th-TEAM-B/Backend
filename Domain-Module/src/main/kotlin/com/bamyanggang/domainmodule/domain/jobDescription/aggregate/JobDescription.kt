@@ -1,6 +1,7 @@
 package com.bamyanggang.domainmodule.domain.jobDescription.aggregate
 
 import com.bamyanggang.domainmodule.common.entity.AggregateRoot
+import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import com.example.uuid.UuidCreator
 import java.time.LocalDateTime
 import java.util.*
@@ -9,6 +10,7 @@ data class JobDescription(
     override val id: UUID = UuidCreator.create(),
     val enterpriseName: String,
     val title: String,
+    val writeStatus: WriteStatus,
     val content: String,
     val link: String,
     val createdAt: LocalDateTime,
@@ -30,6 +32,10 @@ data class JobDescription(
         return LocalDateTime.now().until(endedAt, java.time.temporal.ChronoUnit.DAYS).toInt()
     }
 
+    fun changeWriteStatus(writeStatus: WriteStatus): JobDescription {
+        return copy(writeStatus = writeStatus)
+    }
+
     companion object {
         fun create(
             enterpriseName: String,
@@ -43,6 +49,7 @@ data class JobDescription(
             return JobDescription(
                 enterpriseName = enterpriseName,
                 title = title,
+                writeStatus = WriteStatus.NOT_APPLIED,
                 content = content,
                 link = link,
                 createdAt = LocalDateTime.now(),
@@ -50,32 +57,6 @@ data class JobDescription(
                 startedAt = startedAt,
                 endedAt = endedAt,
                 userId = userId
-            )
-        }
-
-        fun toDomain(
-            id: UUID,
-            enterpriseName: String,
-            title: String,
-            content: String,
-            link: String,
-            createdAt: LocalDateTime,
-            updatedAt: LocalDateTime,
-            startedAt: LocalDateTime,
-            endedAt: LocalDateTime,
-            userId: UUID,
-        ): JobDescription {
-            return JobDescription(
-                id = id,
-                enterpriseName = enterpriseName,
-                title = title,
-                content = content,
-                link = link,
-                createdAt = createdAt,
-                updatedAt = updatedAt,
-                startedAt = startedAt,
-                endedAt = endedAt,
-                userId = userId,
             )
         }
     }

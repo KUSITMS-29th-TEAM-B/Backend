@@ -17,7 +17,6 @@ ApplyTest : FunSpec({
         val apply = Apply.create(jobDescriptionId)
 
         apply.jobDescriptionId shouldBe jobDescriptionId
-        apply.writeStatus shouldBe WriteStatus.WRITING
     }
 
 })

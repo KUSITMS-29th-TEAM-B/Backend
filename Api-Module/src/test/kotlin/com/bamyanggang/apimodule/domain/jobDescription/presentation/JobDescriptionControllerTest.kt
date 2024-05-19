@@ -1,7 +1,7 @@
 package com.bamyanggang.apimodule.domain.jobDescription.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
-import com.bamyanggang.apimodule.common.dto.SliceResponse
+import com.bamyanggang.apimodule.common.dto.PageResponse
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApply
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApplyContent
 import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateJobDescription
@@ -11,10 +11,9 @@ import com.bamyanggang.apimodule.domain.jobDescription.application.service.JobDe
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.JobDescriptionInfoGetService
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
-import com.bamyanggang.domainmodule.common.pagination.SliceDomain
+import com.bamyanggang.domainmodule.common.pagination.PageDomain
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.SortType
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
-import io.kotest.assertions.print.printWithType
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
@@ -22,8 +21,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Import
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Slice
-import org.springframework.data.domain.SliceImpl
 import org.springframework.http.MediaType
 import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
@@ -260,9 +257,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("startedAt", LocalDateTime.now())
             it.set("endedAt", LocalDateTime.now()) }
 
-        val slice = SliceDomain(listOf(getJobDescriptionInfoResponse), 0, 1, true)
-        val sliceResponse = SliceResponse.from(slice)
-        given(jobDescriptionInfoGetService.getJobDescriptionInfo(pageRequest, WriteStatus.WRITING, SortType.ENDED)).willReturn(sliceResponse)
+        val slice = PageDomain(listOf(getJobDescriptionInfoResponse), 0, 1, 5, true)
+        val pageResponse = PageResponse.from(slice)
+        given(jobDescriptionInfoGetService.getJobDescriptionInfo(pageRequest, WriteStatus.WRITING, SortType.ENDED)).willReturn(pageResponse)
 
 
         val request = RestDocumentationRequestBuilders.get(JobDescriptionApi.BASE_URL)
@@ -302,6 +299,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("content[].endedAt").description("종료일"),
                         fieldWithPath("page").description("요청 페이지"),
                         fieldWithPath("size").description("요청 사이즈"),
+                        fieldWithPath("totalPage").description("전체 페이지 수"),
                         fieldWithPath("hasNext").description("다음 데이터 존재 여부")
                     )
                 )

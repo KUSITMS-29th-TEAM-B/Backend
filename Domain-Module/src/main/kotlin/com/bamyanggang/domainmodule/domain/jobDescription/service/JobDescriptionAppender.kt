@@ -1,6 +1,7 @@
 package com.bamyanggang.domainmodule.domain.jobDescription.service
 
 import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.JobDescription
+import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.JobDescriptionRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime

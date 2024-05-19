@@ -18,15 +18,32 @@ inline fun <reified T> generateFixture(propertyBuilder: (ArbitraryBuilder<T>) ->
 
 // 특정 속성 없는 임의 객체 생성
 inline fun <reified T> generateFixture(): T {
-    return generateFixture { it }
-}
-
-// 기본 타입의 임의의 객체
-inline fun <reified T> generateBasicTypeFixture(length: Int): T {
     return FixtureMonkey.builder()
         .defaultNotNull(true)
         .plugin(KotlinPlugin())
         .build()
         .giveMeBuilder<T>()
         .sample()
+}
+
+// 기본 타입의 임의의 객체
+inline fun <reified T> generateBasicTypeFixture(length: Int): T {
+    return if (T::class == String::class) {
+        FixtureMonkey.builder()
+            .defaultNotNull(true)
+            .plugin(KotlinPlugin())
+            .build()
+            .giveMeBuilder<T>()
+            .sample()
+            .toString()
+            .take(length) as T
+    } else {
+        FixtureMonkey.builder()
+            .defaultNotNull(true)
+            .plugin(KotlinPlugin())
+            .build()
+            .giveMeBuilder<T>()
+            .sample()
+    }
+
 }
