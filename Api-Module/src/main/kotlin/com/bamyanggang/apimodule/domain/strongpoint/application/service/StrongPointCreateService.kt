@@ -2,7 +2,6 @@ package com.bamyanggang.apimodule.domain.strongpoint.application.service
 
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.strongpoint.application.dto.CreateStrongPoint
-import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoint
 import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint
 import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointException
 import com.bamyanggang.domainmodule.domain.strongpoint.exception.StrongPointExceptionMessage
@@ -29,7 +28,7 @@ class StrongPointCreateService(
         }
 
         val newStrongPoints = strongPointAppender.appendAllStrongPoint(newStrongPointNames, currentUserId).map {
-            GetStrongPoint.DetailStrongPoint(it.id, it.name)
+            CreateStrongPoint.DetailStrongPoint(it.id, it.name)
         }
 
         return CreateStrongPoint.Response(newStrongPoints)

@@ -37,8 +37,8 @@ class StrongPointControllerTest : BaseRestDocsTest() {
         val createStrongPoint: CreateStrongPoint.Request = generateFixture()
 
         val strongPoints = arrayListOf(
-            GetStrongPoint.DetailStrongPoint(generateFixture(), "역량 키워드 이름 1"),
-            GetStrongPoint.DetailStrongPoint(generateFixture(), "역량 키워드 이름 2")
+            CreateStrongPoint.DetailStrongPoint(generateFixture(), "역량 키워드 이름 1"),
+            CreateStrongPoint.DetailStrongPoint(generateFixture(), "역량 키워드 이름 2")
         )
 
         val createStrongPointResponse: CreateStrongPoint.Response = CreateStrongPoint.Response(strongPoints)
