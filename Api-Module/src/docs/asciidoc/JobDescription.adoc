@@ -47,7 +47,7 @@ operation::JobDescriptionControllerTest/getApplyInfo[snippets='http-request,requ
 operation::JobDescriptionControllerTest/updateApplyInfo[snippets='http-request,path-parameters,request-headers,request-fields,http-response']
 
 [[UPDATE-WRITE-STATUS]]
-=== 자기소개서 작성 상태 수정
+=== JD 작성 상태 수정
 
 operation::JobDescriptionControllerTest/updateWriteStatus[snippets='http-request,path-parameters,request-headers,http-response']
 
