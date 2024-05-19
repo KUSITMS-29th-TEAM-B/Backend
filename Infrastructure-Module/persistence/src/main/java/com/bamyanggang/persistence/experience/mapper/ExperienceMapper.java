@@ -16,7 +16,7 @@ public class ExperienceMapper {
                 .map(this::toExperienceContentJpaEntity).toList();
 
         List<ExperienceStrongPointJpaEntity> strongPointInfoJpaEntities = experience.getExperienceStrongPoints().stream()
-                .map(this::toStrongPointInfoJpaEntity).toList();
+                .map(this::toExperienceStrongPointJpaEntity).toList();
 
         return new ExperienceJpaEntity(
                 experience.getId(),
@@ -38,7 +38,7 @@ public class ExperienceMapper {
                 .map(this::toExperienceContentDomainEntity).toList();
 
         List<ExperienceStrongPoint> experienceStrongPoints = experienceJpaEntity.getStrongPointInfos().stream()
-                .map(this::toStrongPointInfoDomainEntity).toList();
+                .map(this::toExperienceStrongPointDomainEntity).toList();
         return Experience.Companion.toDomain(
                 experienceJpaEntity.getExperienceId(),
                 experienceJpaEntity.getUserId(),
@@ -70,11 +70,11 @@ public class ExperienceMapper {
         );
     }
 
-    public ExperienceStrongPointJpaEntity toStrongPointInfoJpaEntity(ExperienceStrongPoint experienceStrongPoint) {
+    public ExperienceStrongPointJpaEntity toExperienceStrongPointJpaEntity(ExperienceStrongPoint experienceStrongPoint) {
         return new ExperienceStrongPointJpaEntity(experienceStrongPoint.getId(), experienceStrongPoint.getStrongPointId());
     }
 
-    public ExperienceStrongPoint toStrongPointInfoDomainEntity(ExperienceStrongPointJpaEntity experienceStrongPointJpaEntity) {
+    public ExperienceStrongPoint toExperienceStrongPointDomainEntity(ExperienceStrongPointJpaEntity experienceStrongPointJpaEntity) {
         return ExperienceStrongPoint.Companion.toDomain(
                 experienceStrongPointJpaEntity.getExperienceStrongPointId(),
                 experienceStrongPointJpaEntity.getStrongPointId()
