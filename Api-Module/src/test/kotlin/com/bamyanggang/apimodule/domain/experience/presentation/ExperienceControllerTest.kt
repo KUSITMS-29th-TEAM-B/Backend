@@ -230,8 +230,8 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     @DisplayName("경험을 수정한다.")
     fun editExperienceTest() {
         //given
-        val content1 = EditExperience.ExperienceContentRequest("질문1", "답변1")
-        val content2 = EditExperience.ExperienceContentRequest("질문2", "답변2")
+        val content1 = EditExperience.DetailExperienceContent("질문1", "답변1")
+        val content2 = EditExperience.DetailExperienceContent("질문2", "답변2")
 
         val contentRequest = arrayListOf(content1, content2)
 
@@ -248,7 +248,7 @@ class ExperienceControllerTest : BaseRestDocsTest() {
         val editedExperienceId : UUID = UUID.randomUUID()
         val editExperienceResponse : EditExperience.Response = generateFixture()
 
-        given(experienceEditService.editExperience(editExperienceRequest, editedExperienceId)).willReturn(editExperienceResponse)
+        given(experienceEditService.editExperienceById(editExperienceRequest, editedExperienceId)).willReturn(editExperienceResponse)
 
         val request = RestDocumentationRequestBuilders.patch(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL, editedExperienceId)
             .header("Authorization", "Bearer Access Token")
