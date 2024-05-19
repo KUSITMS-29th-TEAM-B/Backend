@@ -29,7 +29,7 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     @Override
-    public Token findByValue(@NotNull String value) {
+    public Token findByValue(String value) {
         TokenJpaEntity tokenJpaEntity = tokenJpaRepository.findByValue(value)
                 .orElseThrow(() -> new PersistenceException.NotFound());
         return userMapper.toDomainEntity(tokenJpaEntity);
