@@ -94,15 +94,18 @@ class JobDescriptionTest : FunSpec({
         // arrange
         val startedAt: LocalDateTime = LocalDateTime.now()
         val endedAt: LocalDateTime = startedAt.plusDays(1)
-        val jobDescription = JobDescription.create(
-            enterpriseName = generateBasicTypeFixture(10),
-            title = generateBasicTypeFixture(10),
-            content = generateBasicTypeFixture(10),
-            link = generateBasicTypeFixture(10),
-            startedAt = startedAt,
-            endedAt = endedAt,
-            userId = UUID.randomUUID()
-        )
+        val jobDescription: JobDescription = generateFixture {
+            it.set("enterpriseName", "기업 이름")
+            it.set("title", "직무 공고 제목")
+            it.set("writeStatus", WriteStatus.NOT_APPLIED)
+            it.set("content", "직무 공고 내용")
+            it.set("link", "직무 공고 링크")
+            it.set("createdAt", LocalDateTime.now())
+            it.set("updatedAt", LocalDateTime.now())
+            it.set("startedAt", LocalDateTime.now())
+            it.set("endedAt", LocalDateTime.now().plusDays(1))
+            it.set("userId", UUID.randomUUID())
+        }
 
         // act
         val remainingDate = jobDescription.getRemainingDate()
@@ -113,18 +116,21 @@ class JobDescriptionTest : FunSpec({
 
     test("상태 변경") {
         // arrange
-        val jobDescription = JobDescription.create(
-            enterpriseName = generateBasicTypeFixture(10),
-            title = generateBasicTypeFixture(10),
-            content = generateBasicTypeFixture(10),
-            link = generateBasicTypeFixture(10),
-            startedAt = LocalDateTime.now(),
-            endedAt = LocalDateTime.now().plusDays(1),
-            userId = UUID.randomUUID()
-        )
+        val jobDescription: JobDescription = generateFixture {
+            it.set("enterpriseName", "기업 이름")
+            it.set("title", "직무 공고 제목")
+            it.set("writeStatus", WriteStatus.NOT_APPLIED)
+            it.set("content", "직무 공고 내용")
+            it.set("link", "직무 공고 링크")
+            it.set("createdAt", LocalDateTime.now())
+            it.set("updatedAt", LocalDateTime.now())
+            it.set("startedAt", LocalDateTime.now())
+            it.set("endedAt", LocalDateTime.now().plusDays(1))
+            it.set("userId", UUID.randomUUID())
+        }
 
         // act
-        val changedJobDescription = jobDescription.changeWriteStatus(WriteStatus.WRITING)
+        val changedJobDescription = jobDescription.changeWriteStatus()
 
         // assert
         changedJobDescription.writeStatus shouldBe WriteStatus.WRITING
