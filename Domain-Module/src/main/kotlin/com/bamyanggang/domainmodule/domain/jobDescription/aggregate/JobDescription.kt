@@ -2,6 +2,7 @@ package com.bamyanggang.domainmodule.domain.jobDescription.aggregate
 
 import com.bamyanggang.domainmodule.common.entity.AggregateRoot
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
+import com.bamyanggang.domainmodule.domain.jobDescription.exception.JobDescriptionException
 import com.example.uuid.UuidCreator
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -34,8 +35,13 @@ data class JobDescription(
         return LocalDate.now().until(endedAt.toLocalDate(), ChronoUnit.DAYS).toInt()
     }
 
-    fun changeWriteStatus(writeStatus: WriteStatus): JobDescription {
-        return copy(writeStatus = writeStatus)
+    fun changeWriteStatus() : JobDescription {
+        return when(writeStatus) {
+            WriteStatus.NOT_APPLIED -> copy(writeStatus = WriteStatus.WRITING)
+            WriteStatus.WRITING -> copy(writeStatus = WriteStatus.WRITTEN)
+            WriteStatus.WRITTEN -> copy(writeStatus = WriteStatus.WRITING)
+            else -> throw JobDescriptionException.ModifyWriteStatusFailed()
+        }
     }
 
     companion object {

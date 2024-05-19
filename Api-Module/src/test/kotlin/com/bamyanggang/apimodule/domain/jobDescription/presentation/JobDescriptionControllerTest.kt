@@ -46,6 +46,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
     @MockBean
     private lateinit var applyUpdateService: ApplyUpdateService
 
+    @MockBean
+    private lateinit var jobDescriptionUpdateService: JobDescriptionUpdateService
+
     @Test
     @DisplayName("직무 공고를 등록한다.")
     fun createJobDescription() {
@@ -436,6 +439,33 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("contents").description("내용"),
                         fieldWithPath("contents[].question").description("질문"),
                         fieldWithPath("contents[].answer").description("답변")
+                    )
+                )
+            )
+    }
+
+    @Test
+    @DisplayName("JD 작성 상태를 수정한다")
+    fun updateWriteStatus() {
+        // given
+        val jobDescriptionId = UUID.randomUUID()
+
+        val request = RestDocumentationRequestBuilders.patch(JobDescriptionApi.STATUS, jobDescriptionId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(
+                resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
+                    pathParameters(
+                        RequestDocumentation.parameterWithName("jobDescriptionId").description("jd 공고 ID")
                     )
                 )
             )
