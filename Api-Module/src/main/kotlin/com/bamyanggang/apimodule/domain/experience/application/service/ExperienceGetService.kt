@@ -1,6 +1,8 @@
 package com.bamyanggang.apimodule.domain.experience.application.service
 
+import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.experience.application.dto.DetailExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
 import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoint
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceReader
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointReader
