@@ -6,6 +6,7 @@ import com.bamyanggang.persistence.common.exception.PersistenceException.NotFoun
 import com.bamyanggang.persistence.experience.jpa.entity.ExperienceJpaEntity;
 import com.bamyanggang.persistence.experience.jpa.repository.ExperienceJpaRepository;
 import com.bamyanggang.persistence.experience.mapper.ExperienceMapper;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -33,5 +34,11 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
                 .orElseThrow(NotFound::new);
 
         return experienceMapper.toExperienceDomainEntity(experienceJpaEntity);
+    }
+
+    @Override
+    public List<Experience> findAllByUserId(UUID userId) {
+        List<ExperienceJpaEntity> userExperienceJpaEntities = experienceJpaRepository.findAllByUserId(userId);
+        return userExperienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
 }

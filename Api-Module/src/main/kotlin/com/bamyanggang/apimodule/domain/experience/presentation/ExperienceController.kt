@@ -2,9 +2,11 @@ package com.bamyanggang.apimodule.domain.experience.presentation
 
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
+import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceGetService
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -12,8 +14,14 @@ import java.util.*
 class ExperienceController(
     private val experienceCreateService: ExperienceCreateService,
     private val experienceDeleteService: ExperienceDeleteService,
-    private val experienceEditService: ExperienceEditService
+    private val experienceEditService: ExperienceEditService,
+    private val experienceGetService: ExperienceGetService
 ) {
+    @GetMapping(ExperienceApi.ALL_YEARS)
+    fun getAllYearsByExistExperience() : ExperienceYear.Response {
+        return experienceGetService.getAllYearsByExistExperience()
+    }
+
     @PostMapping(ExperienceApi.BASE_URL)
     fun createExperience(@RequestBody request: CreateExperience.Request): CreateExperience.Response {
         return experienceCreateService.createExperience(request)
