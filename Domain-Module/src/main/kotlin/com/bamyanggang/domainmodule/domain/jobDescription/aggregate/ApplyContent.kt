@@ -4,11 +4,10 @@ import com.bamyanggang.domainmodule.common.entity.DomainEntity
 import com.example.uuid.UuidCreator
 import java.util.*
 
-class ApplyContent(
+data class ApplyContent(
     override val id: UUID = UuidCreator.create(),
     val question: String,
-    val answer: String,
-    val applyId: UUID
+    val answer: String
 ): DomainEntity {
 
     init {
@@ -20,26 +19,10 @@ class ApplyContent(
         fun create(
             question: String,
             answer: String,
-            applyId: UUID
         ): ApplyContent {
             return ApplyContent(
                 question = question,
                 answer = answer,
-                applyId = applyId
-            )
-        }
-
-        fun toDomain(
-            id: UUID,
-            question: String,
-            answer: String,
-            applyId: UUID
-        ): ApplyContent {
-            return ApplyContent(
-                id = id,
-                question = question,
-                answer = answer,
-                applyId = applyId
             )
         }
     }

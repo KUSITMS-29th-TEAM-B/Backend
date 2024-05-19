@@ -12,15 +12,13 @@ class ApplyContentTest : FunSpec({
 
     test("ApplyContent 생성") {
         // arrange
-        val question: String = generateBasicTypeFixture(10)
-        val answer: String = generateBasicTypeFixture(10)
-        val applyId: UUID = UUID.randomUUID()
+        val question: String = generateFixture { it.set("question", "질문") }
+        val answer: String = generateFixture { it.set("answer", "답변") }
 
         // act
         val applyContent = ApplyContent.create(
             question = question,
             answer = answer,
-            applyId = applyId
         )
 
         // assert
@@ -39,7 +37,6 @@ class ApplyContentTest : FunSpec({
             ApplyContent.create(
                 question = question,
                 answer = answer,
-                applyId = applyId
             )
         }
     }
