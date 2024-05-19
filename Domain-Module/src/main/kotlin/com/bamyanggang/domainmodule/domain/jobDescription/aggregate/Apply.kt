@@ -8,7 +8,6 @@ import java.util.UUID
 
 data class Apply(
     override val id : UUID = UuidCreator.create(),
-    val writeStatus: WriteStatus = WriteStatus.WRITING,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
     val jobDescriptionId: UUID,
@@ -27,14 +26,12 @@ data class Apply(
 
         fun toDomain(
             id: UUID,
-            writeStatus: WriteStatus,
             createdAt: LocalDateTime,
             updatedAt: LocalDateTime,
             jobDescriptionId: UUID
         ): Apply {
             return Apply(
                 id = id,
-                writeStatus = writeStatus,
                 createdAt = createdAt,
                 updatedAt = updatedAt,
                 jobDescriptionId = jobDescriptionId
