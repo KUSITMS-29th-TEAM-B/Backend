@@ -1,10 +1,7 @@
 package com.bamyanggang.domainmodule.domain.jobDescription.service
 
-import com.bamyanggang.commonmodule.fixture.generateBasicTypeFixture
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.JobDescriptionRepository
-import com.bamyanggang.domainmodule.domain.jobDescription.service.JobDescriptionAppender
-
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.mockk
 import io.mockk.verify
@@ -16,12 +13,12 @@ class JobDescriptionAppenderTest : BehaviorSpec({
     val jobDescriptionAppender = JobDescriptionAppender(mockJobDescriptionRepository)
 
     given("JobDescriptionAppender.appendJobDescription") {
-        val enterpriseName : String = generateBasicTypeFixture(10)
-        val title : String = generateBasicTypeFixture(10)
-        val content : String = generateBasicTypeFixture(10)
-        val link : String = generateBasicTypeFixture(10)
-        val startedAt: LocalDateTime = LocalDateTime.now()
-        val endedAt: LocalDateTime = startedAt.plusDays(1)
+        val enterpriseName= "기업 명"
+        val title: String = generateFixture { it.set("title", "직무 공고 제목") }
+        val content: String = generateFixture { it.set("content", "직무 공고 내용") }
+        val link: String = generateFixture { it.set("link", "직무 공고 링크") }
+        val startedAt: LocalDateTime = generateFixture{ it.set("startedAt", LocalDateTime.now()) }
+        val endedAt: LocalDateTime = generateFixture { it.set("endedAt", startedAt.plusDays(1))}
         val userId : UUID = UUID.randomUUID()
 
         `when`("appendJobDescription이 호출되면") {
