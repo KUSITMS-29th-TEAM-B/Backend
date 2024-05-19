@@ -1,13 +1,15 @@
 package com.bamyanggang.apimodule.domain.strongpoint.application.dto
 
-import java.util.*
-
 class CreateStrongPoint {
     data class Request(
-        val names: List<String>,
+        val names: List<StrongPointName>,
     )
 
     data class Response(
-        val id: UUID,
+        val strongPoints: List<GetStrongPoint.DetailStrongPoint>,
+    )
+
+    data class StrongPointName(
+        val name: String
     )
 }
