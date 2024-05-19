@@ -2,6 +2,7 @@ package com.bamyanggang.apimodule.domain.tag.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetTag
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.tag.exception.TagException
@@ -203,6 +204,79 @@ class TagControllerTest : BaseRestDocsTest() {
                 responseFields(
                     fieldWithPath("code").description(TagException.DuplicatedTagName().code),
                     fieldWithPath("message").description(TagException.DuplicatedTagName().message)
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("하위 태그를 전체 조회한다.")
+    fun getAllChildTagTest() {
+        //given
+        val parentTagId = generateFixture<UUID>()
+
+        val tagDetails = arrayListOf(
+            GetTag.TagDetail(generateFixture(), "하위 태그 이름 1"),
+            GetTag.TagDetail(generateFixture(), "하위 태그 이름 2")
+        )
+
+        val tagResponse = GetTag.Response(tagDetails)
+
+        given(tagController.getAllChildTags(parentTagId)).willReturn(tagResponse)
+
+        val request = RestDocumentationRequestBuilders.get(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
+            .header("Authorization", "Bearer Access Token")
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                pathParameters(
+                    parameterWithName("tagId").description("상위 태그 id")
+                ),
+                responseFields(
+                    fieldWithPath("tags").description("하위 태그 리스트"),
+                    fieldWithPath("tags[].id").description("태그 id"),
+                    fieldWithPath("tags[].name").description("태그 이름"),
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("상위 태그를 전체조회한다.")
+    fun getAllParentTagTest() {
+        //given
+        val tagDetails = arrayListOf(
+            GetTag.TagDetail(generateFixture(), "상위 태그 이름 1"),
+            GetTag.TagDetail(generateFixture(), "상위 태그 이름 2")
+        )
+
+        val tagResponse = GetTag.Response(tagDetails)
+
+        given(tagController.getAllParentTags()).willReturn(tagResponse)
+
+        val request = RestDocumentationRequestBuilders.get(TagApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                responseFields(
+                    fieldWithPath("tags").description("상위 태그 리스트"),
+                    fieldWithPath("tags[].id").description("태그 id"),
+                    fieldWithPath("tags[].name").description("태그 이름"),
                 )
             )
         )
