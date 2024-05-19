@@ -25,5 +25,4 @@ class JobDescriptionCreateService(
             )
         }.also { return CreateJobDescription.Response(jobDescriptionId = it.id) }
     }
-
 }

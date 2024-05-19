@@ -7,37 +7,62 @@ import java.util.*
 
 data class Experience(
     override val id: UUID = UuidCreator.create(),
-    val userId : UUID,
-    val parentTagId : UUID,
-    val childTagId : UUID,
-    val strongPointIds : List<UUID> = emptyList(),
     val title : String,
-    val contentIds : List<UUID> = emptyList(),
+    val userId : UUID,
+    val parentTagId: UUID,
+    val childTagId: UUID,
+    val experienceStrongPoints: List<ExperienceStrongPoint> = emptyList(),
+    val contents: List<ExperienceContent>,
     val startedAt : LocalDateTime,
     val endedAt : LocalDateTime,
     val createdAt : LocalDateTime,
     val updatedAt : LocalDateTime,
 ) : AggregateRoot {
+    fun update(
+        title: String,
+        userId: UUID,
+        parentTagId: UUID,
+        childTagId: UUID,
+        contents: List<ExperienceContent>,
+        experienceStrongPoints: List<ExperienceStrongPoint>,
+        startedAt: LocalDateTime,
+        endedAt: LocalDateTime,
+    ): Experience {
+        return copy(
+            title = title,
+            userId = userId,
+            parentTagId = parentTagId,
+            childTagId = childTagId,
+            contents = contents,
+            experienceStrongPoints = experienceStrongPoints,
+            startedAt = startedAt,
+            endedAt = endedAt,
+            createdAt = createdAt,
+            updatedAt = LocalDateTime.now(),
+        )
+    }
 
+    init {
+        require(title.length < 50) { "제목의 글자 수는 50자 제한입니다." }
+    }
     companion object {
         fun create(
+            title: String,
             userId: UUID,
             parentTagId: UUID,
             childTagId: UUID,
-            strongPointIds: List<UUID>,
-            title: String,
-            contentIds: List<UUID> = emptyList(),
+            contents: List<ExperienceContent>,
+            experienceStrongPoints: List<ExperienceStrongPoint>,
             startedAt: LocalDateTime,
             endedAt: LocalDateTime,
         ): Experience {
             return Experience(
-                id = UuidCreator.create(),
                 userId = userId,
+                title = title,
                 parentTagId = parentTagId,
                 childTagId = childTagId,
-                strongPointIds = strongPointIds,
-                title = title,
-                contentIds = contentIds,
+                contents = contents,
+                experienceStrongPoints = experienceStrongPoints,
                 startedAt = startedAt,
                 endedAt = endedAt,
                 createdAt = LocalDateTime.now(),
@@ -48,11 +73,11 @@ data class Experience(
         fun toDomain(
             id: UUID,
             userId: UUID,
+            title: String,
             parentTagId: UUID,
             childTagId: UUID,
-            strongPointIds: List<UUID>,
-            title: String,
-            contentIds: List<UUID> = emptyList(),
+            contents: List<ExperienceContent>,
+            experienceStrongPoints: List<ExperienceStrongPoint>,
             startedAt: LocalDateTime,
             endedAt: LocalDateTime,
             createdAt: LocalDateTime,
@@ -61,11 +86,11 @@ data class Experience(
             return Experience(
                 id = id,
                 userId = userId,
+                title = title,
                 parentTagId = parentTagId,
                 childTagId = childTagId,
-                strongPointIds = strongPointIds,
-                title = title,
-                contentIds = contentIds,
+                contents = contents,
+                experienceStrongPoints = experienceStrongPoints,
                 startedAt = startedAt,
                 endedAt = endedAt,
                 createdAt = createdAt,

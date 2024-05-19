@@ -15,7 +15,11 @@ data class Tag(
 
     companion object {
         fun create(name: String, parentTagId: UUID?, userId: UUID): Tag {
-            return Tag(UuidCreator.create(), name, parentTagId, userId)
+            return Tag(
+                name = name,
+                parentTagId = parentTagId,
+                userId = userId
+            )
         }
 
         fun toDomain(id : UUID, name: String, parentTagId: UUID?, userId: UUID): Tag {
