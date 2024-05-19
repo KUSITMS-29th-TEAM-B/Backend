@@ -14,7 +14,7 @@ class ExperienceEditService(
     private val experienceModifier: ExperienceModifier,
 ) {
     @Transactional
-    fun editExperience(request: EditExperience.Request, experienceId: UUID) : EditExperience.Response{
+    fun editExperienceById(request: EditExperience.Request, experienceId: UUID) : EditExperience.Response{
         val newContents = request.contents.map {
             ExperienceContent.create(it.question, it.answer)
         }
