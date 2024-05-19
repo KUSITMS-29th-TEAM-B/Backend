@@ -6,6 +6,7 @@ import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.JobDescripti
 import com.bamyanggang.persistence.jobDescription.jpa.entity.ApplyContentJpaEntity;
 import com.bamyanggang.persistence.jobDescription.jpa.entity.ApplyJpaEntity;
 import com.bamyanggang.persistence.jobDescription.jpa.entity.JobDescriptionJpaEntity;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -46,19 +47,27 @@ public class JobDescriptionMapper {
     }
 
     public ApplyJpaEntity toApplyJpaEntity(Apply apply) {
+        List<ApplyContentJpaEntity> applyContentJpaEntities = apply.getContents().stream()
+                .map(this::toApplyContentJpaEntity).toList();
+
         return new ApplyJpaEntity(
                 apply.getId(),
                 apply.getCreatedAt(),
                 apply.getUpdatedAt(),
+                applyContentJpaEntities,
                 apply.getJobDescriptionId()
         );
     }
 
     public Apply toApplyDomainEntity(ApplyJpaEntity applyJpaEntity) {
-        return Apply.Companion.toDomain(
+        List<ApplyContent> applyContents = applyJpaEntity.getApplyContents().stream()
+                .map(this::toApplyContentDomainEntity).toList();
+
+        return new Apply(
                 applyJpaEntity.getApplyId(),
                 applyJpaEntity.getCreatedAt(),
                 applyJpaEntity.getUpdatedAt(),
+                applyContents,
                 applyJpaEntity.getJobDescriptionId()
         );
     }
@@ -67,17 +76,15 @@ public class JobDescriptionMapper {
         return new ApplyContentJpaEntity(
                 applyContent.getId(),
                 applyContent.getQuestion(),
-                applyContent.getAnswer(),
-                applyContent.getApplyId()
+                applyContent.getAnswer()
         );
     }
 
     public ApplyContent toApplyContentDomainEntity(ApplyContentJpaEntity applyContentJpaEntity) {
-        return ApplyContent.Companion.toDomain(
+        return new ApplyContent(
                 applyContentJpaEntity.getApplyContentId(),
                 applyContentJpaEntity.getQuestion(),
-                applyContentJpaEntity.getAnswer(),
-                applyContentJpaEntity.getApplyId()
+                applyContentJpaEntity.getAnswer()
         );
     }
 
