@@ -26,7 +26,7 @@ class ExperienceReader(
         return experienceRepository.findAllByUserId(userId)
     }
 
-    fun readByYearDesc(year: Int): List<Experience> {
-        return experienceRepository.findByYearDesc(year)
+    fun readByYearDesc(year: Int, userId: UUID): List<Experience> {
+        return experienceRepository.findByUserIdAndYearDesc(year, userId)
     }
 }

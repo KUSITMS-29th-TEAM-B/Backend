@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ExperienceJpaRepository extends JpaRepository<ExperienceJpaEntity, UUID> {
     List<ExperienceJpaEntity> findAllByUserId(UUID userId);
-    List<ExperienceJpaEntity> findByCreatedAtBetweenOrderByCreatedAtDesc(LocalDateTime startYear, LocalDateTime endYear);
+    List<ExperienceJpaEntity> findByUserIdAndCreatedAtBetweenOrderByCreatedAtDesc(UUID userId, LocalDateTime startYear, LocalDateTime endYear);
 }
