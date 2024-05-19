@@ -1,6 +1,7 @@
 package com.bamyanggang.domainmodule.domain.jobDescription.service
 
 import com.bamyanggang.commonmodule.fixture.generateFixture
+import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.ApplyContent
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.ApplyRepository
 import com.bamyanggang.domainmodule.domain.jobDescription.service.ApplyAppender
 import io.kotest.core.spec.style.BehaviorSpec
@@ -13,11 +14,16 @@ class ApplyAppenderTest : BehaviorSpec({
     val applyAppender = ApplyAppender(mockApplyRepository)
 
     given("ApplyAppender.appendApply") {
-        val title : String = generateFixture()
+        val applyContent: ApplyContent = generateFixture {
+            it.set("question", "question")
+            it.set("answer", "answer")
+        }
+        val contents: List<ApplyContent> = listOf(applyContent)
         val jobDescriptionId : UUID = generateFixture()
 
         `when`("appendApply이 호출되면") {
             applyAppender.appendApply(
+                contents = contents,
                 jobDescriptionId = jobDescriptionId
             )
 

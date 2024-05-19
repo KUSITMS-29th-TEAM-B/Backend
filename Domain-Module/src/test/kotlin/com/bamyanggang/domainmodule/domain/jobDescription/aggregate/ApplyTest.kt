@@ -9,12 +9,17 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import java.util.*
 
-class
-ApplyTest : FunSpec({
+class ApplyTest : FunSpec({
     test("Apply.create 생성") {
+        val contents = listOf(
+            ApplyContent.create(
+                question = generateFixture { it.set("question", "질문") },
+                answer = generateFixture { it.set("answer", "답변") }
+            )
+        )
         val jobDescriptionId: UUID = UUID.randomUUID()
 
-        val apply = Apply.create(jobDescriptionId)
+        val apply = Apply.create(contents,jobDescriptionId)
 
         apply.jobDescriptionId shouldBe jobDescriptionId
     }
