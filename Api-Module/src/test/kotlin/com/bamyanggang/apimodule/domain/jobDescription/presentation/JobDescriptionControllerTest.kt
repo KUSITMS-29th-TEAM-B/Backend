@@ -450,7 +450,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
         // given
         val jobDescriptionId = UUID.randomUUID()
 
-        val request = RestDocumentationRequestBuilders.patch(JobDescriptionApi.UPDATE, jobDescriptionId)
+        val request = RestDocumentationRequestBuilders.patch(JobDescriptionApi.STATUS, jobDescriptionId)
             .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
 
