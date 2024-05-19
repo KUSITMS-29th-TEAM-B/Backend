@@ -1,6 +1,7 @@
 package com.bamyanggang.apimodule.domain.experience.presentation
 
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.DetailExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
@@ -17,6 +18,11 @@ class ExperienceController(
     private val experienceEditService: ExperienceEditService,
     private val experienceGetService: ExperienceGetService
 ) {
+    @GetMapping(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL)
+    fun getExperience(@PathVariable("experienceId") experienceId: UUID): DetailExperience.Response {
+        return experienceGetService.getExperienceDetailById(experienceId)
+    }
+    
     @GetMapping(ExperienceApi.ALL_YEARS)
     fun getAllYearsByExistExperience() : ExperienceYear.Response {
         return experienceGetService.getAllYearsByExistExperience()
@@ -35,6 +41,6 @@ class ExperienceController(
     @PatchMapping(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL)
     fun editExperience(@RequestBody request: EditExperience.Request,
                        @PathVariable experienceId: UUID): EditExperience.Response {
-        return experienceEditService.editExperience(request, experienceId)
+        return experienceEditService.editExperienceById(request, experienceId)
     }
 }

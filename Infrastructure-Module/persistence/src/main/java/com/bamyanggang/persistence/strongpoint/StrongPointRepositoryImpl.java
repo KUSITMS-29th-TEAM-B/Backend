@@ -37,4 +37,10 @@ public class StrongPointRepositoryImpl implements StrongPointRepository {
     public boolean isExistByStrongPointId(UUID strongPointId) {
         return strongPointJpaRepository.existsById(strongPointId);
     }
+
+    @Override
+    public List<StrongPoint> findByIds(List<UUID> strongPointIds) {
+        List<StrongPointJpaEntity> strongPointJpaEntities = strongPointJpaRepository.findByIds(strongPointIds);
+        return strongPointJpaEntities.stream().map(strongPointMapper::toDomainEntity).toList();
+    }
 }

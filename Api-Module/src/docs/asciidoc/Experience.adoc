@@ -6,16 +6,6 @@
 
 operation::ExperienceControllerTest/createExperienceTest/[snippets='http-request,request-headers,request-body,request-fields,http-response,response-body,response-fields']
 
-[[CreateOverTitleLengthTest]]
-=== 제목 글자 수 제한(50자) 예외
-
-operation::ExperienceControllerTest/createOverTitleLengthTest/[snippets='http-request,request-headers,request-body,request-fields,http-response,response-body,response-fields']
-
-[[CreateOverStrongPointCountTest]]
-=== 역량 키워드 제한(5개) 초과 예외
-
-operation::ExperienceControllerTest/createOverStrongPointCountTest/[snippets='http-request,request-headers,request-body,http-response,response-body,response-fields']
-
 [[EditExperienceTest]]
 === 경험 수정 API
 
@@ -26,7 +16,22 @@ operation::ExperienceControllerTest/editExperienceTest/[snippets='http-request,p
 
 operation::ExperienceControllerTest/deleteExperienceTest/[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-body']
 
-[[DeleteExperienceTest]]
+[[GetExperienceTest]]
+=== 경험 상세 조회 API
+
+operation::ExperienceControllerTest/getExperienceDetailTest/[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-body']
+
+[[getExperienceYearsTest]]
 === 유저 경험 내 존재 연도 조회 API
 
 operation::ExperienceControllerTest/getExperienceYearsTest/[snippets='http-request,request-headers,request-body,http-response,response-body']
+
+[[CreateOverTitleLengthTest]]
+=== 경험 등록 시 제목 글자 수 제한(50자) 예외
+
+operation::ExperienceControllerTest/createOverTitleLengthTest/[snippets='http-request,request-headers,request-body,request-fields,http-response,response-body,response-fields']
+
+[[CreateOverStrongPointCountTest]]
+=== 경험 등록 시 역량 키워드 제한(5개) 초과 예외
+
+operation::ExperienceControllerTest/createOverStrongPointCountTest/[snippets='http-request,request-headers,request-body,http-response,response-body,response-fields']

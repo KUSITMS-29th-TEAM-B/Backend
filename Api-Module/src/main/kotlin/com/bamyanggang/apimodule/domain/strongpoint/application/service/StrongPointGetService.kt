@@ -11,11 +11,11 @@ class StrongPointGetService(
 ) {
     fun getAllStrongPoints(): GetStrongPoint.Response {
         return getAuthenticationPrincipal().let {
-            val strongPoints = strongPointReader.readAllByUserId(it).map { strongPoint ->
-                GetStrongPoint.StrongPoint(strongPoint.id, strongPoint.name)
+            val detailStrongPoints = strongPointReader.readAllByUserId(it).map { strongPoint ->
+                GetStrongPoint.DetailStrongPoint(strongPoint.id, strongPoint.name)
             }
 
-            GetStrongPoint.Response(strongPoints.size, strongPoints)
+            GetStrongPoint.Response(detailStrongPoints.size, detailStrongPoints)
         }
     }
 }
