@@ -3,9 +3,9 @@ package com.bamyanggang.apimodule.domain.experience.application.service
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.experience.application.dto.DetailExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
-import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoint
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceReader
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointReader
+import com.bamyanggang.domainmodule.domain.tag.service.TagReader
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -13,6 +13,7 @@ import java.util.*
 class ExperienceGetService(
     private val experienceReader: ExperienceReader,
     private val strongPointReader: StrongPointReader,
+    private val tagReader: TagReader,
 ) {
     fun getExperienceDetailById(experienceId: UUID) : DetailExperience.Response {
         val oneExperience = experienceReader.readExperience(experienceId)
@@ -24,9 +25,23 @@ class ExperienceGetService(
             )
         }
 
-        val strongPointIds = oneExperience.strongPoints.map { it.id }
+        val strongPointIds = oneExperience.strongPoints.map { it.strongPointId }
         val strongPointDetails = strongPointReader.readByIds(strongPointIds).map {
-            GetStrongPoint.DetailStrongPoint(
+            DetailExperience.DetailStrongPoint(
+                it.id,
+                it.name
+            )
+        }
+
+        val detailParentTag = tagReader.readById(oneExperience.parentTagId).let {
+            DetailExperience.DetailTag(
+                it.id,
+                it.name
+            )
+        }
+
+        val detailChildTag = tagReader.readById(oneExperience.childTagId).let {
+            DetailExperience.DetailTag(
                 it.id,
                 it.name
             )
@@ -36,8 +51,8 @@ class ExperienceGetService(
             DetailExperience.Response(
                 id = it.id,
                 title = it.title,
-                parentTagId = it.parentTagId,
-                childTagId = it.childTagId,
+                parentTag = detailParentTag,
+                childTag = detailChildTag,
                 strongPoints = strongPointDetails,
                 contents = detailExperienceContents,
                 startedAt = it.startedAt,

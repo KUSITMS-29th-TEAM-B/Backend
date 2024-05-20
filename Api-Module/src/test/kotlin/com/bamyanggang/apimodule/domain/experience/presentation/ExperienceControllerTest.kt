@@ -9,7 +9,6 @@ import com.bamyanggang.apimodule.domain.experience.application.service.Experienc
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceGetService
-import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoint.DetailStrongPoint
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import org.junit.jupiter.api.DisplayName
@@ -301,13 +300,14 @@ class ExperienceControllerTest : BaseRestDocsTest() {
         val contentResponse = arrayListOf(content1, content2)
 
         val experienceId: UUID = UUID.randomUUID()
+
         val experienceDetailResponse : DetailExperience.Response = generateFixture {
             it.set("id", experienceId)
             it.set("title", "제목")
             it.set("contents", contentResponse)
-            it.set("strongPoints", generateFixture<List<DetailStrongPoint>>())
-            it.set("parentTagId", generateFixture<UUID>())
-            it.set("childTagId", generateFixture<UUID>())
+            it.set("strongPoints", generateFixture<List<DetailExperience.DetailStrongPoint>>())
+            it.set("parentTag", generateFixture<DetailExperience.DetailTag>())
+            it.set("childTag", generateFixture<DetailExperience.DetailTag>())
             it.set("startedAt", generateFixture<LocalDateTime>())
             it.set("endedAt", generateFixture<LocalDateTime>())
         }
@@ -340,8 +340,12 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                     fieldWithPath("strongPoints").description("관련된 역량 키워드"),
                     fieldWithPath("strongPoints[].id").description("역량 키워드 id"),
                     fieldWithPath("strongPoints[].name").description("역량 키워드 이름"),
-                    fieldWithPath("parentTagId").description("속한 상위 태그"),
-                    fieldWithPath("childTagId").description("속한 하위 태그"),
+                    fieldWithPath("parentTag").description("속한 상위 태그"),
+                    fieldWithPath("parentTag.id").description("상위 태그 id"),
+                    fieldWithPath("parentTag.name").description("상위 태그 이름"),
+                    fieldWithPath("childTag").description("속한 하위 태그"),
+                    fieldWithPath("childTag.id").description("하위 태그 id"),
+                    fieldWithPath("childTag.name").description("하위 태그 이름"),
                     fieldWithPath("startedAt").description("경험 시작 날짜"),
                     fieldWithPath("endedAt").description("경험 종료 날짜"),
                 ),
