@@ -1,20 +1,5 @@
 package com.bamyanggang.apimodule.domain.jobDescription.application
 
-import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateJobDescription
-import com.bamyanggang.apimodule.domain.jobDescription.application.service.JobDescriptionCreateService
-import com.bamyanggang.commonmodule.fixture.generateFixture
-import com.bamyanggang.domainmodule.domain.jobDescription.service.JobDescriptionAppender
-import io.kotest.core.spec.style.BehaviorSpec
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkStatic
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.context.SecurityContext
-import org.springframework.security.core.context.SecurityContextHolder
-import io.mockk.verify
-import java.time.LocalDateTime
-import java.util.UUID
-
 /**
  * Todo: securityContext를 어떻게 처리하지?
  */

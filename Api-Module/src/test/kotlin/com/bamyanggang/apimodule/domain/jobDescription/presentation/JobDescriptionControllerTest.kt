@@ -47,7 +47,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
     private lateinit var applyUpdateService: ApplyUpdateService
 
     @MockBean
-    private lateinit var jobDescriptionUpdateService: JobDescriptionUpdateService
+    private lateinit var jobDescriptionInfoUpdateService: JobDescriptionInfoUpdateService
 
     @Test
     @DisplayName("직무 공고를 등록한다.")
@@ -258,7 +258,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
     fun getJobDescription() {
         // given
         val pageRequest = PageRequest.of(0, 6)
-        val getJobDescriptionInfoResponse: GetJobDescriptionInfo.Response.Basic = generateFixture {
+        val jobDescriptionInfoResponse: JobDescriptionInfo.Response.Basic = generateFixture {
             it.set("jobDescriptionId", UUID.randomUUID())
             it.set("remainingDate", 1)
             it.set("enterpriseName", "기업 이름")
@@ -268,7 +268,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("startedAt", LocalDateTime.now())
             it.set("endedAt", LocalDateTime.now()) }
 
-        val slice = PageDomain(listOf(getJobDescriptionInfoResponse), 0, 1, 5, true)
+        val slice = PageDomain(listOf(jobDescriptionInfoResponse), 0, 1, 5, true)
         val pageResponse = PageResponse.from(slice)
         given(jobDescriptionInfoGetService.getJobDescriptionInfo(pageRequest, WriteStatus.WRITING, SortType.ENDED)).willReturn(pageResponse)
 
@@ -322,7 +322,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
     fun getJobDescriptionDetail() {
         // given
         val jobDescriptionId = UUID.randomUUID()
-        val getJobDescriptionInfoResponse: GetJobDescriptionInfo.Response.Detail = generateFixture {
+        val jobDescriptionInfoResponse: JobDescriptionInfo.Response.Detail = generateFixture {
             it.set("remainingDate", 1)
             it.set("enterpriseName", "기업 이름")
             it.set("title", "직무 공고 제목")
@@ -334,7 +334,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             it.set("endedAt", LocalDateTime.now())
         }
 
-        given(jobDescriptionInfoGetService.getJobDescriptionDetail(jobDescriptionId)).willReturn(getJobDescriptionInfoResponse)
+        given(jobDescriptionInfoGetService.getJobDescriptionDetail(jobDescriptionId)).willReturn(jobDescriptionInfoResponse)
 
         val request = RestDocumentationRequestBuilders.get(JobDescriptionApi.DETAIL, jobDescriptionId)
             .header("Authorization", "Bearer Access Token")

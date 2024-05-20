@@ -2,7 +2,7 @@ package com.bamyanggang.apimodule.domain.jobDescription.application.service
 
 import com.bamyanggang.apimodule.common.dto.PageResponse
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
-import com.bamyanggang.apimodule.domain.jobDescription.application.dto.GetJobDescriptionInfo
+import com.bamyanggang.apimodule.domain.jobDescription.application.dto.JobDescriptionInfo
 import com.bamyanggang.domainmodule.common.pagination.PageDomain
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.SortType
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
@@ -19,12 +19,12 @@ class JobDescriptionInfoGetService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getJobDescriptionInfo(pageable: Pageable, writeStatus: WriteStatus?, sortType: SortType?): PageResponse<GetJobDescriptionInfo.Response.Basic> {
+    fun getJobDescriptionInfo(pageable: Pageable, writeStatus: WriteStatus?, sortType: SortType?): PageResponse<JobDescriptionInfo.Response.Basic> {
         return getAuthenticationPrincipal().let{ userId ->
             val jobDescriptions = jobDescriptionReader.readJobDescriptionByUserIdAndSortType(userId, pageable.pageNumber, pageable.pageSize, sortType, writeStatus)
 
             val jobDescriptionInfoResponses = jobDescriptions.content.map{ jobDescription ->
-                GetJobDescriptionInfo.Response.Basic(
+                JobDescriptionInfo.Response.Basic(
                     jobDescription.id,
                     jobDescription.getRemainingDate(),
                     jobDescription.enterpriseName,
@@ -43,9 +43,9 @@ class JobDescriptionInfoGetService(
     }
 
     @Transactional(readOnly = true)
-    fun getJobDescriptionDetail(jobDescriptionId: UUID): GetJobDescriptionInfo.Response.Detail {
+    fun getJobDescriptionDetail(jobDescriptionId: UUID): JobDescriptionInfo.Response.Detail {
         return jobDescriptionReader.readJobDescriptionById(jobDescriptionId).let{ jobDescription ->
-            GetJobDescriptionInfo.Response.Detail(
+            JobDescriptionInfo.Response.Detail(
                 jobDescription.getRemainingDate(),
                 jobDescription.enterpriseName,
                 jobDescription.title,

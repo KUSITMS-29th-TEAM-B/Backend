@@ -11,7 +11,7 @@ class ApplyUpdateService(
     private val applyModifier: ApplyModifier
 ) {
 
-    fun updateApplyInfo(jobDescriptionId: UUID, request: ApplyInfo.Request) {
+    fun updateApplyInfo(jobDescriptionId: UUID, request: ApplyInfo.Request.Update) {
         applyModifier.modifyApplyInfo(
             jobDescriptionId = jobDescriptionId,
             applyContentList = request.contents.map {
