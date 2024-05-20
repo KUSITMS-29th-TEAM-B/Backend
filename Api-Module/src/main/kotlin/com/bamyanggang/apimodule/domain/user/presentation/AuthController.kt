@@ -1,16 +1,10 @@
 package com.bamyanggang.apimodule.domain.user.presentation
 
-import com.bamyanggang.apimodule.domain.user.application.dto.Logout
 import com.bamyanggang.apimodule.domain.user.application.dto.Reissue
 import com.bamyanggang.apimodule.domain.user.application.dto.SocialLogin
 import com.bamyanggang.apimodule.domain.user.application.service.AuthService
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class AuthController(
@@ -30,9 +24,9 @@ class AuthController(
 
     @DeleteMapping(AuthApi.LOGOUT)
     fun logout(
-        @RequestBody request: Logout.Request
+        @RequestHeader(AuthApi.REFRESH_TOKEN_HEADER)  refreshTokenHeader: String
     ) {
-        authService.logout(request)
+        authService.logout(refreshTokenHeader)
     }
 
 }

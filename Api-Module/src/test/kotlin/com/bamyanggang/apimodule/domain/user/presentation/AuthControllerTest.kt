@@ -1,7 +1,6 @@
 package com.bamyanggang.apimodule.domain.user.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
-import com.bamyanggang.apimodule.domain.user.application.dto.Logout
 import com.bamyanggang.apimodule.domain.user.application.dto.Reissue
 import com.bamyanggang.apimodule.domain.user.application.dto.SocialLogin
 import com.bamyanggang.apimodule.domain.user.application.service.AuthService
@@ -18,6 +17,8 @@ import org.springframework.restdocs.request.RequestDocumentation.parameterWithNa
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import com.bamyanggang.commonmodule.fixture.generateFixture
+import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 
 @WebMvcTest(AuthController::class)
 class AuthControllerTest : BaseRestDocsTest(){
@@ -125,19 +126,20 @@ class AuthControllerTest : BaseRestDocsTest(){
     @DisplayName("로그아웃 요청시 성공한다.")
     fun logout() {
         //given
-        val refreshToken : String= generateFixture()
-        val logoutRequest = Reissue.Request(refreshToken)
         val request = RestDocumentationRequestBuilders.delete(AuthApi.LOGOUT)
+            .header("Authorization","Bearer accessToken")
+            .header("RefreshToken","Bearer refreshToken")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsString(logoutRequest))
+
         //when
         val result = mockMvc.perform(request)
         //then
         result.andExpect(status().isOk)
             .andDo(
                 resultHandler.document(
-                    requestFields(
-                        fieldWithPath("refreshToken").description("로그아웃을 위한 refreshToken"),
+                    requestHeaders(
+                        headerWithName("Authorization").description("Access Token"),
+                        headerWithName("RefreshToken").description("refreshToken")
                     )
                 )
             )

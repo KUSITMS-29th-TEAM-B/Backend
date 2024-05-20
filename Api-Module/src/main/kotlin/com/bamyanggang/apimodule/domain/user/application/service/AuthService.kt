@@ -1,6 +1,5 @@
 package com.bamyanggang.apimodule.domain.user.application.service
 
-import com.bamyanggang.apimodule.domain.user.application.dto.Logout
 import com.bamyanggang.apimodule.domain.user.application.dto.Reissue
 import com.bamyanggang.apimodule.domain.user.application.dto.SocialLogin
 import com.bamyanggang.apimodule.domain.user.application.service.handler.AuthHandler
@@ -26,7 +25,8 @@ class AuthService(
     private val tokenAppender: TokenAppender,
     private val claimsExtractor: ClaimsExtractor,
     private val tokenRemover: TokenRemover,
-    private val tokenReader : TokenReader
+    private val tokenReader : TokenReader,
+    private val tokenExtractor: TokenExtractor
 ){
     fun executeSocialLogin(provider: SocialLoginProvider, request: SocialLogin.Request): SocialLogin.Response {
         val socialLoginHandler = authHandlerManager.getHandler(provider)
@@ -63,7 +63,8 @@ class AuthService(
     }
 
     @Transactional
-    fun logout(logoutRequest: Logout.Request) {
-        tokenReader.readToken(logoutRequest.refreshToken).also { tokenRemover.removeToken(it) }
+    fun logout(refreshToken: String) {
+        val refreshToken = tokenExtractor.extractValue(refreshToken)
+        tokenReader.readToken(refreshToken).also { tokenRemover.removeToken(it) }
     }
 }
