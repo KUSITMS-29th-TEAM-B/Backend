@@ -40,21 +40,21 @@ class ExperienceGetService(
         }
     }
 
-    private fun createExperienceDetailResponse(it: Experience): DetailExperience.Response {
-        val detailExperienceContents = convertDetailExperienceContent(it)
-        val strongPointDetails = convertStrongPoints(it)
-        val detailParentTag = convertParentTag(it)
-        val detailChildTag = convertChildTag(it)
+    private fun createExperienceDetailResponse(experience: Experience): DetailExperience.Response {
+        val detailExperienceContents = convertDetailExperienceContent(experience)
+        val strongPointDetails = convertStrongPoints(experience)
+        val detailParentTag = convertParentTag(experience)
+        val detailChildTag = convertChildTag(experience)
 
         return DetailExperience.Response(
-            id = it.id,
-            title = it.title,
+            id = experience.id,
+            title = experience.title,
             parentTag = detailParentTag,
             childTag = detailChildTag,
             strongPoints = strongPointDetails,
             contents = detailExperienceContents,
-            startedAt = it.startedAt,
-            endedAt = it.endedAt
+            startedAt = experience.startedAt,
+            endedAt = experience.endedAt
         )
     }
 
