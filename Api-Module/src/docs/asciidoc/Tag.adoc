@@ -36,6 +36,11 @@ operation::TagControllerTest/getAllChildTagTest/[snippets='http-request,path-par
 
 operation::TagControllerTest/getChildTagsByYear/[snippets='http-request,path-parameters,http-response,response-fields']
 
+[[GetYearsByParentTagId]]
+=== 상위 태그 내 존재 연도 조회 API
+
+operation::TagControllerTest/getYearsByParentTagId/[snippets='http-request,path-parameters,http-response,response-fields']
+
 [[duplicatedParentTagTest]]
 ==== 상위 태그 이름 중복 예외
 

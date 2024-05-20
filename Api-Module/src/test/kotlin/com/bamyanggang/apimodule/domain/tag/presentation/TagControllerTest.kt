@@ -283,6 +283,40 @@ class TagControllerTest : BaseRestDocsTest() {
     }
 
     @Test
+    @DisplayName("상위 태그 내 존재하는 경험들의 연도를 반환한다.")
+    fun getYearsByParentTagId() {
+        //given
+
+        val yearResponse = GetParentTag.Years(
+            arrayListOf(2024, 2023, 2022)
+        )
+
+        val parentTagId = UUID.randomUUID()
+        given(tagController.getAllYearsByParentTag(parentTagId)).willReturn(yearResponse)
+
+        val request = RestDocumentationRequestBuilders.get(TagApi.ALL_YEARS, parentTagId)
+            .header("Authorization", "Bearer Access Token")
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                pathParameters(
+                    parameterWithName("parentTagId").description("상위 태그 id")
+                ),
+                responseFields(
+                    fieldWithPath("years").description("상위 태그 리스트"),
+                )
+            )
+        )
+    }
+
+    @Test
     @DisplayName("최근에 추가된 경험이 있는 순으로 상위 태그 정보를 반환한다.")
     fun getTopRankParentTagTest() {
         //given
