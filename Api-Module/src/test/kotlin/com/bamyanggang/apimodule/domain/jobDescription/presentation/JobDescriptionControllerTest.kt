@@ -471,4 +471,48 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
             )
     }
 
+    @Test
+    @DisplayName("JD 공고를 수정한다")
+    fun updateJobDescription() {
+        // given
+        val jobDescriptionId = UUID.randomUUID()
+        val updateJobDescriptionRequest: JobDescriptionInfo.Request.Update = generateFixture {
+            it.set("enterpriseName", "기업 이름")
+            it.set("title", "직무 공고 제목")
+            it.set("content", "직무 공고 내용")
+            it.set("link", "직무 공고 링크")
+            it.set("startedAt", LocalDateTime.now())
+            it.set("endedAt", LocalDateTime.now())
+        }
+
+        val request = RestDocumentationRequestBuilders.patch(JobDescriptionApi.DETAIL, jobDescriptionId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(updateJobDescriptionRequest))
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(
+                resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
+                    pathParameters(
+                        RequestDocumentation.parameterWithName("jobDescriptionId").description("jd 공고 ID")
+                    ),
+                    requestFields(
+                        fieldWithPath("enterpriseName").description("기업 이름"),
+                        fieldWithPath("title").description("직무 공고 제목"),
+                        fieldWithPath("content").description("직무 공고 내용"),
+                        fieldWithPath("link").description("직무 공고 링크"),
+                        fieldWithPath("startedAt").description("직무 공고 시작일"),
+                        fieldWithPath("endedAt").description("직무 공고 종료일")
+                    )
+                )
+            )
+    }
+
 }

@@ -51,6 +51,13 @@ operation::JobDescriptionControllerTest/updateApplyInfo[snippets='http-request,p
 
 operation::JobDescriptionControllerTest/updateWriteStatus[snippets='http-request,path-parameters,request-headers,http-response']
 
+[[UPDATE-JD]]
+=== JD 수정
+
+operation::JobDescriptionControllerTest/updateJobDescription[snippets='http-request,path-parameters,request-headers,request-fields,http-response']
+
+[[DELETE-JD]]
+
 
 
 
