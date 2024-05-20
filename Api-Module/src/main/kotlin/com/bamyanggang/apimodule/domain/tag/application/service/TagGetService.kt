@@ -39,7 +39,7 @@ class TagGetService(
     @Transactional(readOnly = true)
     fun getParentTagsByYearAndLimit(year: Int, limit: Int): GetParentTag.Response {
         val currentUserId = getAuthenticationPrincipal()
-        val topParentTagIds = experienceReader.readByYearDesc(year, currentUserId)
+        val topParentTagIds = experienceReader.readByUserIDAndYearDesc(year, currentUserId)
             .distinctBy { it.parentTagId }
             .take(limit)
             .map { it.parentTagId }
@@ -54,7 +54,7 @@ class TagGetService(
     @Transactional(readOnly = true)
     fun getAllParentTagsByYear(year: Int): GetParentTag.TotalTagInfo {
         val currentUserId = getAuthenticationPrincipal()
-        val experiences = experienceReader.readByYearDesc(year, currentUserId)
+        val experiences = experienceReader.readByUserIDAndYearDesc(year, currentUserId)
 
         val experienceGroup = experiences.groupBy { it.parentTagId }
 
@@ -85,7 +85,7 @@ class TagGetService(
     @Transactional(readOnly = true)
     fun getAllChildTagsByYearAndParentTagId(year: Int, parentTagId: UUID): GetChildTag.TotalTagInfo {
         val currentUserId = getAuthenticationPrincipal()
-        val experiences = experienceReader.readByYearDesc(year, currentUserId)
+        val experiences = experienceReader.readByUserIDAndYearDesc(year, currentUserId)
         val experienceGroup = experiences.groupBy { it.childTagId }
 
         val tagSummaries = experienceGroup.map {
@@ -102,5 +102,18 @@ class TagGetService(
             experiences.size,
             tagSummaries
         )
+    }
+
+    fun getAllYearsByParentTagId(parentTagId: UUID): GetParentTag.Years {
+        val experiences = getAuthenticationPrincipal().let {
+            experienceReader.readByUserIdAndParentTagId(it, parentTagId)
+        }
+
+        val years = experiences
+            .distinctBy { it.createdAt.year }
+            .map { it.createdAt.year }
+            .sorted().reversed()
+
+        return GetParentTag.Years(years)
     }
 }

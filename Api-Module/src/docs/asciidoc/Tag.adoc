@@ -14,7 +14,7 @@ operation::TagControllerTest/createChildTagTest/[snippets='http-request,path-par
 [[GetParentTagTest]]
 === 상위 태그 조회 API
 
-operation::TagControllerTest/getAllParentTagByUserRegisterTest/[snippets='http-request,request-headers,http-response,response-fields']
+operation::TagControllerTest/getAllParentTagByUserTest/[snippets='http-request,request-headers,http-response,response-fields']
 
 [[GetTopRankTagTest]]
 === 연도 내 경험 최근 추가 순 태그 조회 API
@@ -35,6 +35,11 @@ operation::TagControllerTest/getAllChildTagTest/[snippets='http-request,path-par
 === 상위 태그 내 하위 태그 조회 API
 
 operation::TagControllerTest/getChildTagsByYear/[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[GetYearsByParentTagId]]
+=== 상위 태그 내 존재 연도 조회 API
+
+operation::TagControllerTest/getYearsByParentTagId/[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[duplicatedParentTagTest]]
 ==== 상위 태그 이름 중복 예외

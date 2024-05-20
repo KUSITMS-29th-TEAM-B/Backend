@@ -6,4 +6,5 @@ object TagApi {
     const val TOP_RANK_TAG_URL = "$BASE_URL/top-rank"
     const val TAG_PATH_VARIABLE_URL = "$BASE_URL/{tagId}"
     const val MY_CHILD_TAG_URL = "$BASE_URL/{tagId}/my"
+    const val ALL_YEARS = "$BASE_URL/{parentTagId}/all-years"
 }

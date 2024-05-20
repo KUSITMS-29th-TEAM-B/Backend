@@ -15,6 +15,11 @@ class TagController(
     private val tagDeleteService: TagDeleteService,
     private val tagGetService: TagGetService
 ) {
+    @GetMapping(TagApi.ALL_YEARS)
+    fun getAllYearsByParentTag(@PathVariable("parentTagId") parentTagId: UUID): GetParentTag.Years{
+        return tagGetService.getAllYearsByParentTagId(parentTagId)
+    }
+
     @GetMapping(TagApi.TOP_RANK_TAG_URL)
     fun getTopRankTagsByLimit(
         @RequestParam("year") year: Int,

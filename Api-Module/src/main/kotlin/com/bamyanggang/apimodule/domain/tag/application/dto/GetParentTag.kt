@@ -23,4 +23,8 @@ class GetParentTag {
         val strongPointCount: Int,
         val experienceCount: Int
     )
+
+    data class Years(
+        val years: List<Int>
+    )
 }

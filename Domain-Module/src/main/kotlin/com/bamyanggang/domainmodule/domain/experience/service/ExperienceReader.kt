@@ -26,15 +26,15 @@ class ExperienceReader(
         return experienceRepository.findAllByUserId(userId)
     }
 
-    fun readByYearDesc(year: Int, userId: UUID): List<Experience> {
+    fun readByUserIDAndYearDesc(year: Int, userId: UUID): List<Experience> {
         return experienceRepository.findByUserIdAndYearDesc(year, userId)
     }
 
-    fun readByYearAndParentTagId(year: Int, parentTagId: UUID) : List<Experience> {
+    fun readByYearAndTagId(year: Int, parentTagId: UUID) : List<Experience> {
         return experienceRepository.findByYearAndParentTagId(year, parentTagId)
     }
 
-    fun readByYearAndChildTagId(year: Int, childTagId: UUID): List<Experience> {
-        return experienceRepository.findByYearAndChildTagId(year, childTagId)
+    fun readByUserIdAndParentTagId(userId: UUID, parentTagId: UUID): List<Experience> {
+        return experienceRepository.findByUserIdAndParentTagId(userId, parentTagId)
     }
 }
