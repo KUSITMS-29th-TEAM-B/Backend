@@ -1,6 +1,9 @@
 package com.bamyanggang.apimodule.domain.experience.presentation
 
-import com.bamyanggang.apimodule.domain.experience.application.dto.*
+import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
+import com.bamyanggang.apimodule.domain.experience.application.dto.GetExperience
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
@@ -15,6 +18,13 @@ class ExperienceController(
     private val experienceEditService: ExperienceEditService,
     private val experienceGetService: ExperienceGetService
 ) {
+    @GetMapping(ExperienceApi.BOOKMARK_EXPERIENCE_URL)
+    fun getBookMarkExperiences(
+        @PathVariable("jobDescriptionId") jobDescriptionId: UUID
+    ) : GetExperience.Response{
+        return experienceGetService.getBookMarkExperiences(jobDescriptionId)
+    }
+
     @GetMapping(ExperienceApi.BASE_URL)
     fun getExperienceByFilter(@RequestParam("year") year: Int,
                               @RequestParam("parent-tag") parentTagId: UUID,
