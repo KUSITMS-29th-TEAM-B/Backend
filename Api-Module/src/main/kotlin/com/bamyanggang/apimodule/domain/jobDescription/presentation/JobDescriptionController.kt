@@ -6,6 +6,7 @@ import com.bamyanggang.apimodule.domain.jobDescription.application.service.*
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.SortType
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import org.springframework.data.domain.Pageable
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -23,7 +24,8 @@ class JobDescriptionController(
     private val jobDescriptionInfoGetService: JobDescriptionInfoGetService,
     private val applyInfoGetService: ApplyInfoGetService,
     private val applyUpdateService: ApplyUpdateService,
-    private val jobDescriptionInfoUpdateService: JobDescriptionInfoUpdateService
+    private val jobDescriptionInfoUpdateService: JobDescriptionInfoUpdateService,
+    private val jobDescriptionDeleteService: JobDescriptionDeleteService
 ) {
 
     @PostMapping(JobDescriptionApi.BASE_URL)
@@ -72,5 +74,10 @@ class JobDescriptionController(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
         @RequestBody request: JobDescriptionInfo.Request.Update
     ) = jobDescriptionInfoUpdateService.updateJobDescriptionDetail(jobDescriptionId, request)
+
+    @DeleteMapping(JobDescriptionApi.DETAIL)
+    fun deleteJobDescription(
+        @PathVariable("jobDescriptionId") jobDescriptionId: UUID
+    ) = jobDescriptionDeleteService.deleteJobDescription(jobDescriptionId)
 
 }

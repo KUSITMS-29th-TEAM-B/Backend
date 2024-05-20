@@ -63,4 +63,9 @@ public class JobDescriptionRepositoryImpl implements JobDescriptionRepository {
             ,jobDescriptionSlice.getTotalPages(), jobDescriptionSlice.hasNext());
     }
 
+    @Override
+    public void deleteById(UUID jobDescriptionId) {
+        jobDescriptionJpaRepository.deleteById(jobDescriptionId);
+    }
+
 }
