@@ -1,16 +1,41 @@
 package com.bamyanggang.domainmodule.domain.jobDescription.service
 
-import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.JobDescription
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.JobDescriptionRepository
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
+import java.util.UUID
 
 @Service
 class JobDescriptionModifier(
     private val jobDescriptionRepository: JobDescriptionRepository
 ) {
 
-    fun modifyWriteStatus(jobDescription: JobDescription) {
-        jobDescription.changeWriteStatus().also { jobDescriptionRepository.save(it) }
+    fun modifyWriteStatus(jobDescriptionId: UUID) {
+        jobDescriptionRepository
+            .findById(jobDescriptionId)
+            .changeWriteStatus()
+            .also { jobDescriptionRepository.save(it) }
+    }
+
+    fun modifyJobDescription(
+        jobDescriptionId: UUID,
+        enterpriseName: String?,
+        title: String?,
+        content: String?,
+        link: String?,
+        startedAt: LocalDateTime?,
+        endedAt: LocalDateTime?) {
+        jobDescriptionRepository
+            .findById(jobDescriptionId)
+            .update(
+                enterpriseName = enterpriseName,
+                title = title,
+                content = content,
+                link = link,
+                startedAt = startedAt,
+                endedAt = endedAt
+            )
+            .also { jobDescriptionRepository.save(it) }
     }
 
 }
