@@ -4,7 +4,19 @@ import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import java.time.LocalDateTime
 import java.util.UUID
 
-class GetJobDescriptionInfo {
+class JobDescriptionInfo {
+
+    sealed class Request {
+        data class Update(
+            val enterpriseName: String?,
+            val title: String?,
+            val content: String?,
+            val link: String?,
+            val startedAt: LocalDateTime?,
+            val endedAt: LocalDateTime?
+        ) : Request()
+
+    }
 
     sealed class Response {
         data class Basic(
