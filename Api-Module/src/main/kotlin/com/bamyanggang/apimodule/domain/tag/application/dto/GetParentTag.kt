@@ -2,7 +2,7 @@ package com.bamyanggang.apimodule.domain.tag.application.dto
 
 import java.util.*
 
-class GetTag {
+class GetParentTag {
     data class Response(
         val tags: List<TagDetail>
     )

@@ -2,7 +2,7 @@ package com.bamyanggang.apimodule.domain.tag.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
-import com.bamyanggang.apimodule.domain.tag.application.dto.GetTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.tag.exception.TagException
@@ -215,11 +215,11 @@ class TagControllerTest : BaseRestDocsTest() {
         val parentTagId = generateFixture<UUID>()
 
         val tagDetails = arrayListOf(
-            GetTag.TagDetail(generateFixture(), "하위 태그 이름 1"),
-            GetTag.TagDetail(generateFixture(), "하위 태그 이름 2")
+            GetParentTag.TagDetail(generateFixture(), "하위 태그 이름 1"),
+            GetParentTag.TagDetail(generateFixture(), "하위 태그 이름 2")
         )
 
-        val tagResponse = GetTag.Response(tagDetails)
+        val tagResponse = GetParentTag.Response(tagDetails)
 
         given(tagController.getAllChildTags(parentTagId)).willReturn(tagResponse)
 
@@ -252,15 +252,15 @@ class TagControllerTest : BaseRestDocsTest() {
     fun getAllParentTagByUserRegisterTest() {
         //given
         val tagDetails = arrayListOf(
-            GetTag.TagDetail(generateFixture(), "상위 태그 이름 1"),
-            GetTag.TagDetail(generateFixture(), "상위 태그 이름 2")
+            GetParentTag.TagDetail(generateFixture(), "상위 태그 이름 1"),
+            GetParentTag.TagDetail(generateFixture(), "상위 태그 이름 2")
         )
 
-        val tagResponse = GetTag.Response(tagDetails)
+        val tagResponse = GetParentTag.Response(tagDetails)
 
         given(tagController.getUserParentTags()).willReturn(tagResponse)
 
-        val request = RestDocumentationRequestBuilders.get(TagApi.MY_TAG_URL)
+        val request = RestDocumentationRequestBuilders.get(TagApi.MY_PARENT_TAG_URL)
             .header("Authorization", "Bearer Access Token")
 
         //when
@@ -286,13 +286,13 @@ class TagControllerTest : BaseRestDocsTest() {
     fun getTopRankParentTagTest() {
         //given
         val tagDetails = arrayListOf(
-            GetTag.TagDetail(generateFixture(), "상위 태그 이름 1"),
-            GetTag.TagDetail(generateFixture(), "상위 태그 이름 2")
+            GetParentTag.TagDetail(generateFixture(), "상위 태그 이름 1"),
+            GetParentTag.TagDetail(generateFixture(), "상위 태그 이름 2")
         )
 
         val year = 2024
         val limit = 6
-        val tagResponse = GetTag.Response(tagDetails)
+        val tagResponse = GetParentTag.Response(tagDetails)
 
         given(tagController.getTopRankTagsByLimit(year, limit)).willReturn(tagResponse)
 
@@ -329,13 +329,13 @@ class TagControllerTest : BaseRestDocsTest() {
 //        )
 
         val tagSummaries = arrayListOf(
-            GetTag.TagSummary(
+            GetParentTag.TagSummary(
                 UUID.randomUUID(),
                 "상위 태그 정보 1",
                 3,
                 14
             ),
-            GetTag.TagSummary(
+            GetParentTag.TagSummary(
                 UUID.randomUUID(),
                 "상위 태그 정보 2",
                 1,
@@ -343,7 +343,7 @@ class TagControllerTest : BaseRestDocsTest() {
             )
         )
 
-        val tagResponse = GetTag.TotalTagInfo(
+        val tagResponse = GetParentTag.TotalTagInfo(
             21,
             tagSummaries)
 

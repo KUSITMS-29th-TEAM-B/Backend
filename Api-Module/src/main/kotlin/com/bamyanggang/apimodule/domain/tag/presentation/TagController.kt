@@ -1,7 +1,7 @@
 package com.bamyanggang.apimodule.domain.tag.presentation
 
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
-import com.bamyanggang.apimodule.domain.tag.application.dto.GetTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag
 import com.bamyanggang.apimodule.domain.tag.application.service.TagCreateService
 import com.bamyanggang.apimodule.domain.tag.application.service.TagDeleteService
 import com.bamyanggang.apimodule.domain.tag.application.service.TagGetService
@@ -15,7 +15,7 @@ class TagController(
     private val tagGetService: TagGetService
 ) {
     @GetMapping(TagApi.BASE_URL)
-    fun getParentTagsByYear(@RequestParam("year") year: Int): GetTag.TotalTagInfo {
+    fun getParentTagsByYear(@RequestParam("year") year: Int): GetParentTag.TotalTagInfo {
         return tagGetService.getAllParentTagsByYear(year)
     }
 
@@ -23,18 +23,25 @@ class TagController(
     fun getTopRankTagsByLimit(
         @RequestParam("year") year: Int,
         @RequestParam("limit") limit: Int
-    ): GetTag.Response  {
+    ): GetParentTag.Response  {
         return tagGetService.getParentTagsByYearAndLimit(year, limit)
     }
 
-    @GetMapping(TagApi.MY_TAG_URL)
-    fun getUserParentTags(): GetTag.Response {
+    @GetMapping(TagApi.MY_PARENT_TAG_URL)
+    fun getUserParentTags(): GetParentTag.Response {
         return tagGetService.getAllParentTagByUserId()
     }
 
-    @GetMapping(TagApi.TAG_PATH_VARIABLE_URL)
-    fun getAllChildTags(@PathVariable("tagId") parentTagId: UUID): GetTag.Response {
+    @GetMapping(TagApi.MY_CHILD_TAG_URL)
+    fun getUserChildTags(@PathVariable("tagId") parentTagId: UUID): GetParentTag.Response {
         return tagGetService.getAllChildTagsByParentTagId(parentTagId)
+    }
+
+    @GetMapping(TagApi.TAG_PATH_VARIABLE_URL)
+    fun getChildTagsByYear(@PathVariable("tagId") parentTagId: UUID,
+                        @RequestParam("year") year: Int): GetParentTag.Response {
+
+        return GetParentTag.Response(emptyList())
     }
 
     @PostMapping(TagApi.BASE_URL)
