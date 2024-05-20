@@ -13,7 +13,6 @@ import java.util.*
 @Service
 class ApplyCreateService(
     private val applyAppender: ApplyAppender,
-    private val jobDescriptionReader: JobDescriptionReader,
     private val jobDescriptionModifier: JobDescriptionModifier
 ) {
     @Transactional
@@ -25,8 +24,7 @@ class ApplyCreateService(
             )
         }
 
-        val jobDescription = jobDescriptionReader.readJobDescriptionById(jobDescriptionId)
-        jobDescriptionModifier.modifyWriteStatus(jobDescription)
+        jobDescriptionModifier.modifyWriteStatus(jobDescriptionId)
         applyAppender.appendApply(contents = applyContents, jobDescriptionId = jobDescriptionId)
     }
 

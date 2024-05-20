@@ -23,7 +23,7 @@ class JobDescriptionController(
     private val jobDescriptionInfoGetService: JobDescriptionInfoGetService,
     private val applyInfoGetService: ApplyInfoGetService,
     private val applyUpdateService: ApplyUpdateService,
-    private val jobDescriptionUpdateService: JobDescriptionUpdateService
+    private val jobDescriptionInfoUpdateService: JobDescriptionInfoUpdateService
 ) {
 
     @PostMapping(JobDescriptionApi.BASE_URL)
@@ -42,14 +42,14 @@ class JobDescriptionController(
         pageable: Pageable,
         @RequestParam writeStatus: WriteStatus?,
         @RequestParam sortType: SortType?
-    ): PageResponse<GetJobDescriptionInfo.Response.Basic> {
+    ): PageResponse<JobDescriptionInfo.Response.Basic> {
         return jobDescriptionInfoGetService.getJobDescriptionInfo(pageable, writeStatus, sortType)
     }
 
     @GetMapping(JobDescriptionApi.DETAIL)
     fun getJobDescriptionDetail(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID
-    ): GetJobDescriptionInfo.Response.Detail = jobDescriptionInfoGetService.getJobDescriptionDetail(jobDescriptionId)
+    ): JobDescriptionInfo.Response.Detail = jobDescriptionInfoGetService.getJobDescriptionDetail(jobDescriptionId)
 
     @GetMapping(JobDescriptionApi.APPLY)
     fun getApplyInfo(
@@ -59,12 +59,18 @@ class JobDescriptionController(
    @PutMapping(JobDescriptionApi.APPLY)
     fun updateApplyInfo(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
-        @RequestBody request: ApplyInfo.Request
+        @RequestBody request: ApplyInfo.Request.Update
     ) = applyUpdateService.updateApplyInfo(jobDescriptionId, request)
 
     @PatchMapping(JobDescriptionApi.STATUS)
-    fun updateJobDescription(
+    fun updateJobDescriptionWriteStatus(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID
-    ) = jobDescriptionUpdateService.updateWriteStatus(jobDescriptionId)
+    ) = jobDescriptionInfoUpdateService.updateWriteStatus(jobDescriptionId)
+
+    @PatchMapping(JobDescriptionApi.DETAIL)
+    fun updateJobDescriptionDetail(
+        @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
+        @RequestBody request: JobDescriptionInfo.Request.Update
+    ) = jobDescriptionInfoUpdateService.updateJobDescriptionDetail(jobDescriptionId, request)
 
 }

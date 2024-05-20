@@ -14,7 +14,7 @@ class ApplyUpdateServiceTest: BehaviorSpec({
 
     given("ApplyUpdateService") {
         val jobDescriptionId = UUID.randomUUID()
-        val request = ApplyInfo.Request(
+        val request = ApplyInfo.Request.Update(
             contents = listOf(
                 ApplyInfo.ContentInfo(
                     question = "질문1",

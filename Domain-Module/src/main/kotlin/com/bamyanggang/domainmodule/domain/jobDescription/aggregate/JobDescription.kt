@@ -44,6 +44,25 @@ data class JobDescription(
         }
     }
 
+    fun update(
+        enterpriseName: String?,
+        title: String?,
+        content: String?,
+        link: String?,
+        startedAt: LocalDateTime?,
+        endedAt: LocalDateTime?
+    ): JobDescription {
+        return copy(
+            enterpriseName = enterpriseName?: this.enterpriseName,
+            title = title?: this.title,
+            content = content?: this.content,
+            link = link?: this.link,
+            startedAt = startedAt?: this.startedAt,
+            endedAt = endedAt?: this.endedAt,
+            updatedAt = LocalDateTime.now()
+        )
+    }
+
     companion object {
         fun create(
             enterpriseName: String,

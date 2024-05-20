@@ -15,21 +15,34 @@ class JobDescriptionModifierTest: BehaviorSpec({
     val service = JobDescriptionModifier(jobDescriptionRepository)
 
     given("JobDescriptionModifier.modifyWriteStatus") {
-        val jobDescription: JobDescription = generateFixture {
-            it.set("enterpriseName", "기업 이름")
-            it.set("title", "직무 공고 제목")
-            it.set("writeStatus", WriteStatus.NOT_APPLIED)
-            it.set("content", "직무 공고 내용")
-            it.set("link", "직무 공고 링크")
-            it.set("createdAt", LocalDateTime.now())
-            it.set("updatedAt", LocalDateTime.now())
-            it.set("startedAt", LocalDateTime.now())
-            it.set("endedAt", LocalDateTime.now().plusDays(1))
-            it.set("userId", UUID.randomUUID())
-        }
+        val jobDescriptionId: UUID = UUID.randomUUID()
         `when`("jobDescription가 주어지면") {
-            service.modifyWriteStatus(jobDescription)
+            service.modifyWriteStatus(jobDescriptionId)
             then("changeWriteStatus가 호출된다.") {
+                verify { jobDescriptionRepository.save(any()) }
+            }
+        }
+    }
+
+    given("JobDescriptionModifier.modifyJobDescription") {
+        val jobDescriptionId: UUID = UUID.randomUUID()
+        val enterpriseName: String = generateFixture { it.set("enterpriseName", "기업명") }
+        val title: String = generateFixture { it.set("title", "제목") }
+        val content: String = generateFixture { it.set("content", "내용") }
+        val link: String = generateFixture { it.set("link", "링크") }
+        val startedAt: LocalDateTime = LocalDateTime.now()
+        val endedAt: LocalDateTime = startedAt.plusDays(1)
+        `when`("jobDescription가 주어지면") {
+            service.modifyJobDescription(
+                jobDescriptionId,
+                enterpriseName,
+                title,
+                content,
+                link,
+                startedAt,
+                endedAt
+            )
+            then("update가 호출된다.") {
                 verify { jobDescriptionRepository.save(any()) }
             }
         }

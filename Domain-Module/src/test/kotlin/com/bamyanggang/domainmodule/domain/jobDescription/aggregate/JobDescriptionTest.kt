@@ -136,4 +136,39 @@ class JobDescriptionTest : FunSpec({
         changedJobDescription.writeStatus shouldBe WriteStatus.WRITING
     }
 
+    test("정보 업데이트") {
+        // arrange
+        val jobDescription: JobDescription = generateFixture {
+            it.set("enterpriseName", "기업 이름")
+            it.set("title", "직무 공고 제목")
+            it.set("writeStatus", WriteStatus.NOT_APPLIED)
+            it.set("content", "직무 공고 내용")
+            it.set("link", "직무 공고 링크")
+            it.set("createdAt", LocalDateTime.now())
+            it.set("updatedAt", LocalDateTime.now())
+            it.set("startedAt", LocalDateTime.now())
+            it.set("endedAt", LocalDateTime.now().plusDays(1))
+            it.set("userId", UUID.randomUUID())
+        }
+
+        // act
+        val changedJobDescription = jobDescription.update(
+            enterpriseName = "변경된 기업 이름",
+            title = "변경된 직무 공고 제목",
+            content = "변경된 직무 공고 내용",
+            link = "변경된 직무 공고 링크",
+            startedAt = LocalDateTime.of(2026, 5, 20, 14, 30),
+            endedAt = LocalDateTime.of(2026, 5, 21, 14, 30),
+        )
+
+        // assert
+        changedJobDescription.enterpriseName shouldBe "변경된 기업 이름"
+        changedJobDescription.title shouldBe "변경된 직무 공고 제목"
+        changedJobDescription.content shouldBe "변경된 직무 공고 내용"
+        changedJobDescription.link shouldBe "변경된 직무 공고 링크"
+        changedJobDescription.startedAt shouldBe LocalDateTime.of(2026, 5, 20, 14, 30)
+        changedJobDescription.endedAt shouldBe LocalDateTime.of(2026, 5, 21, 14, 30)
+
+    }
+
 })

@@ -2,9 +2,12 @@ package com.bamyanggang.apimodule.domain.jobDescription.application.dto
 
 class ApplyInfo {
 
-    data class Request(
-        val contents: List<ContentInfo>
-    )
+    sealed class Request {
+        data class Update(
+            val contents: List<ContentInfo>
+        ) : Request()
+
+    }
 
     data class Response(
         val applyContentList: List<ContentInfo>
