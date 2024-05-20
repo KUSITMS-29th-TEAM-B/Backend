@@ -317,7 +317,7 @@ class TagControllerTest : BaseRestDocsTest() {
                     fieldWithPath("tags[].name").description("태그 이름"),
                 )
             )
-            )
+        )
     }
 
     @Test

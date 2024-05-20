@@ -20,5 +20,4 @@ class BookmarkService(
             bookmarkModifier.modifyBookmarkStatus(it)
         } ?: bookmarkAppender.appendBookmark(jobDescriptionId, experienceId)
     }
-
 }
