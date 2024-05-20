@@ -17,8 +17,7 @@ import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
-import org.springframework.restdocs.request.RequestDocumentation.pathParameters
+import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.*
 
@@ -249,8 +248,8 @@ class TagControllerTest : BaseRestDocsTest() {
     }
 
     @Test
-    @DisplayName("상위 태그를 전체조회한다.")
-    fun getAllParentTagTest() {
+    @DisplayName("유저가 등록한 상위 태그를 전체 조회한다.")
+    fun getAllParentTagByUserRegisterTest() {
         //given
         val tagDetails = arrayListOf(
             GetTag.TagDetail(generateFixture(), "상위 태그 이름 1"),
@@ -259,9 +258,9 @@ class TagControllerTest : BaseRestDocsTest() {
 
         val tagResponse = GetTag.Response(tagDetails)
 
-        given(tagController.getAllParentTags()).willReturn(tagResponse)
+        given(tagController.getUserParentTags()).willReturn(tagResponse)
 
-        val request = RestDocumentationRequestBuilders.get(TagApi.BASE_URL)
+        val request = RestDocumentationRequestBuilders.get(TagApi.MY_TAG_URL)
             .header("Authorization", "Bearer Access Token")
 
         //when
@@ -277,6 +276,103 @@ class TagControllerTest : BaseRestDocsTest() {
                     fieldWithPath("tags").description("상위 태그 리스트"),
                     fieldWithPath("tags[].id").description("태그 id"),
                     fieldWithPath("tags[].name").description("태그 이름"),
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("최근에 추가된 경험이 있는 순으로 상위 태그 정보를 반환한다.")
+    fun getTopRankParentTagTest() {
+        //given
+        val tagDetails = arrayListOf(
+            GetTag.TagDetail(generateFixture(), "상위 태그 이름 1"),
+            GetTag.TagDetail(generateFixture(), "상위 태그 이름 2")
+        )
+
+        val year = 2024
+        val limit = 6
+        val tagResponse = GetTag.Response(tagDetails)
+
+        given(tagController.getTopRankTagsByLimit(year, limit)).willReturn(tagResponse)
+
+        val request = RestDocumentationRequestBuilders.get(TagApi.TOP_RANK_TAG_URL)
+            .header("Authorization", "Bearer Access Token")
+            .queryParam("year", year.toString())
+            .queryParam("limit", limit.toString())
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                responseFields(
+                    fieldWithPath("tags").description("상위 태그 리스트"),
+                    fieldWithPath("tags[].id").description("태그 id"),
+                    fieldWithPath("tags[].name").description("태그 이름"),
+                )
+            )
+            )
+    }
+
+    @Test
+    @DisplayName("필터에 의해 걸러진 태그 정보를 반환한다.")
+    fun getParentTagsByFilter() {
+        //given
+//        val tagDetails = arrayListOf(
+//            GetTag.TagDetail(generateFixture(), "상위 태그 이름 1"),
+//            GetTag.TagDetail(generateFixture(), "상위 태그 이름 2")
+//        )
+
+        val tagSummaries = arrayListOf(
+            GetTag.TagSummary(
+                UUID.randomUUID(),
+                "상위 태그 정보 1",
+                3,
+                14
+            ),
+            GetTag.TagSummary(
+                UUID.randomUUID(),
+                "상위 태그 정보 2",
+                1,
+                7
+            )
+        )
+
+        val tagResponse = GetTag.TotalTagInfo(
+            21,
+            tagSummaries)
+
+        val year = 2024
+
+        given(tagController.getParentTagsByYear(year)).willReturn(tagResponse)
+
+        val request = RestDocumentationRequestBuilders.get(TagApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
+            .queryParam("year", year.toString())
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ), queryParameters(
+                    parameterWithName("year").description("검색 연도")
+                ),
+                responseFields(
+                    fieldWithPath("totalExperienceCount").description("연도 내 총 경험 개수"),
+                    fieldWithPath("tagInfos").description("상위 태그 정보 배열"),
+                    fieldWithPath("tagInfos[].id").description("상위 태그 id"),
+                    fieldWithPath("tagInfos[].name").description("상위 태그 이름"),
+                    fieldWithPath("tagInfos[].strongPointCount").description("상위 태그 내 역량 키워드 개수"),
+                    fieldWithPath("tagInfos[].experienceCount").description("상위 태그 내 경험 개수"),
                 )
             )
         )
