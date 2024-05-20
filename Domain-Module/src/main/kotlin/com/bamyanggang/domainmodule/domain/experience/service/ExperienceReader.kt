@@ -37,4 +37,8 @@ class ExperienceReader(
     fun readByYearAndChildTagId(year: Int, childTagId: UUID): List<Experience> {
         return experienceRepository.findByYearAndChildTagId(year, childTagId)
     }
+
+    fun readByIds(experienceIds: List<UUID>) : List<Experience> {
+        return experienceRepository.findByIds(experienceIds)
+    }
 }

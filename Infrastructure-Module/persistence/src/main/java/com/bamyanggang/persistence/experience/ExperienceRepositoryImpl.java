@@ -75,4 +75,10 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
 
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
+
+    @Override
+    public List<Experience> findByIds(List<UUID> experienceIds) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByIds(experienceIds);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
 }
