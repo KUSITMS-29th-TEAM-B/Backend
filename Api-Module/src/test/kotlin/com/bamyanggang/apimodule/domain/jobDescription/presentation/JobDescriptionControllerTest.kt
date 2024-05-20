@@ -2,7 +2,10 @@ package com.bamyanggang.apimodule.domain.jobDescription.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.common.dto.PageResponse
-import com.bamyanggang.apimodule.domain.jobDescription.application.dto.*
+import com.bamyanggang.apimodule.domain.jobDescription.application.dto.ApplyInfo
+import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateApply
+import com.bamyanggang.apimodule.domain.jobDescription.application.dto.CreateJobDescription
+import com.bamyanggang.apimodule.domain.jobDescription.application.dto.JobDescriptionInfo
 import com.bamyanggang.apimodule.domain.jobDescription.application.service.*
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
@@ -416,7 +419,7 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
     fun updateApplyInfo() {
         // given
         val jobDescriptionId = UUID.randomUUID()
-        val updateApplyRequest: ApplyInfo.Request = generateFixture {
+        val updateApplyRequest: ApplyInfo.Request.Update = generateFixture {
             it.set("contents", listOf(ApplyInfo.ContentInfo("질문", "답변")))
         }
 
