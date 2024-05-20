@@ -150,7 +150,13 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("역량 키워드 개수 제한보다 더 많은 키워드 등록 시도 시 예외를 반환한다.")
     fun overCountLimitTest(){
-        val overCountLimitRequest: CreateStrongPoint.Request = generateFixture()
+        val overCountLimitRequest = CreateStrongPoint.Request(
+            arrayListOf(
+                CreateStrongPoint.StrongPointName("역량 키워드 이름 1"),
+                CreateStrongPoint.StrongPointName("역량 키워드 이름 2")
+            )
+        )
+
 
         given(strongPointController.createStrongPoint(overCountLimitRequest)).willThrow(StrongPointException.OverCountLimit())
 
