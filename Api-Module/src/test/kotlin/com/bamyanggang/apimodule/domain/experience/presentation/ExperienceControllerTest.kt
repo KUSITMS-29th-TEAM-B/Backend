@@ -2,9 +2,9 @@ package com.bamyanggang.apimodule.domain.experience.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
-import com.bamyanggang.apimodule.domain.experience.application.dto.DetailExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
+import com.bamyanggang.apimodule.domain.experience.application.dto.GetExperience
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
@@ -294,20 +294,20 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("경험을 상세조회한다.")
     fun getExperienceDetailTest() {
-        val content1 = DetailExperience.DetailExperienceContent("질문1", "답변1")
-        val content2 = DetailExperience.DetailExperienceContent("질문2", "답변2")
+        val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
+        val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
 
         val contentResponse = arrayListOf(content1, content2)
 
         val experienceId: UUID = UUID.randomUUID()
 
-        val experienceDetailResponse : DetailExperience.Response = generateFixture {
+        val experienceDetailResponse : GetExperience.DetailExperience = generateFixture {
             it.set("id", experienceId)
             it.set("title", "제목")
             it.set("contents", contentResponse)
-            it.set("strongPoints", generateFixture<List<DetailExperience.DetailStrongPoint>>())
-            it.set("parentTag", generateFixture<DetailExperience.DetailTag>())
-            it.set("childTag", generateFixture<DetailExperience.DetailTag>())
+            it.set("strongPoints", generateFixture<List<GetExperience.DetailStrongPoint>>())
+            it.set("parentTag", generateFixture<GetExperience.DetailTag>())
+            it.set("childTag", generateFixture<GetExperience.DetailTag>())
             it.set("startedAt", generateFixture<LocalDateTime>())
             it.set("endedAt", generateFixture<LocalDateTime>())
         }
@@ -356,40 +356,43 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("경험 목록을 상위 태그 id를 기준으로 조회한다.")
     fun getExperienceYearAndParentTagTest() {
-        val content1 = DetailExperience.DetailExperienceContent("질문1", "답변1")
-        val content2 = DetailExperience.DetailExperienceContent("질문2", "답변2")
-        val strongPoint1 = DetailExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
-        val strongPoint2 = DetailExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
-        val parentTag = DetailExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
-        val childTag = DetailExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
+        val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
+        val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
+        val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
+        val strongPoint2 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
+        val parentTag = GetExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
+        val childTag = GetExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
         val startedAt = LocalDateTime.now()
         val endedAt = LocalDateTime.now().plusDays(1)
 
         val contentResponse = arrayListOf(content1, content2)
         val strongPointResponse = arrayListOf(strongPoint1, strongPoint2)
 
-        val experienceResponses = arrayListOf(
-            DetailExperience.Response(
-                id = UUID.randomUUID(),
-                title = "경험 제목1 ",
-                contents = contentResponse,
-                strongPoints = strongPointResponse,
-                parentTag = parentTag,
-                childTag = childTag,
-                startedAt = startedAt,
-                endedAt = endedAt
-            ),
-            DetailExperience.Response(
-                id = UUID.randomUUID(),
-                title = "경험 제목 2",
-                contents = contentResponse,
-                strongPoints = strongPointResponse,
-                parentTag = parentTag,
-                childTag = childTag,
-                startedAt = startedAt.minusYears(1),
-                endedAt = endedAt
+        val experienceResponses =
+            GetExperience.Response(
+                arrayListOf(
+                    GetExperience.DetailExperience(
+                        id = UUID.randomUUID(),
+                        title = "경험 제목1 ",
+                        contents = contentResponse,
+                        strongPoints = strongPointResponse,
+                        parentTag = parentTag,
+                        childTag = childTag,
+                        startedAt = startedAt,
+                        endedAt = endedAt
+                    ),
+                    GetExperience.DetailExperience(
+                        id = UUID.randomUUID(),
+                        title = "경험 제목 2",
+                        contents = contentResponse,
+                        strongPoints = strongPointResponse,
+                        parentTag = parentTag,
+                        childTag = childTag,
+                        startedAt = startedAt.minusYears(1),
+                        endedAt = endedAt
+                    )
+                )
             )
-        )
 
         val year = 2024
         given(experienceGetService.getExperienceByYearAndParentTag(year, parentTag.id)).willReturn(experienceResponses)
@@ -411,22 +414,22 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                     headerWithName("Authorization").description("엑세스 토큰")
                 ),
                 responseFields(
-                    fieldWithPath("[].id").description("경험 id"),
-                    fieldWithPath("[].title").description("경험 제목"),
-                    fieldWithPath("[].contents").description("경험 내용"),
-                    fieldWithPath("[].contents[].question").description("경험 내용 질문"),
-                    fieldWithPath("[].contents[].answer").description("경험 내용 답변"),
-                    fieldWithPath("[].strongPoints").description("관련된 역량 키워드"),
-                    fieldWithPath("[].strongPoints[].id").description("역량 키워드 id"),
-                    fieldWithPath("[].strongPoints[].name").description("역량 키워드 이름"),
-                    fieldWithPath("[].parentTag").description("속한 상위 태그"),
-                    fieldWithPath("[].parentTag.id").description("상위 태그 id"),
-                    fieldWithPath("[].parentTag.name").description("상위 태그 이름"),
-                    fieldWithPath("[].childTag").description("속한 하위 태그"),
-                    fieldWithPath("[].childTag.id").description("하위 태그 id"),
-                    fieldWithPath("[].childTag.name").description("하위 태그 이름"),
-                    fieldWithPath("[].startedAt").description("경험 시작 날짜"),
-                    fieldWithPath("[].endedAt").description("경험 종료 날짜"),
+                    fieldWithPath("experiences[].id").description("경험 id"),
+                    fieldWithPath("experiences[].title").description("경험 제목"),
+                    fieldWithPath("experiences[].contents").description("경험 내용"),
+                    fieldWithPath("experiences[].contents[].question").description("경험 내용 질문"),
+                    fieldWithPath("experiences[].contents[].answer").description("경험 내용 답변"),
+                    fieldWithPath("experiences[].strongPoints").description("관련된 역량 키워드"),
+                    fieldWithPath("experiences[].strongPoints[].id").description("역량 키워드 id"),
+                    fieldWithPath("experiences[].strongPoints[].name").description("역량 키워드 이름"),
+                    fieldWithPath("experiences[].parentTag").description("속한 상위 태그"),
+                    fieldWithPath("experiences[].parentTag.id").description("상위 태그 id"),
+                    fieldWithPath("experiences[].parentTag.name").description("상위 태그 이름"),
+                    fieldWithPath("experiences[].childTag").description("속한 하위 태그"),
+                    fieldWithPath("experiences[].childTag.id").description("하위 태그 id"),
+                    fieldWithPath("experiences[].childTag.name").description("하위 태그 이름"),
+                    fieldWithPath("experiences[].startedAt").description("경험 시작 날짜"),
+                    fieldWithPath("experiences[].endedAt").description("경험 종료 날짜"),
                 ),
             )
         )
@@ -435,40 +438,43 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("경험 목록을 하위 태그 id를 기준으로 조회한다.")
     fun getExperienceYearAndChildTagTest() {
-        val content1 = DetailExperience.DetailExperienceContent("질문1", "답변1")
-        val content2 = DetailExperience.DetailExperienceContent("질문2", "답변2")
-        val strongPoint1 = DetailExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
-        val strongPoint2 = DetailExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
-        val parentTag = DetailExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
-        val childTag = DetailExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
+        val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
+        val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
+        val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
+        val strongPoint2 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
+        val parentTag = GetExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
+        val childTag = GetExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
         val startedAt = LocalDateTime.now()
         val endedAt = LocalDateTime.now().plusDays(1)
 
         val contentResponse = arrayListOf(content1, content2)
         val strongPointResponse = arrayListOf(strongPoint1, strongPoint2)
 
-        val experienceResponses = arrayListOf(
-            DetailExperience.Response(
-                id = UUID.randomUUID(),
-                title = "경험 제목1 ",
-                contents = contentResponse,
-                strongPoints = strongPointResponse,
-                parentTag = parentTag,
-                childTag = childTag,
-                startedAt = startedAt,
-                endedAt = endedAt
-            ),
-            DetailExperience.Response(
-                id = UUID.randomUUID(),
-                title = "경험 제목 2",
-                contents = contentResponse,
-                strongPoints = strongPointResponse,
-                parentTag = parentTag,
-                childTag = childTag,
-                startedAt = startedAt.minusYears(1),
-                endedAt = endedAt
+        val experienceResponses =
+            GetExperience.Response(
+                arrayListOf(
+                    GetExperience.DetailExperience(
+                        id = UUID.randomUUID(),
+                        title = "경험 제목1 ",
+                        contents = contentResponse,
+                        strongPoints = strongPointResponse,
+                        parentTag = parentTag,
+                        childTag = childTag,
+                        startedAt = startedAt,
+                        endedAt = endedAt
+                    ),
+                    GetExperience.DetailExperience(
+                        id = UUID.randomUUID(),
+                        title = "경험 제목 2",
+                        contents = contentResponse,
+                        strongPoints = strongPointResponse,
+                        parentTag = parentTag,
+                        childTag = childTag,
+                        startedAt = startedAt.minusYears(1),
+                        endedAt = endedAt
+                    )
+                )
             )
-        )
 
         val year = 2024
         given(experienceGetService.getExperienceByYearAndChildTag(year, childTag.id)).willReturn(experienceResponses)
@@ -490,23 +496,24 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                     headerWithName("Authorization").description("엑세스 토큰")
                 ),
                 responseFields(
-                    fieldWithPath("[].id").description("경험 id"),
-                    fieldWithPath("[].title").description("경험 제목"),
-                    fieldWithPath("[].contents").description("경험 내용"),
-                    fieldWithPath("[].contents[].question").description("경험 내용 질문"),
-                    fieldWithPath("[].contents[].answer").description("경험 내용 답변"),
-                    fieldWithPath("[].strongPoints").description("관련된 역량 키워드"),
-                    fieldWithPath("[].strongPoints[].id").description("역량 키워드 id"),
-                    fieldWithPath("[].strongPoints[].name").description("역량 키워드 이름"),
-                    fieldWithPath("[].parentTag").description("속한 상위 태그"),
-                    fieldWithPath("[].parentTag.id").description("상위 태그 id"),
-                    fieldWithPath("[].parentTag.name").description("상위 태그 이름"),
-                    fieldWithPath("[].childTag").description("속한 하위 태그"),
-                    fieldWithPath("[].childTag.id").description("하위 태그 id"),
-                    fieldWithPath("[].childTag.name").description("하위 태그 이름"),
-                    fieldWithPath("[].startedAt").description("경험 시작 날짜"),
-                    fieldWithPath("[].endedAt").description("경험 종료 날짜"),
-                ),
+                    fieldWithPath("experiences").description("경험 목록"),
+                    fieldWithPath("experiences[].id").description("경험 id"),
+                    fieldWithPath("experiences[].title").description("경험 제목"),
+                    fieldWithPath("experiences[].contents").description("경험 내용"),
+                    fieldWithPath("experiences[].contents[].question").description("경험 내용 질문"),
+                    fieldWithPath("experiences[].contents[].answer").description("경험 내용 답변"),
+                    fieldWithPath("experiences[].strongPoints").description("관련된 역량 키워드"),
+                    fieldWithPath("experiences[].strongPoints[].id").description("역량 키워드 id"),
+                    fieldWithPath("experiences[].strongPoints[].name").description("역량 키워드 이름"),
+                    fieldWithPath("experiences[].parentTag").description("속한 상위 태그"),
+                    fieldWithPath("experiences[].parentTag.id").description("상위 태그 id"),
+                    fieldWithPath("experiences[].parentTag.name").description("상위 태그 이름"),
+                    fieldWithPath("experiences[].childTag").description("속한 하위 태그"),
+                    fieldWithPath("experiences[].childTag.id").description("하위 태그 id"),
+                    fieldWithPath("experiences[].childTag.name").description("하위 태그 이름"),
+                    fieldWithPath("experiences[].startedAt").description("경험 시작 날짜"),
+                    fieldWithPath("experiences[].endedAt").description("경험 종료 날짜"),
+                )
             )
         )
     }

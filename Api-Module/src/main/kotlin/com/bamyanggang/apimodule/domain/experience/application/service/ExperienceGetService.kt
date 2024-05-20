@@ -1,8 +1,8 @@
 package com.bamyanggang.apimodule.domain.experience.application.service
 
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
-import com.bamyanggang.apimodule.domain.experience.application.dto.DetailExperience
 import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
+import com.bamyanggang.apimodule.domain.experience.application.dto.GetExperience
 import com.bamyanggang.domainmodule.domain.experience.aggregate.Experience
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceReader
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointReader
@@ -16,7 +16,7 @@ class ExperienceGetService(
     private val strongPointReader: StrongPointReader,
     private val tagReader: TagReader,
 ) {
-    fun getExperienceDetailById(experienceId: UUID) : DetailExperience.Response {
+    fun getExperienceDetailById(experienceId: UUID) : GetExperience.DetailExperience {
         val oneExperience = experienceReader.readExperience(experienceId)
         return createExperienceDetailResponse(oneExperience)
     }
@@ -28,25 +28,29 @@ class ExperienceGetService(
             .let { ExperienceYear.Response(it) }
     }
 
-    fun getExperienceByYearAndParentTag(year: Int, parentTagId: UUID): List<DetailExperience.Response> {
-        return experienceReader.readByYearAndParentTagId(year, parentTagId).map {
+    fun getExperienceByYearAndParentTag(year: Int, parentTagId: UUID): GetExperience.Response {
+        val experiences = experienceReader.readByYearAndParentTagId(year, parentTagId).map {
             createExperienceDetailResponse(it)
         }
+
+        return GetExperience.Response(experiences)
     }
 
-    fun getExperienceByYearAndChildTag(year: Int, childTagId: UUID): List<DetailExperience.Response> {
-        return experienceReader.readByYearAndChildTagId(year, childTagId).map {
+    fun getExperienceByYearAndChildTag(year: Int, childTagId: UUID): GetExperience.Response {
+        val experiences = experienceReader.readByYearAndParentTagId(year, childTagId).map {
             createExperienceDetailResponse(it)
         }
+
+        return GetExperience.Response(experiences)
     }
 
-    private fun createExperienceDetailResponse(experience: Experience): DetailExperience.Response {
+    private fun createExperienceDetailResponse(experience: Experience): GetExperience.DetailExperience {
         val detailExperienceContents = convertDetailExperienceContent(experience)
         val strongPointDetails = convertStrongPoints(experience)
         val detailParentTag = convertParentTag(experience)
         val detailChildTag = convertChildTag(experience)
 
-        return DetailExperience.Response(
+        return GetExperience.DetailExperience(
             id = experience.id,
             title = experience.title,
             parentTag = detailParentTag,
@@ -60,7 +64,7 @@ class ExperienceGetService(
 
     private fun convertChildTag(oneExperience: Experience) =
         tagReader.readById(oneExperience.childTagId).let {
-            DetailExperience.DetailTag(
+            GetExperience.DetailTag(
                 it.id,
                 it.name
             )
@@ -68,14 +72,14 @@ class ExperienceGetService(
 
     private fun convertParentTag(oneExperience: Experience) =
         tagReader.readById(oneExperience.parentTagId).let {
-            DetailExperience.DetailTag(
+            GetExperience.DetailTag(
                 it.id,
                 it.name
             )
         }
 
     private fun convertDetailExperienceContent(experience: Experience) =
-        experience.contents.map { DetailExperience.DetailExperienceContent(
+        experience.contents.map { GetExperience.DetailExperienceContent(
                 it.question,
                 it.answer
             )
@@ -84,7 +88,7 @@ class ExperienceGetService(
     private fun convertStrongPoints(experience: Experience) =
         experience.strongPoints.map { it.strongPointId }.let {
             strongPointReader.readByIds(it).map { strongPoint ->
-                DetailExperience.DetailStrongPoint(
+                GetExperience.DetailStrongPoint(
                     strongPoint.id,
                     strongPoint.name
                 )

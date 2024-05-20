@@ -1,9 +1,6 @@
 package com.bamyanggang.apimodule.domain.experience.presentation
 
-import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
-import com.bamyanggang.apimodule.domain.experience.application.dto.DetailExperience
-import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
-import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
+import com.bamyanggang.apimodule.domain.experience.application.dto.*
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
@@ -20,16 +17,16 @@ class ExperienceController(
 ) {
     @GetMapping(ExperienceApi.BASE_URL)
     fun getExperienceByFilter(@RequestParam("year") year: Int,
-                              @RequestParam("parent-tag", required = false) parentTagId: UUID,
+                              @RequestParam("parent-tag") parentTagId: UUID,
                               @RequestParam("child-tag", required = false) childTagId: UUID?
-    ) : List<DetailExperience.Response> =
+    ) : GetExperience.Response =
         when (childTagId){
             null -> experienceGetService.getExperienceByYearAndParentTag(year, parentTagId)
             else -> experienceGetService.getExperienceByYearAndChildTag(year, childTagId)
         }
 
     @GetMapping(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL)
-    fun getExperience(@PathVariable("experienceId") experienceId: UUID): DetailExperience.Response {
+    fun getExperience(@PathVariable("experienceId") experienceId: UUID): GetExperience.DetailExperience {
         return experienceGetService.getExperienceDetailById(experienceId)
     }
     
