@@ -1,26 +1,21 @@
 package com.bamyanggang.apimodule.domain.tag.application.dto
 
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag.TagDetail
 import java.util.*
 
-class GetParentTag {
+class GetChildTag {
     data class Response(
         val tags: List<TagDetail>
     )
 
-    data class TagDetail(
-        val id: UUID,
-        val name: String
-    )
-
     data class TotalTagInfo(
         val totalExperienceCount: Int,
-        val tagInfos : List<ParentTagSummary>
+        val tagInfos : List<ChildTagSummary>
     )
 
-    data class ParentTagSummary(
+    data class ChildTagSummary(
         val id: UUID,
         val name: String,
-        val strongPointCount: Int,
         val experienceCount: Int
     )
 }

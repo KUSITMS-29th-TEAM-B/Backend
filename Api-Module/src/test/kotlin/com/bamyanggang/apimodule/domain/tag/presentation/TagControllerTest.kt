@@ -2,6 +2,7 @@ package com.bamyanggang.apimodule.domain.tag.presentation
 
 import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetChildTag
 import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
@@ -219,9 +220,9 @@ class TagControllerTest : BaseRestDocsTest() {
             GetParentTag.TagDetail(generateFixture(), "하위 태그 이름 2")
         )
 
-        val tagResponse = GetParentTag.Response(tagDetails)
+        val tagResponse = GetChildTag.Response(tagDetails)
 
-        given(tagController.getAllChildTags(parentTagId)).willReturn(tagResponse)
+        given(tagController.getUserChildTags(parentTagId)).willReturn(tagResponse)
 
         val request = RestDocumentationRequestBuilders.get(TagApi.TAG_PATH_VARIABLE_URL, parentTagId)
             .header("Authorization", "Bearer Access Token")
@@ -329,13 +330,13 @@ class TagControllerTest : BaseRestDocsTest() {
 //        )
 
         val tagSummaries = arrayListOf(
-            GetParentTag.TagSummary(
+            GetParentTag.ParentTagSummary(
                 UUID.randomUUID(),
                 "상위 태그 정보 1",
                 3,
                 14
             ),
-            GetParentTag.TagSummary(
+            GetParentTag.ParentTagSummary(
                 UUID.randomUUID(),
                 "상위 태그 정보 2",
                 1,
