@@ -22,6 +22,5 @@ class StrongPointAppender(
 
         strongPointRepository.saveAll(newStrongPoints)
         return newStrongPoints
-
     }
 }

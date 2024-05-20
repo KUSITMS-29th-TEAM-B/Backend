@@ -4,7 +4,7 @@ import java.util.*
 
 class CreateStrongPoint {
     data class Request(
-        val names: List<StrongPointName>,
+        val names: List<StrongPointName>
     )
 
     data class Response(
