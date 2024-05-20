@@ -544,6 +544,7 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                 ),
                 responseFields(
                     fieldWithPath("years").description("경험이 존재하는 연도 배열(활동 시작 일시 기준)"),
+                    fieldWithPath("yearTagInfos").description("연도 내 상위 태그 정보 배열"),
                     fieldWithPath("yearTagInfos[].year").description("연도"),
                     fieldWithPath("yearTagInfos[].tags").description("연도 내 상위 태그 정보"),
                     fieldWithPath("yearTagInfos[].tags[].id").description("상위 태그 id"),
