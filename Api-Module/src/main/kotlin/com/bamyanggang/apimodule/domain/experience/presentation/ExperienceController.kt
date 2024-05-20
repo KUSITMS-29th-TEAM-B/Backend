@@ -18,6 +18,16 @@ class ExperienceController(
     private val experienceEditService: ExperienceEditService,
     private val experienceGetService: ExperienceGetService
 ) {
+    @GetMapping(ExperienceApi.BASE_URL)
+    fun getExperienceByFilter(@RequestParam("year") year: Int,
+                              @RequestParam("parent-tag", required = false) parentTagId: UUID,
+                              @RequestParam("child-tag", required = false) childTagId: UUID?
+    ) : List<DetailExperience.Response> =
+        when (childTagId){
+            null -> experienceGetService.getExperienceByYearAndParentTag(year, parentTagId)
+            else -> experienceGetService.getExperienceByYearAndChildTag(year, childTagId)
+        }
+
     @GetMapping(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL)
     fun getExperience(@PathVariable("experienceId") experienceId: UUID): DetailExperience.Response {
         return experienceGetService.getExperienceDetailById(experienceId)
