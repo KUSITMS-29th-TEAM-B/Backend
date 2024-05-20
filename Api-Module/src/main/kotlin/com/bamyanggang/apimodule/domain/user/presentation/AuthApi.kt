@@ -7,4 +7,6 @@ object AuthApi {
     const val LOGOUT = "$BASE_URL/logout"
     const val REISSUE = "$BASE_URL/reissue"
 
+    const val REFRESH_TOKEN_HEADER = "RefreshToken"
+
 }
