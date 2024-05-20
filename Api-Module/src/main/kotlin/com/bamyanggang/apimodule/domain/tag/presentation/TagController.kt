@@ -1,6 +1,7 @@
 package com.bamyanggang.apimodule.domain.tag.presentation
 
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetChildTag
 import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag
 import com.bamyanggang.apimodule.domain.tag.application.service.TagCreateService
 import com.bamyanggang.apimodule.domain.tag.application.service.TagDeleteService
@@ -14,11 +15,6 @@ class TagController(
     private val tagDeleteService: TagDeleteService,
     private val tagGetService: TagGetService
 ) {
-    @GetMapping(TagApi.BASE_URL)
-    fun getParentTagsByYear(@RequestParam("year") year: Int): GetParentTag.TotalTagInfo {
-        return tagGetService.getAllParentTagsByYear(year)
-    }
-
     @GetMapping(TagApi.TOP_RANK_TAG_URL)
     fun getTopRankTagsByLimit(
         @RequestParam("year") year: Int,
@@ -33,15 +29,19 @@ class TagController(
     }
 
     @GetMapping(TagApi.MY_CHILD_TAG_URL)
-    fun getUserChildTags(@PathVariable("tagId") parentTagId: UUID): GetParentTag.Response {
+    fun getUserChildTags(@PathVariable("tagId") parentTagId: UUID): GetChildTag.Response {
         return tagGetService.getAllChildTagsByParentTagId(parentTagId)
+    }
+
+    @GetMapping(TagApi.BASE_URL)
+    fun getParentTagsByYear(@RequestParam("year") year: Int): GetParentTag.TotalTagInfo {
+        return tagGetService.getAllParentTagsByYear(year)
     }
 
     @GetMapping(TagApi.TAG_PATH_VARIABLE_URL)
     fun getChildTagsByYear(@PathVariable("tagId") parentTagId: UUID,
-                        @RequestParam("year") year: Int): GetParentTag.Response {
-
-        return GetParentTag.Response(emptyList())
+                        @RequestParam("year") year: Int): GetChildTag.TotalTagInfo {
+        return tagGetService.getAllChildTagsByYearAndParentTagId(year, parentTagId)
     }
 
     @PostMapping(TagApi.BASE_URL)
