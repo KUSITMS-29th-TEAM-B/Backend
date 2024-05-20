@@ -16,4 +16,8 @@ class TagReader(
     fun readAllChildTagsByUserId(userId: UUID, parentId: UUID): List<Tag> {
         return tagRepository.findAllChildTagsByUserId(userId, parentId)
     }
+
+    fun readById(tagId: UUID): Tag {
+        return tagRepository.findById(tagId)
+    }
 }
