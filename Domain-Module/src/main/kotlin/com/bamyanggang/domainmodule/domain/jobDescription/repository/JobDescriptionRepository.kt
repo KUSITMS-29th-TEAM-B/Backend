@@ -17,4 +17,6 @@ interface JobDescriptionRepository {
 
     fun findAllByUserId(userId: UUID, page: Int, size: Int, writeStatus: WriteStatus?): PageDomain<JobDescription>
 
+    fun deleteById(jobDescriptionId: UUID)
+
 }
