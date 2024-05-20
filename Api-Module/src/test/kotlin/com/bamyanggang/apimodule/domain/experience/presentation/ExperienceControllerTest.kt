@@ -352,12 +352,171 @@ class ExperienceControllerTest : BaseRestDocsTest() {
             )
         )
     }
-    
+
+    @Test
+    @DisplayName("경험 목록을 상위 태그 id를 기준으로 조회한다.")
+    fun getExperienceYearAndParentTagTest() {
+        val content1 = DetailExperience.DetailExperienceContent("질문1", "답변1")
+        val content2 = DetailExperience.DetailExperienceContent("질문2", "답변2")
+        val strongPoint1 = DetailExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
+        val strongPoint2 = DetailExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
+        val parentTag = DetailExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
+        val childTag = DetailExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
+        val startedAt = LocalDateTime.now()
+        val endedAt = LocalDateTime.now().plusDays(1)
+
+        val contentResponse = arrayListOf(content1, content2)
+        val strongPointResponse = arrayListOf(strongPoint1, strongPoint2)
+
+        val experienceResponses = arrayListOf(
+            DetailExperience.Response(
+                id = UUID.randomUUID(),
+                title = "경험 제목1 ",
+                contents = contentResponse,
+                strongPoints = strongPointResponse,
+                parentTag = parentTag,
+                childTag = childTag,
+                startedAt = startedAt,
+                endedAt = endedAt
+            ),
+            DetailExperience.Response(
+                id = UUID.randomUUID(),
+                title = "경험 제목 2",
+                contents = contentResponse,
+                strongPoints = strongPointResponse,
+                parentTag = parentTag,
+                childTag = childTag,
+                startedAt = startedAt.minusYears(1),
+                endedAt = endedAt
+            )
+        )
+
+        val year = 2024
+        given(experienceGetService.getExperienceByYearAndParentTag(year, parentTag.id)).willReturn(experienceResponses)
+
+        //given
+        val request = RestDocumentationRequestBuilders.get(ExperienceApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .queryParam("year", year.toString())
+            .queryParam("parent-tag", parentTag.id.toString())
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk).andDo(
+            resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                responseFields(
+                    fieldWithPath("[].id").description("경험 id"),
+                    fieldWithPath("[].title").description("경험 제목"),
+                    fieldWithPath("[].contents").description("경험 내용"),
+                    fieldWithPath("[].contents[].question").description("경험 내용 질문"),
+                    fieldWithPath("[].contents[].answer").description("경험 내용 답변"),
+                    fieldWithPath("[].strongPoints").description("관련된 역량 키워드"),
+                    fieldWithPath("[].strongPoints[].id").description("역량 키워드 id"),
+                    fieldWithPath("[].strongPoints[].name").description("역량 키워드 이름"),
+                    fieldWithPath("[].parentTag").description("속한 상위 태그"),
+                    fieldWithPath("[].parentTag.id").description("상위 태그 id"),
+                    fieldWithPath("[].parentTag.name").description("상위 태그 이름"),
+                    fieldWithPath("[].childTag").description("속한 하위 태그"),
+                    fieldWithPath("[].childTag.id").description("하위 태그 id"),
+                    fieldWithPath("[].childTag.name").description("하위 태그 이름"),
+                    fieldWithPath("[].startedAt").description("경험 시작 날짜"),
+                    fieldWithPath("[].endedAt").description("경험 종료 날짜"),
+                ),
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("경험 목록을 하위 태그 id를 기준으로 조회한다.")
+    fun getExperienceYearAndChildTagTest() {
+        val content1 = DetailExperience.DetailExperienceContent("질문1", "답변1")
+        val content2 = DetailExperience.DetailExperienceContent("질문2", "답변2")
+        val strongPoint1 = DetailExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
+        val strongPoint2 = DetailExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
+        val parentTag = DetailExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
+        val childTag = DetailExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
+        val startedAt = LocalDateTime.now()
+        val endedAt = LocalDateTime.now().plusDays(1)
+
+        val contentResponse = arrayListOf(content1, content2)
+        val strongPointResponse = arrayListOf(strongPoint1, strongPoint2)
+
+        val experienceResponses = arrayListOf(
+            DetailExperience.Response(
+                id = UUID.randomUUID(),
+                title = "경험 제목1 ",
+                contents = contentResponse,
+                strongPoints = strongPointResponse,
+                parentTag = parentTag,
+                childTag = childTag,
+                startedAt = startedAt,
+                endedAt = endedAt
+            ),
+            DetailExperience.Response(
+                id = UUID.randomUUID(),
+                title = "경험 제목 2",
+                contents = contentResponse,
+                strongPoints = strongPointResponse,
+                parentTag = parentTag,
+                childTag = childTag,
+                startedAt = startedAt.minusYears(1),
+                endedAt = endedAt
+            )
+        )
+
+        val year = 2024
+        given(experienceGetService.getExperienceByYearAndChildTag(year, childTag.id)).willReturn(experienceResponses)
+
+        //given
+        val request = RestDocumentationRequestBuilders.get(ExperienceApi.BASE_URL)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .queryParam("year", year.toString())
+            .queryParam("parent-tag", parentTag.id.toString())
+            .queryParam("child-tag", childTag.id.toString())
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk).andDo(
+            resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                responseFields(
+                    fieldWithPath("[].id").description("경험 id"),
+                    fieldWithPath("[].title").description("경험 제목"),
+                    fieldWithPath("[].contents").description("경험 내용"),
+                    fieldWithPath("[].contents[].question").description("경험 내용 질문"),
+                    fieldWithPath("[].contents[].answer").description("경험 내용 답변"),
+                    fieldWithPath("[].strongPoints").description("관련된 역량 키워드"),
+                    fieldWithPath("[].strongPoints[].id").description("역량 키워드 id"),
+                    fieldWithPath("[].strongPoints[].name").description("역량 키워드 이름"),
+                    fieldWithPath("[].parentTag").description("속한 상위 태그"),
+                    fieldWithPath("[].parentTag.id").description("상위 태그 id"),
+                    fieldWithPath("[].parentTag.name").description("상위 태그 이름"),
+                    fieldWithPath("[].childTag").description("속한 하위 태그"),
+                    fieldWithPath("[].childTag.id").description("하위 태그 id"),
+                    fieldWithPath("[].childTag.name").description("하위 태그 이름"),
+                    fieldWithPath("[].startedAt").description("경험 시작 날짜"),
+                    fieldWithPath("[].endedAt").description("경험 종료 날짜"),
+                ),
+            )
+        )
+    }
+
+    @Test
     @DisplayName("유저의 경험 내 존재하는 연도들을 중복 제거한 리스트를 반환한다.")
     fun getExperienceYearsTest() {
         //given
         val userId: UUID = generateFixture()
-        val years = arrayListOf(2023, 2024, 2025)
+        val years = arrayListOf(2020,2021,2023, 2024, 2025)
         val yearResponse = ExperienceYear.Response(years)
 
         given(experienceGetService.getAllYearsByExistExperience()).willReturn(yearResponse)
@@ -371,6 +530,9 @@ class ExperienceControllerTest : BaseRestDocsTest() {
         
         result.andExpect(status().isOk).andDo(
             resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
                 responseFields(
                     fieldWithPath("years").description("경험이 존재하는 연도 배열(활동 시작 일시 기준)")
                 )
