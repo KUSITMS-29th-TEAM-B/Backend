@@ -1,10 +1,13 @@
 package com.bamyanggang.persistence.bookmark;
 
 import com.bamyanggang.domainmodule.domain.bookmark.aggregate.Bookmark;
+import com.bamyanggang.domainmodule.domain.bookmark.enums.BookmarkStatus;
 import com.bamyanggang.domainmodule.domain.bookmark.repository.BookmarkRepository;
 import com.bamyanggang.persistence.bookmark.jpa.entity.BookmarkJpaEntity;
 import com.bamyanggang.persistence.bookmark.jpa.repository.BookmarkJpaRepository;
 import com.bamyanggang.persistence.bookmark.mapper.BookmarkMapper;
+import com.bamyanggang.persistence.experience.mapper.ExperienceMapper;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Repository;
 public class BookmarkRepositoryImpl implements BookmarkRepository {
     private final BookmarkJpaRepository bookmarkJpaRepository;
     private final BookmarkMapper bookmarkMapper;
+    private final ExperienceMapper experienceMapper;
 
     @Override
     public Bookmark findByIds(UUID jobDescriptionId, UUID experienceId) {
@@ -28,4 +32,13 @@ public class BookmarkRepositoryImpl implements BookmarkRepository {
         bookmarkJpaRepository.save(bookmarkJpaEntity);
     }
 
+    @Override
+    public List<Bookmark> findByStatusOnAndJobDescriptionId(
+            UUID jobDescriptionId,
+            BookmarkStatus status) {
+        List<BookmarkJpaEntity> bookmarkJpaEntities = bookmarkJpaRepository
+                .findByBookmarkStatusAndJobDescriptionId(status, jobDescriptionId);
+
+        return bookmarkJpaEntities.stream().map(bookmarkMapper::toDomainEntity).toList();
+    }
 }
