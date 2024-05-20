@@ -49,6 +49,9 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
     @MockBean
     private lateinit var jobDescriptionInfoUpdateService: JobDescriptionInfoUpdateService
 
+    @MockBean
+    private lateinit var jobDescriptionDeleteService: JobDescriptionDeleteService
+
     @Test
     @DisplayName("직무 공고를 등록한다.")
     fun createJobDescription() {
@@ -510,6 +513,33 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("link").description("직무 공고 링크"),
                         fieldWithPath("startedAt").description("직무 공고 시작일"),
                         fieldWithPath("endedAt").description("직무 공고 종료일")
+                    )
+                )
+            )
+    }
+
+    @Test
+    @DisplayName("JD를 삭제한다")
+    fun deleteJobDescription() {
+        // given
+        val jobDescriptionId = UUID.randomUUID()
+
+        val request = RestDocumentationRequestBuilders.delete(JobDescriptionApi.DETAIL, jobDescriptionId)
+            .header("Authorization", "Bearer Access Token")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(
+                resultHandler.document(
+                    requestHeaders(
+                        headerWithName("Authorization").description("엑세스 토큰")
+                    ),
+                    pathParameters(
+                        RequestDocumentation.parameterWithName("jobDescriptionId").description("jd 공고 ID")
                     )
                 )
             )
