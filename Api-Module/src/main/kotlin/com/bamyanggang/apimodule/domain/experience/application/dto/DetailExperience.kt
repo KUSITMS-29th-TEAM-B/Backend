@@ -1,6 +1,5 @@
 package com.bamyanggang.apimodule.domain.experience.application.dto
 
-import com.bamyanggang.apimodule.domain.strongpoint.application.dto.GetStrongPoint.DetailStrongPoint
 import java.time.LocalDateTime
 import java.util.*
 
@@ -8,8 +7,8 @@ class DetailExperience {
     data class Response(
         val id: UUID,
         val title: String,
-        val parentTagId: UUID,
-        val childTagId: UUID,
+        val parentTag: DetailTag,
+        val childTag: DetailTag,
         val strongPoints: List<DetailStrongPoint>,
         val contents: List<DetailExperienceContent>,
         val startedAt: LocalDateTime,
@@ -19,5 +18,15 @@ class DetailExperience {
     data class DetailExperienceContent(
         val question: String,
         val answer: String,
+    )
+
+    data class DetailTag(
+        val id: UUID,
+        val name: String,
+    )
+
+    data class DetailStrongPoint(
+        val id: UUID,
+        val name: String,
     )
 }
