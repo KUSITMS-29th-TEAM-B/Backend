@@ -38,4 +38,8 @@ class JobDescriptionModifier(
             .also { jobDescriptionRepository.save(it) }
     }
 
+    fun invoke() {
+        jobDescriptionRepository.changeWriteStatus()
+    }
+
 }

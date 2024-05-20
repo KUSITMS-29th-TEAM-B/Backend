@@ -19,4 +19,6 @@ interface JobDescriptionRepository {
 
     fun deleteById(jobDescriptionId: UUID)
 
+    fun changeWriteStatus()
+
 }

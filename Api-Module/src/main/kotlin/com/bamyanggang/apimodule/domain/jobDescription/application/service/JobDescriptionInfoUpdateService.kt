@@ -23,4 +23,9 @@ class JobDescriptionInfoUpdateService(
             request.link, request.startedAt, request.endedAt)
     }
 
+    @Transactional
+    fun invoke() {
+        jobDescriptionModifier.invoke()
+    }
+
 }
