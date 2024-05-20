@@ -35,6 +35,6 @@ class ExperienceReader(
     }
 
     fun readByUserIdAndParentTagId(userId: UUID, parentTagId: UUID): List<Experience> {
-        return experienceRepository.findByUserIdAnd(userId, parentTagId)
+        return experienceRepository.findByUserIdAndParentTagId(userId, parentTagId)
     }
 }
