@@ -1,7 +1,8 @@
 package com.bamyanggang.apimodule.domain.tag.application.service
 
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
-import com.bamyanggang.apimodule.domain.tag.application.dto.GetTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetChildTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceReader
 import com.bamyanggang.domainmodule.domain.tag.service.TagReader
 import org.springframework.stereotype.Service
@@ -14,29 +15,29 @@ class TagGetService(
     private val experienceReader: ExperienceReader
 ) {
     @Transactional(readOnly = true)
-    fun getAllParentTagByUserId(): GetTag.Response {
+    fun getAllParentTagByUserId(): GetParentTag.Response {
         val tagDetails = getAuthenticationPrincipal().let {
             tagReader.readAllParentTagsByUserId(it).map { tag ->
-                GetTag.TagDetail(tag.id, tag.name)
+                GetParentTag.TagDetail(tag.id, tag.name)
             }
         }
 
-        return GetTag.Response(tagDetails)
+        return GetParentTag.Response(tagDetails)
     }
 
     @Transactional(readOnly = true)
-    fun getAllChildTagsByParentTagId(parentTagId: UUID): GetTag.Response {
+    fun getAllChildTagsByParentTagId(parentTagId: UUID): GetChildTag.Response {
         val tagDetails = getAuthenticationPrincipal().let {
             tagReader.readAllChildTagsByUserId(it, parentTagId).map { tag ->
-                GetTag.TagDetail(tag.id, tag.name)
+                GetParentTag.TagDetail(tag.id, tag.name)
             }
         }
 
-        return GetTag.Response(tagDetails)
+        return GetChildTag.Response(tagDetails)
     }
 
     @Transactional(readOnly = true)
-    fun getParentTagsByYearAndLimit(year: Int, limit: Int): GetTag.Response {
+    fun getParentTagsByYearAndLimit(year: Int, limit: Int): GetParentTag.Response {
         val currentUserId = getAuthenticationPrincipal()
         val topParentTagIds = experienceReader.readByYearDesc(year, currentUserId)
             .distinctBy { it.parentTagId }
@@ -44,14 +45,14 @@ class TagGetService(
             .map { it.parentTagId }
 
         return tagReader.readByIds(topParentTagIds).map {
-            GetTag.TagDetail(it.id, it.name)
+            GetParentTag.TagDetail(it.id, it.name)
         }.let {
-            GetTag.Response(it)
+            GetParentTag.Response(it)
         }
     }
 
     @Transactional(readOnly = true)
-    fun getAllParentTagsByYear(year: Int): GetTag.TotalTagInfo {
+    fun getAllParentTagsByYear(year: Int): GetParentTag.TotalTagInfo {
         val currentUserId = getAuthenticationPrincipal()
         val experiences = experienceReader.readByYearDesc(year, currentUserId)
 
@@ -67,7 +68,7 @@ class TagGetService(
                 }
             }
 
-            GetTag.TagSummary(
+            GetParentTag.ParentTagSummary(
                 parentTag.id,
                 parentTag.name,
                 strongPoints.size,
@@ -75,7 +76,29 @@ class TagGetService(
             )
         }
 
-        return GetTag.TotalTagInfo(
+        return GetParentTag.TotalTagInfo(
+            experiences.size,
+            tagSummaries
+        )
+    }
+
+    @Transactional(readOnly = true)
+    fun getAllChildTagsByYearAndParentTagId(year: Int, parentTagId: UUID): GetChildTag.TotalTagInfo {
+        val currentUserId = getAuthenticationPrincipal()
+        val experiences = experienceReader.readByYearDesc(year, currentUserId)
+        val experienceGroup = experiences.groupBy { it.childTagId }
+
+        val tagSummaries = experienceGroup.map {
+            val childTag = tagReader.readById(it.key)
+
+            GetChildTag.ChildTagSummary(
+                childTag.id,
+                childTag.name,
+                it.value.size
+            )
+        }
+
+        return GetChildTag.TotalTagInfo(
             experiences.size,
             tagSummaries
         )
