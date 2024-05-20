@@ -405,7 +405,8 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                     ),
                     responseFields(
                         fieldWithPath("applyContentList[].question").description("질문"),
-                        fieldWithPath("applyContentList[].answer").description("답변")
+                        fieldWithPath("applyContentList[].answer").description("답변"),
+                        fieldWithPath("writeStatus").description("작성 상태. NOT_APPLIED(칩 없음, 작성 전), WRITING(작성 중), WRITTEN(작성 완료), CLOSED(마감)")
                     )
                 )
             )
