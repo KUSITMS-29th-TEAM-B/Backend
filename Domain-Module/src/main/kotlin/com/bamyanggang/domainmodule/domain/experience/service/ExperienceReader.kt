@@ -15,14 +15,18 @@ class ExperienceReader(
 
     fun readAllYearsByExistExperience(userId: UUID): List<Int> {
         val yearSet : TreeSet<Int> = TreeSet<Int>()
-        readAllExperienceByUserId(userId).forEach {
+        readAllByUserId(userId).forEach {
             yearSet.add(it.startedAt.year)
         }
 
         return yearSet.toList()
     }
 
-    fun readAllExperienceByUserId(userId: UUID): List<Experience> {
+    fun readAllByUserId(userId: UUID): List<Experience> {
         return experienceRepository.findAllByUserId(userId)
+    }
+
+    fun readByYearDesc(year: Int, userId: UUID): List<Experience> {
+        return experienceRepository.findByUserIdAndYearDesc(year, userId)
     }
 }
