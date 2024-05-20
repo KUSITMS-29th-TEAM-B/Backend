@@ -26,11 +26,15 @@ operation::TagControllerTest/getTopRankParentTagTest/[snippets='http-request,req
 
 operation::TagControllerTest/getParentTagsByFilter/[snippets='http-request,http-response,response-fields']
 
-
 [[GetChildTagTest]]
-=== 하위 태그 조회 API
+=== 하위 태그 전체 조회 API
 
 operation::TagControllerTest/getAllChildTagTest/[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[GetChildTagsByFilter]]
+=== 상위 태그 내 하위 태그 조회 API
+
+operation::TagControllerTest/getChildTagsByYear/[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[duplicatedParentTagTest]]
 ==== 상위 태그 이름 중복 예외
