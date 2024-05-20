@@ -1,0 +1,7 @@
+[[Bookmark-API]]
+== Bookmark-API
+
+[[CREATE-BOOKMARK]]
+=== 북마크 생성 API
+
+operation::BookmarkControllerTest/createBookmark/[snippets='http-request,path-parameters,request-headers,http-response']
