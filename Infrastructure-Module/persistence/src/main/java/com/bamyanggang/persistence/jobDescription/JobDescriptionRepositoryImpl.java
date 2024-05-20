@@ -68,4 +68,9 @@ public class JobDescriptionRepositoryImpl implements JobDescriptionRepository {
         jobDescriptionJpaRepository.deleteById(jobDescriptionId);
     }
 
+    @Override
+    public void changeWriteStatus() {
+        jobDescriptionJpaRepository.changeWriteStatus();
+    }
+
 }
