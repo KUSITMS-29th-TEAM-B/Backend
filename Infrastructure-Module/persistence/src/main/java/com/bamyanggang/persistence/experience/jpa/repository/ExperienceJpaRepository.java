@@ -19,4 +19,9 @@ public interface ExperienceJpaRepository extends JpaRepository<ExperienceJpaEnti
     @Modifying
     @Query("select e from ExperienceTagJpaEntity e where e.experienceId in :experienceIds")
     List<ExperienceJpaEntity> findByIds(@Param("experienceIds") List<UUID> experienceIds);
+  
+    List<ExperienceJpaEntity> findByCreatedAtBetween(LocalDateTime startYear, LocalDateTime endYear);
+    List<ExperienceJpaEntity> findByUserIdAndParentTagId(UUID userId, UUID parentTagId);
+    List<ExperienceJpaEntity> findByUserIdAndParentTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(
+            UUID userId, UUID parentTagId, LocalDateTime startYear, LocalDateTime endYear);
 }

@@ -1,11 +1,9 @@
 package com.bamyanggang.domainmodule.domain.jobDescription.service
 
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.JobDescriptionRepository
-import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.UUID
 
-@Service
 class JobDescriptionModifier(
     private val jobDescriptionRepository: JobDescriptionRepository
 ) {
@@ -36,6 +34,10 @@ class JobDescriptionModifier(
                 endedAt = endedAt
             )
             .also { jobDescriptionRepository.save(it) }
+    }
+
+    fun invoke() {
+        jobDescriptionRepository.changeWriteStatus()
     }
 
 }

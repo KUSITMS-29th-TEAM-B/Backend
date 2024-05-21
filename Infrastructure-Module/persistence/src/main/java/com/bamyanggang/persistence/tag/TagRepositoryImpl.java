@@ -30,7 +30,7 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public List<Tag> findAllChildTagsByUserId(UUID userId, UUID parentTagId) {
+    public List<Tag> findAllChildTagsByUserIdAndParentTagId(UUID userId, UUID parentTagId) {
         List<TagJpaEntity> childTagJpaEntities = tagJpaRepository.findAllByUserIdAndParentTagId(userId, parentTagId);
         return childTagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
     }
@@ -60,6 +60,10 @@ public class TagRepositoryImpl implements TagRepository {
     @Override
     public List<Tag> findByNameContains(String search) {
         List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findByNameContaining(search);
+    }
+  
+    public List<Tag> findAllChildTagsByParentTagId(UUID parentTagId) {
+        List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findAllByParentTagId(parentTagId);
 
         return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
     }

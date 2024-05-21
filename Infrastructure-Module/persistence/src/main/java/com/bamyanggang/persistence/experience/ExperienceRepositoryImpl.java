@@ -84,6 +84,33 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
 
     public List<Experience> findByTitleContains(String search) {
         List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByTitleContaining(search);
+    }
+  
+    public List<Experience> findByUserIdAndParentTagId(UUID userId, UUID parentTagId) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByUserIdAndParentTagId(userId,
+                parentTagId);
+
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
+
+    @Override
+    public List<Experience> findByUserIdAndParentTagIdAndYearDesc(int year, UUID parentTagId, UUID userId) {
+        LocalDateTime startYear = LocalDateTime.of(year, 1, 1, 0, 0);
+        LocalDateTime endYear = LocalDateTime.of(year, 12, 31, 23, 59);
+
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository
+                .findByUserIdAndParentTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(
+                        userId, parentTagId, startYear, endYear);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
+
+    @Override
+    public List<Experience> findByYear(int year) {
+        LocalDateTime startYear = LocalDateTime.of(year, 1, 1, 0, 0);
+        LocalDateTime endYear = LocalDateTime.of(year, 12, 31, 23, 59);
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByCreatedAtBetween(startYear,
+                endYear);
+
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
 }

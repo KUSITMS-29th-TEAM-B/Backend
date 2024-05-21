@@ -1,5 +1,7 @@
 package com.bamyanggang.apimodule.domain.jobDescription.application.dto
 
+import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
+
 class ApplyInfo {
 
     sealed class Request {
@@ -10,7 +12,8 @@ class ApplyInfo {
     }
 
     data class Response(
-        val applyContentList: List<ContentInfo>
+        val applyContentList: List<ContentInfo>,
+        val writeStatus: WriteStatus
     )
 
     data class ContentInfo(

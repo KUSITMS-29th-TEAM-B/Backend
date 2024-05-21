@@ -32,8 +32,29 @@ class ExperienceGetService(
     fun getAllYearsByExistExperience(): ExperienceYear.Response {
         val currentUserId = getAuthenticationPrincipal()
 
-        return experienceReader.readAllYearsByExistExperience(currentUserId)
-            .let { ExperienceYear.Response(it) }
+        val years = experienceReader.readAllYearsByExistExperience(currentUserId)
+        val yearTagInfos = years.map { year ->
+            val parentTagIds = experienceReader.readByUserIDAndYearDesc(year, currentUserId)
+                .distinctBy { it.parentTagId }
+                .map { it.parentTagId }
+
+            val tagDetails = tagReader.readByIds(parentTagIds).map {
+                ExperienceYear.TagDetail(
+                    id = it.id,
+                    name = it.name
+                )
+            }
+
+            ExperienceYear.YearTagInfo(
+                year,
+                tagDetails
+            )
+        }
+
+        return ExperienceYear.Response(
+            years,
+            yearTagInfos
+        )
     }
 
     @Transactional(readOnly = true)
@@ -47,7 +68,7 @@ class ExperienceGetService(
 
     @Transactional(readOnly = true)
     fun getExperienceByYearAndChildTag(year: Int, childTagId: UUID): GetExperience.Response {
-        val experiences = experienceReader.readByYearAndChildTagId(year, childTagId).map {
+        val experiences = experienceReader.readByChildTagIdAndYear(year, childTagId).map {
             createExperienceDetailResponse(it)
         }
 
@@ -161,4 +182,12 @@ class ExperienceGetService(
                 )
             }
     }
-}
+
+    fun getAllExperienceByYear(year: Int): GetExperience.Response {
+        val experiences = experienceReader.readByYear(year).map {
+            createExperienceDetailResponse(it)
+        }
+
+        return GetExperience.Response(experiences)
+    }
+}   
