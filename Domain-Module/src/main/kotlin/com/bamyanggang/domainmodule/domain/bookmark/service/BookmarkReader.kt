@@ -20,6 +20,6 @@ class BookmarkReader(
     }
 
     fun readByExperienceIds(experiencesIds: List<UUID>) : List<Bookmark>{
-        return bookmarkRepository.findByExperienceIds()
+        return bookmarkRepository.findByExperienceIds(experiencesIds)
     }
 }
