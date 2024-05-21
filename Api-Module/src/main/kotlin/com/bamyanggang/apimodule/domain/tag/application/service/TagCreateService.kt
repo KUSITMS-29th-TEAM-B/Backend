@@ -19,7 +19,7 @@ class TagCreateService(
     fun createChildTag(request: CreateTag.Request, parentTagId: UUID): CreateTag.Response {
         return getAuthenticationPrincipal()
             .also {
-                val userChildTags = tagReader.readAllChildTagsByUserId(it, parentTagId)
+                val userChildTags = tagReader.readAllChildTagsByUserIdAndParentTagId(it, parentTagId)
                 validateTagCountLimit(userChildTags.size)
                 validateDuplicatedName(userChildTags, request.name)
             }.let {

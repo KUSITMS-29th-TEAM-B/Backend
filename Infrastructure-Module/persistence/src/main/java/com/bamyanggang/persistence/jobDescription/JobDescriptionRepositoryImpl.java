@@ -29,6 +29,7 @@ public class JobDescriptionRepositoryImpl implements JobDescriptionRepository {
         jobDescriptionJpaRepository.save(jobDescriptionJpaEntity);
     }
 
+    @Override
     public JobDescription findById(UUID jobDescriptionId) {
         return jobDescriptionJpaRepository.findById(jobDescriptionId)
                 .map(jobDescriptionMapper::toDomainEntity)
@@ -54,18 +55,13 @@ public class JobDescriptionRepositoryImpl implements JobDescriptionRepository {
     }
 
     @Override
-    public PageDomain<JobDescription> findAllByUserIdAndSortByEndedAt(UUID userId, int page, int size, WriteStatus writeStatus) {
-        Pageable pageable = PageRequest.of(page, size);
-        LocalDateTime now = LocalDateTime.now();
-        Page<JobDescriptionJpaEntity> jobDescriptionJpaEntities = jobDescriptionJpaRepository.findAllByUserIdAndWriteStatusAndTime(userId, writeStatus, now, pageable);
-        Page<JobDescription> jobDescriptionSlice = jobDescriptionJpaEntities.map(jobDescriptionMapper::toDomainEntity);
-        return new PageDomain<>(jobDescriptionSlice.getContent(), jobDescriptionSlice.getNumber(), jobDescriptionSlice.getSize()
-            ,jobDescriptionSlice.getTotalPages(), jobDescriptionSlice.hasNext());
+    public void deleteById(UUID jobDescriptionId) {
+        jobDescriptionJpaRepository.deleteById(jobDescriptionId);
     }
 
     @Override
-    public void deleteById(UUID jobDescriptionId) {
-        jobDescriptionJpaRepository.deleteById(jobDescriptionId);
+    public void changeWriteStatus() {
+        jobDescriptionJpaRepository.changeWriteStatus();
     }
 
 }

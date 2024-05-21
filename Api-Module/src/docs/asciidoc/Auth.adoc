@@ -19,5 +19,5 @@ operation::AuthControllerTest/reissueToken[snippets='http-request,http-response,
 [[Auth-Logout]]
 === 로그아웃
 
-operation::AuthControllerTest/logout[snippets='http-request,http-response,request-fields']
+operation::AuthControllerTest/logout[snippets='http-request,request-headers,http-response']
 

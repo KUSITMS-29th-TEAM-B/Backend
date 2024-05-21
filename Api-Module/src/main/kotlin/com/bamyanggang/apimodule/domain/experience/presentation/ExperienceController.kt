@@ -30,12 +30,13 @@ class ExperienceController(
 
     @GetMapping(ExperienceApi.BASE_URL)
     fun getExperienceByFilter(@RequestParam("year") year: Int,
-                              @RequestParam("parent-tag") parentTagId: UUID,
+                              @RequestParam("parent-tag", required = false) parentTagId: UUID?,
                               @RequestParam("child-tag", required = false) childTagId: UUID?
     ) : GetExperience.Response =
-        when (childTagId){
-            null -> experienceGetService.getExperienceByYearAndParentTag(year, parentTagId)
-            else -> experienceGetService.getExperienceByYearAndChildTag(year, childTagId)
+        when {
+            childTagId == null && parentTagId == null -> experienceGetService.getAllExperienceByYear(year)
+            childTagId == null && parentTagId != null -> experienceGetService.getExperienceByYearAndParentTag(year, parentTagId)
+            else -> experienceGetService.getExperienceByYearAndChildTag(year, childTagId!!)
         }
 
     @GetMapping(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL)

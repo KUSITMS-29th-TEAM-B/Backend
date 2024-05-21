@@ -13,8 +13,8 @@ class TagReader(
         return tagRepository.findAllParentTagsByUserId(userId)
     }
 
-    fun readAllChildTagsByUserId(userId: UUID, parentId: UUID): List<Tag> {
-        return tagRepository.findAllChildTagsByUserId(userId, parentId)
+    fun readAllChildTagsByUserIdAndParentTagId(userId: UUID, parentId: UUID): List<Tag> {
+        return tagRepository.findAllChildTagsByUserIdAndParentTagId(userId, parentId)
     }
 
     fun readById(tagId: UUID): Tag {
@@ -27,5 +27,9 @@ class TagReader(
 
     fun readIdsByNameContains(search: String) : List<UUID> {
         return tagRepository.findByNameContains(search).map { it.id }
+    }
+    
+    fun readChildTagsByParentTagId(parentTagId: UUID) : List<Tag> {
+        return tagRepository.findAllChildTagsByParentTagId(parentTagId)
     }
 }

@@ -2,10 +2,8 @@ package com.bamyanggang.domainmodule.domain.user.service
 
 import com.bamyanggang.domainmodule.domain.user.aggregate.Token
 import com.bamyanggang.domainmodule.domain.user.repository.TokenRepository
-import org.springframework.stereotype.Service
 import java.util.*
 
-@Service
 class TokenAppender (
     private val tokenRepository: TokenRepository
 ) {
