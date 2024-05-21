@@ -115,4 +115,12 @@ class ExperienceGetService(
                 )
             }
     }
+
+    fun getAllExperienceByYear(year: Int): GetExperience.Response {
+        val experiences = experienceReader.readByYear(year).map {
+            createExperienceDetailResponse(it)
+        }
+
+        return GetExperience.Response(experiences)
+    }
 }   
