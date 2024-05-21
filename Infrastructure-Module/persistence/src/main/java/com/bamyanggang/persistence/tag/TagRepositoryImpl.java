@@ -3,7 +3,6 @@ package com.bamyanggang.persistence.tag;
 import com.bamyanggang.domainmodule.domain.tag.aggregate.Tag;
 import com.bamyanggang.domainmodule.domain.tag.exception.TagException.NotFoundTag;
 import com.bamyanggang.domainmodule.domain.tag.repository.TagRepository;
-import com.bamyanggang.persistence.common.exception.PersistenceException.NotFound;
 import com.bamyanggang.persistence.tag.jpa.entity.TagJpaEntity;
 import com.bamyanggang.persistence.tag.jpa.repository.TagJpaRepository;
 import com.bamyanggang.persistence.tag.mapper.TagMapper;
@@ -56,5 +55,12 @@ public class TagRepositoryImpl implements TagRepository {
     public Tag findById(UUID tagId) {
         TagJpaEntity tagJpaEntity = tagJpaRepository.findById(tagId).orElseThrow(NotFoundTag::new);
         return tagMapper.toDomainEntity(tagJpaEntity);
+    }
+
+    @Override
+    public List<Tag> findByNameContains(String search) {
+        List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findByNameContaining(search);
+
+        return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
     }
 }

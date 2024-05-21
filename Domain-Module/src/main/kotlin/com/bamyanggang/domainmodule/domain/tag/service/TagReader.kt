@@ -24,4 +24,8 @@ class TagReader(
     fun readByIds(parentTagIds: List<UUID>): List<Tag> {
         return tagRepository.findByParentTagIds(parentTagIds)
     }
+
+    fun readIdsByNameContains(search: String) : List<UUID> {
+        return tagRepository.findByNameContains(search).map { it.id }
+    }
 }
