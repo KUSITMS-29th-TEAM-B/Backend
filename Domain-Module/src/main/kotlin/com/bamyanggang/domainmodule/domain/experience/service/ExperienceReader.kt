@@ -50,11 +50,11 @@ class ExperienceReader(
         return experienceRepository.findByIds(experienceIds)
     }
 
-    fun readByTitleContains(search: String): List<UUID> {
-        return experienceRepository.findByTitleContains(search).map { it.id }
+    fun readIdsByUserIdAndTitleContains(userId: UUID, search: String): List<UUID> {
+        return experienceRepository.findByUserIdAndTitleContains(userId, search).map { it.id }
     }
 
-    fun readByContentsContains(userId: UUID, search: String): List<UUID> {
+    fun readIdsByContentsContains(userId: UUID, search: String): List<UUID> {
         val experiences = experienceRepository.findAllByUserId(userId)
 
         return experiences.filter {
@@ -69,5 +69,26 @@ class ExperienceReader(
 
     fun readByChildTag(childTag: UUID): List<Experience> {
         return experienceRepository.findByChildTagId(childTag)
+    }
+
+    fun readIdsByTagIds(tagIds: List<UUID>) : List<UUID> {
+        return experienceRepository.findByTagIds(tagIds).map { it.id }
+    }
+
+    fun readIdsByStrongPointIds(userId: UUID, strongPointIds: List<UUID>) : List<UUID> {
+        val experiences = experienceRepository.findAllByUserId(userId)
+        val filteredExperience: MutableList<Experience> = mutableListOf()
+
+        strongPointIds.forEach { strongPointId ->
+            val fragExperiences = experiences.filter { experience ->
+                experience.strongPoints.map {
+                    it.strongPointId
+                }.contains(strongPointId)
+            }
+
+            filteredExperience.addAll(fragExperiences)
+        }
+
+        return filteredExperience.map { it.id }
     }
 }
