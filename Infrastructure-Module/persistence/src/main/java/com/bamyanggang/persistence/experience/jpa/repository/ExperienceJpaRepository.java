@@ -12,7 +12,7 @@ public interface ExperienceJpaRepository extends JpaRepository<ExperienceJpaEnti
     List<ExperienceJpaEntity> findAllByUserId(UUID userId);
     List<ExperienceJpaEntity> findByUserIdAndCreatedAtBetweenOrderByCreatedAtDesc(UUID userId, LocalDateTime startYear, LocalDateTime endYear);
     List<ExperienceJpaEntity> findByParentTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(UUID parentTagId, LocalDateTime startYear, LocalDateTime endYear);
-    List<ExperienceJpaEntity> findByChildTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(UUID childTagId, LocalDateTime startYear, LocalDateTime endYear);
+    List<ExperienceJpaEntity> findByChildTagIdAndStartedAtBetweenOrderByStartedAtDesc(UUID childTagId, LocalDateTime startYear, LocalDateTime endYear);
     List<ExperienceJpaEntity> findByTitleContaining(String title);
 
     @Query("select e from ExperienceJpaEntity e where e.experienceId in :experienceIds")

@@ -71,7 +71,7 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
         LocalDateTime endYear = LocalDateTime.of(year, 12, 31, 23, 59);
 
         List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository
-                .findByChildTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(childTagId, startYear, endYear);
+                .findByChildTagIdAndStartedAtBetweenOrderByStartedAtDesc(childTagId, startYear, endYear);
 
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
