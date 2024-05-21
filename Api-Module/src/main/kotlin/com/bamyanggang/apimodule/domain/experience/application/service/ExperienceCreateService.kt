@@ -20,9 +20,11 @@ class ExperienceCreateService(
             ExperienceContent.create(it.question, it.answer)
         }
 
-        val newExperienceStrongPoints = request.strongPointIds.map {
-            ExperienceStrongPoint.create(it)
-        }
+        val newExperienceStrongPoints = runCatching {
+            request.strongPointIds.map {
+                ExperienceStrongPoint.create(it)
+            }
+        }.getOrElse { emptyList() }
 
         return experienceAppender.appendExperience(
             title = request.title,
