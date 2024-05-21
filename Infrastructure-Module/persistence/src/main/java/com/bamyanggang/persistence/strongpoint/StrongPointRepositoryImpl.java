@@ -51,4 +51,10 @@ public class StrongPointRepositoryImpl implements StrongPointRepository {
 
         strongPointJpaRepository.saveAll(strongPointJpaEntities);
     }
+
+    @Override
+    public List<StrongPoint> findByNameContains(String search) {
+        List<StrongPointJpaEntity> strongPointJpaEntities = strongPointJpaRepository.findByNameContaining(search);
+        return strongPointJpaEntities.stream().map(strongPointMapper::toDomainEntity).toList();
+    }
 }

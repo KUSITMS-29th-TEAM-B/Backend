@@ -1,5 +1,6 @@
 package com.bamyanggang.apimodule.domain.experience.application.dto
 
+import com.bamyanggang.domainmodule.domain.bookmark.enums.BookmarkStatus
 import java.time.LocalDateTime
 import java.util.*
 
@@ -18,6 +19,23 @@ class GetExperience {
         val startedAt: LocalDateTime,
         val endedAt: LocalDateTime,
     )
+
+    data class BookmarkResponse(
+        val experience: List<BookmarkDetailExperience>
+    )
+
+    data class BookmarkDetailExperience(
+        val id: UUID,
+        val title: String,
+        val parentTag: DetailTag,
+        val childTag: DetailTag,
+        val strongPoints: List<DetailStrongPoint>,
+        val contents: List<DetailExperienceContent>,
+        val startedAt: LocalDateTime,
+        val endedAt: LocalDateTime,
+        val bookmarked: BookmarkStatus,
+    )
+
 
     data class DetailExperienceContent(
         val question: String,

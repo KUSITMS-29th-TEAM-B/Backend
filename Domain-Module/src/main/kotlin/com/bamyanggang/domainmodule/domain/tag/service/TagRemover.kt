@@ -10,7 +10,7 @@ class TagRemover(
     private val tagRepository: TagRepository
 ) {
     fun removeTag(tagId: UUID) {
-        if (tagRepository.isExistById(tagId)) {
+        if (!tagRepository.isExistById(tagId)) {
             throw TagException.NotFoundTag()
         }
         tagRepository.deleteByTagId(tagId)

@@ -16,4 +16,8 @@ class StrongPointReader(
     fun readByIds(strongPointIds: List<UUID>) : List<StrongPoint> {
         return strongPointRepository.findByIds(strongPointIds)
     }
+
+    fun readIdsByNameContains(search: String) : List<UUID> {
+        return strongPointRepository.findByNameContains(search).map { it.id }
+    }
 }

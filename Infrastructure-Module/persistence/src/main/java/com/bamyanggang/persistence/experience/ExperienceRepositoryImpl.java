@@ -71,12 +71,22 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
         LocalDateTime endYear = LocalDateTime.of(year, 12, 31, 23, 59);
 
         List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository
-                .findByChildTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(childTagId, startYear, endYear);
+                .findByChildTagIdAndStartedAtBetweenOrderByStartedAtDesc(childTagId, startYear, endYear);
 
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
 
     @Override
+    public List<Experience> findByIds(List<UUID> experienceIds) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByIds(experienceIds);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
+
+    public List<Experience> findByTitleContains(String search) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByTitleContaining(search);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
+  
     public List<Experience> findByUserIdAndParentTagId(UUID userId, UUID parentTagId) {
         List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByUserIdAndParentTagId(userId,
                 parentTagId);
@@ -102,6 +112,12 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
         List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByCreatedAtBetween(startYear,
                 endYear);
 
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
+
+    @Override
+    public List<Experience> findByChildTagId(UUID childTag) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByChildTagId(childTag);
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
 }

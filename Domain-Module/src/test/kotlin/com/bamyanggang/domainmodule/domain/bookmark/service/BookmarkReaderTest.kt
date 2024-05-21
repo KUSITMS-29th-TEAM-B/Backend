@@ -16,7 +16,7 @@ class BookmarkReaderTest: BehaviorSpec({
         val jobDescriptionId = UUID.randomUUID()
         val experienceId = UUID.randomUUID()
         val expectedBookmark = mockk<Bookmark>()
-        every { mockBookmarkRepository.findByIds(jobDescriptionId, experienceId) } returns expectedBookmark
+        every { mockBookmarkRepository.findById(jobDescriptionId, experienceId) } returns expectedBookmark
 
         `when`("북마크를 조회하면") {
             val result = bookmarkReader.readBookmark(jobDescriptionId, experienceId)

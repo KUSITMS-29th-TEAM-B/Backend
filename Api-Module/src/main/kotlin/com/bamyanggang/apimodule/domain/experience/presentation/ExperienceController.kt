@@ -18,6 +18,16 @@ class ExperienceController(
     private val experienceEditService: ExperienceEditService,
     private val experienceGetService: ExperienceGetService
 ) {
+    @GetMapping(ExperienceApi.BOOKMARK_EXPERIENCE_URL)
+    fun getBookMarkExperiences(
+        @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
+        @RequestParam("search", required = false) search: String?,
+    ) : GetExperience.BookmarkResponse =
+        when (search) {
+            null -> experienceGetService.getAllBookmarkExperiences(jobDescriptionId)
+            else -> experienceGetService.getBookmarkExperienceBySearch(jobDescriptionId, search.trim())
+        }
+
     @GetMapping(ExperienceApi.BASE_URL)
     fun getExperienceByFilter(@RequestParam("year") year: Int,
                               @RequestParam("parent-tag", required = false) parentTagId: UUID?,

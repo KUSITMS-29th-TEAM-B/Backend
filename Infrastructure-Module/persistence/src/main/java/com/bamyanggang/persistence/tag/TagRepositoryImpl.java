@@ -42,6 +42,7 @@ public class TagRepositoryImpl implements TagRepository {
 
     @Override
     public boolean isExistById(UUID tagId) {
+        System.out.println(tagJpaRepository.existsById(tagId));
         return tagJpaRepository.existsById(tagId);
     }
 
@@ -58,8 +59,14 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
+    public List<Tag> findByNameContains(String search) {
+        List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findByNameContaining(search);
+        return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
+    }
+  
     public List<Tag> findAllChildTagsByParentTagId(UUID parentTagId) {
         List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findAllByParentTagId(parentTagId);
+
         return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
     }
 }

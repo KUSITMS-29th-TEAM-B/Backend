@@ -46,7 +46,28 @@ class ExperienceReader(
         return experienceRepository.findByYearAndChildTagId(year, childTagId)
     }
 
+    fun readByIds(experienceIds: List<UUID>) : List<Experience> {
+        return experienceRepository.findByIds(experienceIds)
+    }
+
+    fun readByTitleContains(search: String): List<UUID> {
+        return experienceRepository.findByTitleContains(search).map { it.id }
+    }
+
+    fun readByContentsContains(userId: UUID, search: String): List<UUID> {
+        val experiences = experienceRepository.findAllByUserId(userId)
+
+        return experiences.filter {
+            it.contents.map { content ->
+                content.question.contains(search) || content.answer.contains(search)
+            }.contains(true)
+        }.map { it.id }
+    }
     fun readByYear(year: Int): List<Experience> {
         return experienceRepository.findByYear(year)
+    }
+
+    fun readByChildTag(childTag: UUID): List<Experience> {
+        return experienceRepository.findByChildTagId(childTag)
     }
 }

@@ -11,5 +11,6 @@ interface TagRepository {
     fun deleteByTagId(tagId: UUID)
     fun isExistById(tagId: UUID): Boolean
     fun findByParentTagIds(tagParentTagIds: List<UUID>): List<Tag>
+    fun findByNameContains(search: String): List<Tag>
     fun findAllChildTagsByParentTagId(parentTagId: UUID) : List<Tag>
 }

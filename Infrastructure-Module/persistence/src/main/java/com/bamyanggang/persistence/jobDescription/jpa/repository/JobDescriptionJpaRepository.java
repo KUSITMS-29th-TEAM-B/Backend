@@ -2,7 +2,6 @@ package com.bamyanggang.persistence.jobDescription.jpa.repository;
 
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus;
 import com.bamyanggang.persistence.jobDescription.jpa.entity.JobDescriptionJpaEntity;
-import java.time.LocalDateTime;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
