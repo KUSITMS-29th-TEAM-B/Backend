@@ -89,7 +89,7 @@ class TagGetService(
         var totalExperienceCount = 0
 
         val childTagDetails = childTags.map {
-            val experiences = experienceReader.readByChildTagIdAndYear(it.id, year)
+            val experiences = experienceReader.readByChildTagIdAndYear(year, it.id)
             totalExperienceCount += experiences.size
             GetChildTag.ChildTagSummary(
                 it.id,
