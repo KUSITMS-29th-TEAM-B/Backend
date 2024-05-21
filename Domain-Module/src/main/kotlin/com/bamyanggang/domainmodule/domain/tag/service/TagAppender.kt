@@ -2,10 +2,8 @@ package com.bamyanggang.domainmodule.domain.tag.service
 
 import com.bamyanggang.domainmodule.domain.tag.aggregate.Tag
 import com.bamyanggang.domainmodule.domain.tag.repository.TagRepository
-import org.springframework.stereotype.Service
 import java.util.*
 
-@Service
 class TagAppender(
     private val tagRepository: TagRepository
 ) {
