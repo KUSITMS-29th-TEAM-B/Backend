@@ -4,11 +4,9 @@ import com.bamyanggang.domainmodule.domain.experience.aggregate.Experience
 import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceContent
 import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceStrongPoint
 import com.bamyanggang.domainmodule.domain.experience.repository.ExperienceRepository
-import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.*
 
-@Service
 class ExperienceModifier(
     private val experienceRepository: ExperienceRepository
 ) {
