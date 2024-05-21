@@ -95,10 +95,14 @@ class ExperienceGetService(
     fun getBookmarkExperienceBySearch(jobDescriptionId: UUID, search: String): GetExperience.BookmarkResponse {
         val currentUserId = getAuthenticationPrincipal()
 
-        val experiencesIds = experienceReader.readByTitleContains(search) +
-                experienceReader.readByContentsContains(currentUserId, search) +
-                tagReader.readIdsByNameContains(search) +
-                strongPointReader.readIdsByNameContains(search)
+        val experiencesIds = experienceReader.readIdsByUserIdAndTitleContains(currentUserId, search) +
+                experienceReader.readIdsByContentsContains(currentUserId, search) +
+                tagReader.readIdsByUserIdAndNameContains(currentUserId, search).let {
+                    experienceReader.readIdsByTagIds(it)
+                } +
+                strongPointReader.readIdsByUserIdAndNameContains(currentUserId, search).let {
+                    experienceReader.readIdsByStrongPointIds(currentUserId, it)
+                }
 
         val searchExperiences = experienceReader.readByIds(experiencesIds)
         val bookmarkExperienceIds = bookMarkReader.readByExperienceIds(experiencesIds).map { it.experienceId }
