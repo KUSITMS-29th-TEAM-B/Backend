@@ -114,4 +114,10 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
 
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
+
+    @Override
+    public List<Experience> findByChildTagId(UUID childTag) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByChildTagId(childTag);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
 }
