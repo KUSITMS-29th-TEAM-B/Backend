@@ -13,8 +13,6 @@ interface JobDescriptionRepository {
 
     fun findAllByUserIdAndSortByCreatedAt(userId: UUID, page: Int, size: Int, writeStatus: WriteStatus?): PageDomain<JobDescription>
 
-    fun findAllByUserIdAndSortByEndedAt(userId: UUID, page: Int, size: Int, writeStatus: WriteStatus?): PageDomain<JobDescription>
-
     fun findAllByUserId(userId: UUID, page: Int, size: Int, writeStatus: WriteStatus?): PageDomain<JobDescription>
 
     fun deleteById(jobDescriptionId: UUID)

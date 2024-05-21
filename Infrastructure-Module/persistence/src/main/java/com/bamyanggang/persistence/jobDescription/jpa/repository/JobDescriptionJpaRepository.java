@@ -16,9 +16,6 @@ public interface JobDescriptionJpaRepository extends JpaRepository<JobDescriptio
     @Query("SELECT j FROM JobDescriptionJpaEntity j WHERE j.userId = :userId AND (:writeStatus is null or j.writeStatus = :writeStatus)")
     Page<JobDescriptionJpaEntity> findAllByUserIdAndWriteStatus(@Param("userId") UUID userId, @Param("writeStatus") WriteStatus writeStatus, @Param("date")  Pageable pageable);
 
-    @Query("SELECT j FROM JobDescriptionJpaEntity j WHERE j.userId = :userId AND (:writeStatus is null or j.writeStatus = :writeStatus) AND j.endedAt > :date ORDER BY j.endedAt ASC")
-    Page<JobDescriptionJpaEntity> findAllByUserIdAndWriteStatusAndTime(@Param("userId") UUID userId, @Param("writeStatus") WriteStatus writeStatus,
-                                                                       @Param("date") LocalDateTime now, Pageable pageable);
     @Modifying
     @Query("UPDATE JobDescriptionJpaEntity j SET j.writeStatus = 'CLOSED' WHERE j.endedAt < CURRENT_TIMESTAMP")
     void changeWriteStatus();
