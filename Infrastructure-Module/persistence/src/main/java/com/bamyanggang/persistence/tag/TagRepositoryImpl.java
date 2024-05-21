@@ -42,6 +42,7 @@ public class TagRepositoryImpl implements TagRepository {
 
     @Override
     public boolean isExistById(UUID tagId) {
+        System.out.println(tagJpaRepository.existsById(tagId));
         return tagJpaRepository.existsById(tagId);
     }
 
