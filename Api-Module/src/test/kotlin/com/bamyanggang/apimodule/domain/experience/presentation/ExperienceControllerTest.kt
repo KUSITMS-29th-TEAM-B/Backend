@@ -522,10 +522,32 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     @DisplayName("유저의 경험 내 존재하는 연도들을 중복 제거한 리스트를 반환한다.")
     fun getExperienceYearsTest() {
         //given
-        val years = arrayListOf(2020,2021,2023, 2024, 2025)
+        val tagDetails = arrayListOf(
+            ExperienceYear.TagDetail(
+                UUID.randomUUID(),
+                "태그 상세 1"
+            ),
+            ExperienceYear.TagDetail(
+                UUID.randomUUID(),
+                "태그 상세 1"
+            )
+        )
+
+        val yearTagInfos = arrayListOf(
+            ExperienceYear.YearTagInfo(
+                2023,
+                tagDetails
+            ),
+            ExperienceYear.YearTagInfo(
+                2024,
+                tagDetails
+            )
+        )
+
+        val years = arrayListOf(2023, 2024)
         val yearResponse = ExperienceYear.Response(
             years,
-            generateFixture()
+            yearTagInfos
         )
 
         given(experienceGetService.getAllYearsByExistExperience()).willReturn(yearResponse)
