@@ -25,22 +25,6 @@ class Token(
                 updatedAt = LocalDateTime.now(),
             )
         }
-
-        fun toDomain(
-            id: UUID,
-            userId: UUID,
-            value: String,
-            createdAt: LocalDateTime,
-            updatedAt: LocalDateTime,
-        ): Token {
-            return Token(
-                id = id,
-                userId = userId,
-                value = value,
-                createdAt = createdAt,
-                updatedAt = updatedAt,
-            )
-        }
     }
 
 }
