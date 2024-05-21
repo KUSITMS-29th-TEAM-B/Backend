@@ -21,6 +21,11 @@ operation::ExperienceControllerTest/deleteExperienceTest/[snippets='http-request
 
 operation::ExperienceControllerTest/getExperienceDetailTest/[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-body']
 
+[[GetExperiencesTest]]
+=== 경험 목록 조회 API
+
+operation::ExperienceControllerTest/getExperienceYearAndChildTagTest/[snippets='http-request,request-headers,request-body,http-response,response-body']
+
 [[getExperienceYearsTest]]
 === 유저 경험 내 존재 연도 조회 API
 

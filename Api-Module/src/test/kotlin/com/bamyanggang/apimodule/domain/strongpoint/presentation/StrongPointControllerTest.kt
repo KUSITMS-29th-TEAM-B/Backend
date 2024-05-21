@@ -34,7 +34,11 @@ class StrongPointControllerTest : BaseRestDocsTest() {
     @Test
     @DisplayName("역량 키워드를 저장한 뒤 생성된 역량 키워드 정보를 반환한다.")
     fun createStrongPointTest() {
-        val createStrongPoint: CreateStrongPoint.Request = generateFixture()
+        val createStrongPoint = CreateStrongPoint.Request(
+            arrayListOf(
+                CreateStrongPoint.StrongPointName("이름 1"),
+                CreateStrongPoint.StrongPointName("이름 2"),
+            ))
 
         val strongPoints = arrayListOf(
             CreateStrongPoint.DetailStrongPoint(generateFixture(), "역량 키워드 이름 1"),

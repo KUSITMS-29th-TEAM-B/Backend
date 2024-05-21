@@ -3,8 +3,12 @@ package com.bamyanggang.apimodule.domain.experience.application.dto
 import java.time.LocalDateTime
 import java.util.*
 
-class DetailExperience {
+class GetExperience {
     data class Response(
+        val experiences: List<DetailExperience>
+    )
+
+    data class DetailExperience(
         val id: UUID,
         val title: String,
         val parentTag: DetailTag,
