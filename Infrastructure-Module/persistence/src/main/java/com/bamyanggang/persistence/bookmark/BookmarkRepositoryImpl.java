@@ -31,7 +31,7 @@ public class BookmarkRepositoryImpl implements BookmarkRepository {
     }
 
     @Override
-    public List<Bookmark> findByStatusAndJobDescriptionId(UUID jobDescriptionId, BookmarkStatus status) {
+    public List<Bookmark> findByBookmarkStatusAndJobDescriptionId(UUID jobDescriptionId, BookmarkStatus status) {
         List<BookmarkJpaEntity> bookmarkJpaEntities = bookmarkJpaRepository
                 .findByBookmarkStatusAndJobDescriptionId(status, jobDescriptionId);
 
@@ -39,8 +39,8 @@ public class BookmarkRepositoryImpl implements BookmarkRepository {
     }
 
     @Override
-    public List<Bookmark> findByExperienceIds(List<UUID> experienceIds) {
-        List<BookmarkJpaEntity> bookmarkJpaEntities = bookmarkJpaRepository.findByExperienceIds(experienceIds);
+    public List<Bookmark> findByBookmarkStatusAndExperienceIds(List<UUID> experienceIds, BookmarkStatus status) {
+        List<BookmarkJpaEntity> bookmarkJpaEntities = bookmarkJpaRepository.findByBookmarkStatusAndExperienceIds(experienceIds, status);
 
         return bookmarkJpaEntities.stream().map(bookmarkMapper::toDomainEntity).toList();
     }

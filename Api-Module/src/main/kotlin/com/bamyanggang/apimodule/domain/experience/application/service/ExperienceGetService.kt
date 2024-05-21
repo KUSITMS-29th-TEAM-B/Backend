@@ -105,8 +105,8 @@ class ExperienceGetService(
                 }
 
         val searchExperiences = experienceReader.readByIds(experiencesIds)
-        val bookmarkExperienceIds = bookMarkReader.readByExperienceIds(experiencesIds).map { it.experienceId }
-
+        val bookmarkExperienceIds = bookMarkReader.readByBookmarkStatusAndExperienceIds(experiencesIds, BookmarkStatus.ON).map { it.experienceId }
+        println(bookmarkExperienceIds)
         val bookmarkExperienceDetails = searchExperiences.map {
             when {
                 it.id in bookmarkExperienceIds -> createBookmarkExperienceDetailResponse(it, BookmarkStatus.ON)

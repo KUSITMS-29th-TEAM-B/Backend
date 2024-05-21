@@ -21,7 +21,7 @@ class GetExperience {
     )
 
     data class BookmarkResponse(
-        val experience: List<BookmarkDetailExperience>
+        val experiences: List<BookmarkDetailExperience>
     )
 
     data class BookmarkDetailExperience(
