@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.strongpoint.config
+package com.bamyanggang.apimodule.domain.strongpoint.config
 
 import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRepository
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointAppender

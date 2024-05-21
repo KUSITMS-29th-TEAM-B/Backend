@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.experience.config
+package com.bamyanggang.apimodule.domain.experience.config
 
 import com.bamyanggang.domainmodule.domain.experience.repository.ExperienceRepository
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceAppender

@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.bookmark.config
+package com.bamyanggang.apimodule.domain.bookmark.config
 
 import com.bamyanggang.domainmodule.domain.bookmark.repository.BookmarkRepository
 import com.bamyanggang.domainmodule.domain.bookmark.service.BookmarkAppender

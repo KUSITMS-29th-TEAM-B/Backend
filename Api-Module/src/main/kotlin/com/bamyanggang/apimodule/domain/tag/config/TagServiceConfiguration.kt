@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.tag.config
+package com.bamyanggang.apimodule.domain.tag.config
 
 import com.bamyanggang.domainmodule.domain.tag.repository.TagRepository
 import com.bamyanggang.domainmodule.domain.tag.service.TagAppender
