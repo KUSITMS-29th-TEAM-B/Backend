@@ -25,7 +25,7 @@ class ExperienceController(
     ) : GetExperience.BookmarkResponse =
         when (search) {
             null -> experienceGetService.getAllBookmarkExperiences(jobDescriptionId)
-            else -> experienceGetService.getBookmarkExperienceBySearch(search)
+            else -> experienceGetService.getBookmarkExperienceBySearch(jobDescriptionId, search)
         }
 
     @GetMapping(ExperienceApi.BASE_URL)

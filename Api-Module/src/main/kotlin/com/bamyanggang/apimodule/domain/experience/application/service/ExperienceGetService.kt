@@ -20,7 +20,7 @@ class ExperienceGetService(
     private val experienceReader: ExperienceReader,
     private val strongPointReader: StrongPointReader,
     private val tagReader: TagReader,
-    private val bookMarkReader: BookmarkReader
+    private val bookMarkReader: BookmarkReader,
 ) {
     @Transactional(readOnly = true)
     fun getExperienceDetailById(experienceId: UUID) : GetExperience.DetailExperience {
@@ -70,8 +70,30 @@ class ExperienceGetService(
         return GetExperience.BookmarkResponse(bookmarkExperienceDetails)
     }
 
+    @Transactional(readOnly = true)
+    fun getBookmarkExperienceBySearch(jobDescriptionId: UUID, search: String): GetExperience.BookmarkResponse {
+        val currentUserId = getAuthenticationPrincipal()
+
+        val experiencesIds = experienceReader.readByTitleContains(search) +
+                experienceReader.readByContentsContains(currentUserId, search) +
+                tagReader.readIdsByNameContains(search) +
+                strongPointReader.readIdsByNameContains(search)
+
+        val searchExperiences = experienceReader.readByIds(experiencesIds)
+        val bookmarkExperienceIds = bookMarkReader.readByExperienceIds(experiencesIds).map { it.experienceId }
+
+        val bookmarkExperienceDetails = searchExperiences.map {
+            when {
+                it.id in bookmarkExperienceIds -> createBookmarkExperienceDetailResponse(it, BookmarkStatus.ON)
+                else -> createBookmarkExperienceDetailResponse(it, BookmarkStatus.OFF)
+            }
+        }
+
+        return GetExperience.BookmarkResponse(bookmarkExperienceDetails)
+    }
+
     private fun createExperienceDetailResponse(experience: Experience): GetExperience.DetailExperience {
-        val detailExperienceContents = convertDetailExperienceContent(experience.contents)
+        val detailExperienceContents = convertExperienceContent(experience.contents)
         val strongPointDetails = convertStrongPoints(experience.strongPoints)
         val detailParentTag = convertParentTag(experience.parentTagId)
         val detailChildTag = convertChildTag(experience.childTagId)
@@ -89,7 +111,7 @@ class ExperienceGetService(
     }
 
     private fun createBookmarkExperienceDetailResponse(experience: Experience, bookmarkStatus: BookmarkStatus): GetExperience.BookmarkDetailExperience {
-        val detailExperienceContents = convertDetailExperienceContent(experience.contents)
+        val detailExperienceContents = convertExperienceContent(experience.contents)
         val strongPointDetails = convertStrongPoints(experience.strongPoints)
         val detailParentTag = convertParentTag(experience.parentTagId)
         val detailChildTag = convertChildTag(experience.childTagId)
@@ -123,7 +145,7 @@ class ExperienceGetService(
             )
         }
 
-    private fun convertDetailExperienceContent(contents: List<ExperienceContent>) =
+    private fun convertExperienceContent(contents: List<ExperienceContent>) =
         contents.map { GetExperience.DetailExperienceContent(
                 it.question,
                 it.answer
@@ -139,8 +161,4 @@ class ExperienceGetService(
                 )
             }
     }
-
-    fun getBookmarkExperienceBySearch(search: String): GetExperience.BookmarkResponse {
-        return GetExperience.BookmarkResponse(emptyList())
-    }
-}   
+}
