@@ -20,9 +20,9 @@ class ExperienceController(
 ) {
     @GetMapping(ExperienceApi.BOOKMARK_EXPERIENCE_URL)
     fun getBookMarkExperiences(
-        @PathVariable("jobDescriptionId") jobDescriptionId: UUID
-    ) : GetExperience.Response{
-        return experienceGetService.getBookMarkExperiences(jobDescriptionId)
+        @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
+    ) : GetExperience.BookmarkResponse {
+        return experienceGetService.getAllBookMarkExperiences(jobDescriptionId)
     }
 
     @GetMapping(ExperienceApi.BASE_URL)

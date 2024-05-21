@@ -3,6 +3,7 @@ package com.bamyanggang.apimodule.domain.experience.application.service
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
 import com.bamyanggang.apimodule.domain.experience.application.dto.GetExperience
+import com.bamyanggang.domainmodule.domain.bookmark.enums.BookmarkStatus
 import com.bamyanggang.domainmodule.domain.bookmark.service.BookmarkReader
 import com.bamyanggang.domainmodule.domain.experience.aggregate.Experience
 import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceContent
@@ -46,7 +47,7 @@ class ExperienceGetService(
 
     @Transactional(readOnly = true)
     fun getExperienceByYearAndChildTag(year: Int, childTagId: UUID): GetExperience.Response {
-        val experiences = experienceReader.readByYearAndParentTagId(year, childTagId).map {
+        val experiences = experienceReader.readByYearAndChildTagId(year, childTagId).map {
             createExperienceDetailResponse(it)
         }
 
@@ -54,28 +55,19 @@ class ExperienceGetService(
     }
 
     @Transactional(readOnly = true)
-    fun getBookMarkExperiences(jobDescriptionId: UUID): GetExperience.Response {
-        val experienceIds = bookMarkReader.readByStatusOnAndJobDescriptionId(jobDescriptionId).map { it.experienceId }
+    fun getAllBookMarkExperiences(jobDescriptionId: UUID): GetExperience.BookmarkResponse {
+        val experienceIds = bookMarkReader.readByStatusAndJobDescriptionId(jobDescriptionId, BookmarkStatus.ON).map { it.experienceId }
 
-        val detailExperiences = experienceReader.readByIds(experienceIds).map {
-            val detailParentTag = convertParentTag(it.parentTagId)
-            val detailChildTag = convertChildTag(it.childTagId)
-            val detailStrongPoints = convertStrongPoints(it.strongPoints)
-            val detailContents = convertDetailExperienceContent(it.contents)
+        val userExperiences = experienceReader.readAllByUserId(getAuthenticationPrincipal())
 
-            GetExperience.DetailExperience(
-                id = it.id,
-                title = it.title,
-                parentTag = detailParentTag,
-                childTag = detailChildTag,
-                strongPoints = detailStrongPoints,
-                contents = detailContents,
-                startedAt = it.startedAt,
-                endedAt = it.endedAt
-            )
+        val bookmarkExperienceDetails = userExperiences.map {
+            when {
+                it.id in experienceIds -> createBookmarkExperienceDetailResponse(it, BookmarkStatus.ON)
+                else -> createBookmarkExperienceDetailResponse(it, BookmarkStatus.OFF)
+            }
         }
 
-        return GetExperience.Response(detailExperiences)
+        return GetExperience.BookmarkResponse(bookmarkExperienceDetails)
     }
 
     private fun createExperienceDetailResponse(experience: Experience): GetExperience.DetailExperience {
@@ -93,6 +85,25 @@ class ExperienceGetService(
             contents = detailExperienceContents,
             startedAt = experience.startedAt,
             endedAt = experience.endedAt
+        )
+    }
+
+    private fun createBookmarkExperienceDetailResponse(experience: Experience, bookmarkStatus: BookmarkStatus): GetExperience.BookmarkDetailExperience {
+        val detailExperienceContents = convertDetailExperienceContent(experience.contents)
+        val strongPointDetails = convertStrongPoints(experience.strongPoints)
+        val detailParentTag = convertParentTag(experience.parentTagId)
+        val detailChildTag = convertChildTag(experience.childTagId)
+
+        return GetExperience.BookmarkDetailExperience(
+            id = experience.id,
+            title = experience.title,
+            parentTag = detailParentTag,
+            childTag = detailChildTag,
+            strongPoints = strongPointDetails,
+            contents = detailExperienceContents,
+            startedAt = experience.startedAt,
+            endedAt = experience.endedAt,
+            bookmarked = bookmarkStatus.boolStatus
         )
     }
 
