@@ -33,9 +33,7 @@ public class BookmarkRepositoryImpl implements BookmarkRepository {
     }
 
     @Override
-    public List<Bookmark> findByStatusOnAndJobDescriptionId(
-            UUID jobDescriptionId,
-            BookmarkStatus status) {
+    public List<Bookmark> findByStatusAndJobDescriptionId(UUID jobDescriptionId, BookmarkStatus status) {
         List<BookmarkJpaEntity> bookmarkJpaEntities = bookmarkJpaRepository
                 .findByBookmarkStatusAndJobDescriptionId(status, jobDescriptionId);
 
