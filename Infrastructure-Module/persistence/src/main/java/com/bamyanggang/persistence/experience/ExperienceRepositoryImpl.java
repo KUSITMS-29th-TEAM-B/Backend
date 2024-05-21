@@ -83,4 +83,15 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
 
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
+
+    @Override
+    public List<Experience> findByUserIdAndParentTagIdAndYearDesc(int year, UUID parentTagId, UUID userId) {
+        LocalDateTime startYear = LocalDateTime.of(year, 1, 1, 0, 0);
+        LocalDateTime endYear = LocalDateTime.of(year, 12, 31, 23, 59);
+
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository
+                .findByUserIdAndParentTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(
+                        userId, parentTagId, startYear, endYear);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
 }

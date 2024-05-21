@@ -50,7 +50,7 @@ class ExperienceGetService(
     }
 
     fun getExperienceByYearAndParentTag(year: Int, parentTagId: UUID): GetExperience.Response {
-        val experiences = experienceReader.readByYearAndTagId(year, parentTagId).map {
+        val experiences = experienceReader.readByYearAndParentTagId(year, parentTagId).map {
             createExperienceDetailResponse(it)
         }
 
@@ -58,7 +58,7 @@ class ExperienceGetService(
     }
 
     fun getExperienceByYearAndChildTag(year: Int, childTagId: UUID): GetExperience.Response {
-        val experiences = experienceReader.readByYearAndTagId(year, childTagId).map {
+        val experiences = experienceReader.readByYearAndParentTagId(year, childTagId).map {
             createExperienceDetailResponse(it)
         }
 
