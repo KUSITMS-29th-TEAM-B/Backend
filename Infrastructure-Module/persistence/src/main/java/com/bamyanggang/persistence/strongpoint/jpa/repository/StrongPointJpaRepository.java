@@ -14,4 +14,6 @@ public interface StrongPointJpaRepository extends JpaRepository<StrongPointJpaEn
     @Modifying
     @Query("select spe from StrongPointJpaEntity spe where spe.strongPointId in :strongPoints")
     List<StrongPointJpaEntity> findByIds(@Param("strongPoints") List<UUID> strongPointIds);
+
+    List<StrongPointJpaEntity> findByNameContaining(String search);
 }
