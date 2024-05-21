@@ -82,8 +82,8 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
 
-    public List<Experience> findByTitleContains(String search) {
-        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByTitleContaining(search);
+    public List<Experience> findByUserIdAndTitleContains(UUID userId, String search) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByUserIdAndTitleContaining(userId, search);
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
   
@@ -118,6 +118,12 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
     @Override
     public List<Experience> findByChildTagId(UUID childTag) {
         List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByChildTagId(childTag);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
+
+    @Override
+    public List<Experience> findByTagIds(List<UUID> tagIds) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByTagIds(tagIds);
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
 }
