@@ -20,7 +20,7 @@ public class BookmarkRepositoryImpl implements BookmarkRepository {
     private final ExperienceMapper experienceMapper;
 
     @Override
-    public Bookmark findByIds(UUID jobDescriptionId, UUID experienceId) {
+    public Bookmark findById(UUID jobDescriptionId, UUID experienceId) {
         return bookmarkJpaRepository.findByJobDescriptionIdAndExperienceId(jobDescriptionId, experienceId)
                 .map(bookmarkMapper::toDomainEntity)
                 .orElse(null);

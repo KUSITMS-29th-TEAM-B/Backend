@@ -81,4 +81,9 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
         List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByIds(experienceIds);
         return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
+
+    public List<Experience> findByTitleContains(String search) {
+        List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByTitleContaining(search);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
+    }
 }
