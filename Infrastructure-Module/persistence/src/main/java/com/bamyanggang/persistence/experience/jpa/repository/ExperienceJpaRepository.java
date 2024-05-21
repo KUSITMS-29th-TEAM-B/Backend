@@ -17,7 +17,7 @@ public interface ExperienceJpaRepository extends JpaRepository<ExperienceJpaEnti
     List<ExperienceJpaEntity> findByTitleContaining(String title);
 
     @Modifying
-    @Query("select e from ExperienceTagJpaEntity e where e.experienceId in :experienceIds")
+    @Query("select e from ExperienceJpaEntity e where e.experienceId in :experienceIds")
     List<ExperienceJpaEntity> findByIds(@Param("experienceIds") List<UUID> experienceIds);
   
     List<ExperienceJpaEntity> findByCreatedAtBetween(LocalDateTime startYear, LocalDateTime endYear);
