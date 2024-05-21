@@ -100,7 +100,6 @@ class ExperienceGetService(
                 tagReader.readIdsByNameContains(search) +
                 strongPointReader.readIdsByNameContains(search)
 
-        println(experiencesIds.filter {  })
         val searchExperiences = experienceReader.readByIds(experiencesIds)
         val bookmarkExperienceIds = bookMarkReader.readByExperienceIds(experiencesIds).map { it.experienceId }
 

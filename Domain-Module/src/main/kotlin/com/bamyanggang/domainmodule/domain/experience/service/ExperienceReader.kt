@@ -60,8 +60,9 @@ class ExperienceReader(
         return experiences.filter {
             it.contents.map { content ->
                 content.question.contains(search) || content.answer.contains(search)
-            }.contains(true) }.map { it.id }
-        
+            }.contains(true)
+        }.map { it.id }
+    }
     fun readByYear(year: Int): List<Experience> {
         return experienceRepository.findByYear(year)
     }

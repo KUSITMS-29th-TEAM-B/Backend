@@ -84,6 +84,7 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
 
     public List<Experience> findByTitleContains(String search) {
         List<ExperienceJpaEntity> experienceJpaEntities = experienceJpaRepository.findByTitleContaining(search);
+        return experienceJpaEntities.stream().map(experienceMapper::toExperienceDomainEntity).toList();
     }
   
     public List<Experience> findByUserIdAndParentTagId(UUID userId, UUID parentTagId) {
