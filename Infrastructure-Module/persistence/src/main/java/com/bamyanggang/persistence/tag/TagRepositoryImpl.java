@@ -56,4 +56,10 @@ public class TagRepositoryImpl implements TagRepository {
         TagJpaEntity tagJpaEntity = tagJpaRepository.findById(tagId).orElseThrow(NotFoundTag::new);
         return tagMapper.toDomainEntity(tagJpaEntity);
     }
+
+    @Override
+    public List<Tag> findAllChildTagsByParentTagId(UUID parentTagId) {
+        List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findAllByParentTagId(parentTagId);
+        return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
+    }
 }

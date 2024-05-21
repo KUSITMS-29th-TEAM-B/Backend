@@ -3,6 +3,7 @@ package com.bamyanggang.apimodule.domain.tag.application.service
 import com.bamyanggang.apimodule.common.getAuthenticationPrincipal
 import com.bamyanggang.apimodule.domain.tag.application.dto.GetChildTag
 import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetTag
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceReader
 import com.bamyanggang.domainmodule.domain.tag.service.TagReader
 import org.springframework.stereotype.Service
@@ -103,6 +104,7 @@ class TagGetService(
         )
     }
 
+    @Transactional(readOnly = true)
     fun getAllYearsByParentTagId(parentTagId: UUID): GetParentTag.Years {
         val experiences = getAuthenticationPrincipal().let {
             experienceReader.readByUserIdAndParentTagId(it, parentTagId)
@@ -114,5 +116,29 @@ class TagGetService(
             .sorted().reversed()
 
         return GetParentTag.Years(years)
+    }
+
+    @Transactional(readOnly = true)
+    fun getAllTags(): GetTag.Response {
+        val parentTags = getAuthenticationPrincipal().let {
+            tagReader.readAllParentTagsByUserId(it)
+        }
+
+        val parentTagDetails = parentTags.map {
+            val childTagDetails = tagReader.readChildTagsByParentTagId(it.id).map {
+                GetTag.ChildTagDetail(
+                    it.id,
+                    it.name
+                )
+            }
+
+            GetTag.ParentTagDetail(
+                it.id,
+                it.name,
+                childTagDetails
+            )
+        }
+
+        return GetTag.Response(parentTagDetails)
     }
 }

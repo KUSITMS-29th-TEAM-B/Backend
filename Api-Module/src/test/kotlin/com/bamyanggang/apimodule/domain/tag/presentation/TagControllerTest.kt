@@ -4,6 +4,7 @@ import com.bamyanggang.apimodule.BaseRestDocsTest
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
 import com.bamyanggang.apimodule.domain.tag.application.dto.GetChildTag
 import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetTag
 import com.bamyanggang.commonmodule.exception.ExceptionHandler
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.tag.exception.TagException
@@ -204,6 +205,54 @@ class TagControllerTest : BaseRestDocsTest() {
                 responseFields(
                     fieldWithPath("code").description(TagException.DuplicatedTagName().code),
                     fieldWithPath("message").description(TagException.DuplicatedTagName().message)
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("상위 태그와 하위 태그 전체를 조회한다.")
+    fun getAllTagsTest() {
+        //given
+        val childTagDetails = arrayListOf(
+            GetTag.ChildTagDetail(UUID.randomUUID(), "하위 태그 이름 1"),
+            GetTag.ChildTagDetail(UUID.randomUUID(), "하위 태그 이름 2")
+        )
+
+        val parentTagDetails = arrayListOf(
+            GetTag.ParentTagDetail(UUID.randomUUID(),
+                "상위, 태그 이름 1",
+                childTagDetails
+            ),
+            GetTag.ParentTagDetail(UUID.randomUUID(),
+                "상위, 태그 이름 1",
+                childTagDetails
+            ),
+        )
+
+        val tagResponse = GetTag.Response(parentTagDetails)
+
+        given(tagController.getAllTags()).willReturn(tagResponse)
+
+        val request = RestDocumentationRequestBuilders.get(TagApi.ALL_TAGS)
+            .header("Authorization", "Bearer Access Token")
+
+        //when
+        val result = mockMvc.perform(request)
+
+        //then
+        result.andExpect(status().isOk)
+            .andDo(resultHandler.document(
+                requestHeaders(
+                    headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                responseFields(
+                    fieldWithPath("tags").description("태그 리스트"),
+                    fieldWithPath("tags[].id").description("상위 태그 id"),
+                    fieldWithPath("tags[].name").description("상위 태그 이름"),
+                    fieldWithPath("tags[].childTags").description("하위 태그 리스트"),
+                    fieldWithPath("tags[].childTags[].id").description("하위 태그 id"),
+                    fieldWithPath("tags[].childTags[].name").description("하위 태그 이름"),
                 )
             )
         )
