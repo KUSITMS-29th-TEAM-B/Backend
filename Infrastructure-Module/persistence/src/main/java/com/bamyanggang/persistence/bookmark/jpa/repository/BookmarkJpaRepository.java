@@ -13,7 +13,10 @@ import org.springframework.data.repository.query.Param;
 public interface BookmarkJpaRepository extends JpaRepository<BookmarkJpaEntity, UUID> {
 
     Optional<BookmarkJpaEntity> findByJobDescriptionIdAndExperienceId(UUID jobDescriptionId, UUID experienceId);
-    List<BookmarkJpaEntity> findByBookmarkStatusAndJobDescriptionId(BookmarkStatus status, UUID jobDescriptionId);
+
+    @Query("select bm from BookmarkJpaEntity bm where bm.bookmarkStatus = :status and bm.jobDescriptionId = :jobDescriptionId")
+    List<BookmarkJpaEntity> findByBookmarkStatusAndJobDescriptionId(@Param("status") BookmarkStatus status,
+                                                                    @Param("jobDescriptionId") UUID jobDescriptionId);
 
     @Modifying
     @Query("select bm from BookmarkJpaEntity bm where bm.experienceId in :experienceIds")

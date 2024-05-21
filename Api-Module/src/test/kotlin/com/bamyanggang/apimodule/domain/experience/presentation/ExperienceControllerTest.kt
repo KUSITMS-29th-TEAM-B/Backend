@@ -435,6 +435,91 @@ class ExperienceControllerTest : BaseRestDocsTest() {
         )
     }
 
+//    @Test
+//    @DisplayName("북마크 경험을 전체 조회한다.")
+//    fun getAllBookmarkExperienceYearTest() {
+//        val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
+//        val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
+//        val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
+//        val strongPoint2 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
+//        val parentTag = GetExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
+//        val childTag = GetExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
+//        val startedAt = LocalDateTime.now()
+//        val endedAt = LocalDateTime.now().plusDays(1)
+//
+//        val contentResponse = arrayListOf(content1, content2)
+//        val strongPointResponse = arrayListOf(strongPoint1, strongPoint2)
+//
+//        val experienceResponses =
+//            GetExperience.BookmarkResponse(
+//                arrayListOf(
+//                    GetExperience.BookmarkDetailExperience(
+//                        id = UUID.randomUUID(),
+//                        title = "경험 제목1 ",
+//                        contents = contentResponse,
+//                        strongPoints = strongPointResponse,
+//                        parentTag = parentTag,
+//                        childTag = childTag,
+//                        startedAt = startedAt,
+//                        endedAt = endedAt,
+//                        bookmarked = BookmarkStatus.ON
+//                    ),
+//                    GetExperience.BookmarkDetailExperience(
+//                        id = UUID.randomUUID(),
+//                        title = "경험 제목 2",
+//                        contents = contentResponse,
+//                        strongPoints = strongPointResponse,
+//                        parentTag = parentTag,
+//                        childTag = childTag,
+//                        startedAt = startedAt.minusYears(1),
+//                        endedAt = endedAt,
+//                        bookmarked = BookmarkStatus.OFF
+//                    )
+//                )
+//            )
+//
+//        val year = 2024
+//        given(experienceGetService.getAllBookmarkExperiences(UUID.randomUUID())).willReturn(experienceResponses)
+//
+//        //given
+//        val request = RestDocumentationRequestBuilders.get(ExperienceApi.BOOKMARK_EXPERIENCE_URL, UUID.randomUUID())
+//            .header("Authorization", "Bearer Access Token")
+//            .contentType(MediaType.APPLICATION_JSON_VALUE)
+//            .queryParam("year", year.toString())
+//            .queryParam("parent-tag", parentTag.id.toString())
+//
+//        //when
+//        val result = mockMvc.perform(request)
+//
+//        //then
+//        result.andExpect(status().isOk).andDo(
+//            resultHandler.document(
+//                requestHeaders(
+//                    headerWithName("Authorization").description("엑세스 토큰")
+//                ),
+//                responseFields(
+//                    fieldWithPath("experiences[].id").description("경험 id"),
+//                    fieldWithPath("experiences[].title").description("경험 제목"),
+//                    fieldWithPath("experiences[].contents").description("경험 내용"),
+//                    fieldWithPath("experiences[].contents[].question").description("경험 내용 질문"),
+//                    fieldWithPath("experiences[].contents[].answer").description("경험 내용 답변"),
+//                    fieldWithPath("experiences[].strongPoints").description("관련된 역량 키워드"),
+//                    fieldWithPath("experiences[].strongPoints[].id").description("역량 키워드 id"),
+//                    fieldWithPath("experiences[].strongPoints[].name").description("역량 키워드 이름"),
+//                    fieldWithPath("experiences[].parentTag").description("속한 상위 태그"),
+//                    fieldWithPath("experiences[].parentTag.id").description("상위 태그 id"),
+//                    fieldWithPath("experiences[].parentTag.name").description("상위 태그 이름"),
+//                    fieldWithPath("experiences[].childTag").description("속한 하위 태그"),
+//                    fieldWithPath("experiences[].childTag.id").description("하위 태그 id"),
+//                    fieldWithPath("experiences[].childTag.name").description("하위 태그 이름"),
+//                    fieldWithPath("experiences[].startedAt").description("경험 시작 날짜"),
+//                    fieldWithPath("experiences[].endedAt").description("경험 종료 날짜"),
+//                    fieldWithPath("experiences[].bookmarked").description("북마크 여부"),
+//                ),
+//            )
+//        )
+//    }
+
     @Test
     @DisplayName("경험 목록을 하위 태그 id를 기준으로 조회한다.")
     fun getExperienceYearAndChildTagTest() {
