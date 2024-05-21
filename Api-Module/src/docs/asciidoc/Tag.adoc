@@ -11,6 +11,11 @@ operation::TagControllerTest/createParentTagTest/[snippets='http-request,request
 
 operation::TagControllerTest/createChildTagTest/[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
 
+[[DeleteTagTest]]
+=== 태그 삭제 API
+
+operation::TagControllerTest/deleteTagTest/[snippets='http-request,path-parameters,http-response']
+
 [[GetAllTagTest]]
 === 상위 & 하위 태그 전체 조회 API
 
