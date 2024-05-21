@@ -5,10 +5,8 @@ import com.bamyanggang.domainmodule.domain.jobDescription.aggregate.JobDescripti
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.SortType
 import com.bamyanggang.domainmodule.domain.jobDescription.enums.WriteStatus
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.JobDescriptionRepository
-import org.springframework.stereotype.Service
 import java.util.*
 
-@Service
 class JobDescriptionReader(
     private val jobDescriptionRepository: JobDescriptionRepository
 ) {
