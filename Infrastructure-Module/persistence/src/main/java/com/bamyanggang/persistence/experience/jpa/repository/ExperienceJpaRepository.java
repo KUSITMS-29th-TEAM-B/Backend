@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface ExperienceJpaRepository extends JpaRepository<ExperienceJpaEntity, UUID> {
     List<ExperienceJpaEntity> findAllByUserId(UUID userId);
     List<ExperienceJpaEntity> findByUserIdAndCreatedAtBetweenOrderByCreatedAtDesc(UUID userId, LocalDateTime startYear, LocalDateTime endYear);
-    List<ExperienceJpaEntity> findByParentTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(UUID parentTagId, LocalDateTime startYear, LocalDateTime endYear);
+    List<ExperienceJpaEntity> findByParentTagIdAndStartedAtBetweenOrderByStartedAtDesc(UUID parentTagId, LocalDateTime startYear, LocalDateTime endYear);
     List<ExperienceJpaEntity> findByChildTagIdAndStartedAtBetweenOrderByStartedAtDesc(UUID childTagId, LocalDateTime startYear, LocalDateTime endYear);
     List<ExperienceJpaEntity> findByTitleContaining(String title);
 
