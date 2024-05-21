@@ -11,7 +11,7 @@ class ExceptionHandler {
     private val logger = LoggerFactory.getLogger(ExceptionHandler::class.java)
     @ExceptionHandler(CustomException::class)
     fun handleJwtException(e: CustomException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity(ErrorResponse(e.code, e.message), e.httpStatusCode)
+        return ResponseEntity(ErrorResponse(e.code, e.message), HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(Exception::class)
