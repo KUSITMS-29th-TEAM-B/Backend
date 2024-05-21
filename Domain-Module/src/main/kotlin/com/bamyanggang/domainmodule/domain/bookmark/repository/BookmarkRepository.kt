@@ -6,8 +6,9 @@ import java.util.*
 
 interface BookmarkRepository {
 
-    fun findByIds(jobDescriptionId : UUID, experienceId : UUID) : Bookmark?
+    fun findById(jobDescriptionId : UUID, experienceId : UUID) : Bookmark?
 
     fun save(bookmark: Bookmark)
     fun findByStatusAndJobDescriptionId(jobDescriptionId: UUID, status: BookmarkStatus): List<Bookmark>
+    fun findByExperienceIds(): List<Bookmark>
 }
