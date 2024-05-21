@@ -21,9 +21,12 @@ class ExperienceController(
     @GetMapping(ExperienceApi.BOOKMARK_EXPERIENCE_URL)
     fun getBookMarkExperiences(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
-    ) : GetExperience.BookmarkResponse {
-        return experienceGetService.getAllBookMarkExperiences(jobDescriptionId)
-    }
+        @RequestParam("search", required = false) search: String?,
+    ) : GetExperience.BookmarkResponse =
+        when (search) {
+            null -> experienceGetService.getAllBookmarkExperiences(jobDescriptionId)
+            else -> experienceGetService.getBookmarkExperienceBySearch(search)
+        }
 
     @GetMapping(ExperienceApi.BASE_URL)
     fun getExperienceByFilter(@RequestParam("year") year: Int,

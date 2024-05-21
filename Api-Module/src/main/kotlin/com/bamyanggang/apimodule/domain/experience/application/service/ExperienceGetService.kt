@@ -55,7 +55,7 @@ class ExperienceGetService(
     }
 
     @Transactional(readOnly = true)
-    fun getAllBookMarkExperiences(jobDescriptionId: UUID): GetExperience.BookmarkResponse {
+    fun getAllBookmarkExperiences(jobDescriptionId: UUID): GetExperience.BookmarkResponse {
         val experienceIds = bookMarkReader.readByStatusAndJobDescriptionId(jobDescriptionId, BookmarkStatus.ON).map { it.experienceId }
 
         val userExperiences = experienceReader.readAllByUserId(getAuthenticationPrincipal())
@@ -138,5 +138,9 @@ class ExperienceGetService(
                     strongPoint.name
                 )
             }
+    }
+
+    fun getBookmarkExperienceBySearch(search: String): GetExperience.BookmarkResponse {
+        return GetExperience.BookmarkResponse(emptyList())
     }
 }   
