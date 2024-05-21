@@ -3,6 +3,7 @@ package com.bamyanggang.apimodule.domain.tag.presentation
 import com.bamyanggang.apimodule.domain.tag.application.dto.CreateTag
 import com.bamyanggang.apimodule.domain.tag.application.dto.GetChildTag
 import com.bamyanggang.apimodule.domain.tag.application.dto.GetParentTag
+import com.bamyanggang.apimodule.domain.tag.application.dto.GetTag
 import com.bamyanggang.apimodule.domain.tag.application.service.TagCreateService
 import com.bamyanggang.apimodule.domain.tag.application.service.TagDeleteService
 import com.bamyanggang.apimodule.domain.tag.application.service.TagGetService
@@ -36,6 +37,11 @@ class TagController(
     @GetMapping(TagApi.MY_CHILD_TAG_URL)
     fun getUserChildTags(@PathVariable("tagId") parentTagId: UUID): GetChildTag.Response {
         return tagGetService.getAllChildTagsByParentTagId(parentTagId)
+    }
+
+    @GetMapping(TagApi.ALL_TAGS)
+    fun getAllTags(): GetTag.Response {
+        return tagGetService.getAllTags()
     }
 
     @GetMapping(TagApi.BASE_URL)
