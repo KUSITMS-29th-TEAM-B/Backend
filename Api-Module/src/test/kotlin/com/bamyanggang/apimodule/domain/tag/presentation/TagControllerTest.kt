@@ -214,14 +214,23 @@ class TagControllerTest : BaseRestDocsTest() {
     @DisplayName("상위 태그와 하위 태그 전체를 조회한다.")
     fun getAllTagsTest() {
         //given
-        val parentTagId = UUID.randomUUID()
-
-        val tagDetails = arrayListOf(
-            GetParentTag.TagDetail(UUID.randomUUID(), "하위 태그 이름 1"),
-            GetParentTag.TagDetail(UUID.randomUUID(), "하위 태그 이름 2")
+        val childTagDetails = arrayListOf(
+            GetTag.ChildTagDetail(UUID.randomUUID(), "하위 태그 이름 1"),
+            GetTag.ChildTagDetail(UUID.randomUUID(), "하위 태그 이름 2")
         )
 
-        val tagResponse = GetTag.Response(generateFixture())
+        val parentTagDetails = arrayListOf(
+            GetTag.ParentTagDetail(UUID.randomUUID(),
+                "상위, 태그 이름 1",
+                childTagDetails
+            ),
+            GetTag.ParentTagDetail(UUID.randomUUID(),
+                "상위, 태그 이름 1",
+                childTagDetails
+            ),
+        )
+
+        val tagResponse = GetTag.Response(parentTagDetails)
 
         given(tagController.getAllTags()).willReturn(tagResponse)
 
