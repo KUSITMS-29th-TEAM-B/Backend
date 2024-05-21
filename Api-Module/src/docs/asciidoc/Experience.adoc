@@ -26,6 +26,16 @@ operation::ExperienceControllerTest/getExperienceDetailTest/[snippets='http-requ
 
 operation::ExperienceControllerTest/getExperienceYearAndChildTagTest/[snippets='http-request,request-headers,request-body,http-response,response-body']
 
+[[GetBookmarkExperiencesTest]]
+=== 북마크 경험 전체 조회 API
+
+operation::ExperienceControllerTest/getAllBookmarkExperienceYearTest/[snippets='http-request,request-headers,path-parameters,request-body,http-response,response-body']
+
+[[GetBookmarkExperienceSearchTest]]
+=== 북마크 경험 검색 API
+
+operation::ExperienceControllerTest/getBookmarkExperienceBySearchYearTest/[snippets='http-request,request-headers,path-parameters,request-body,http-response,response-body']
+
 [[getExperienceYearsTest]]
 === 유저 경험 내 존재 연도 조회 API
 
