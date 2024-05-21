@@ -28,7 +28,7 @@ class TagGetService(
     @Transactional(readOnly = true)
     fun getAllChildTagsByParentTagId(parentTagId: UUID): GetChildTag.Response {
         val tagDetails = getAuthenticationPrincipal().let {
-            tagReader.readAllChildTagsByUserId(it, parentTagId).map { tag ->
+            tagReader.readAllChildTagsByUserIdAndParentTagId(it, parentTagId).map { tag ->
                 GetParentTag.TagDetail(tag.id, tag.name)
             }
         }
@@ -84,23 +84,22 @@ class TagGetService(
 
     @Transactional(readOnly = true)
     fun getAllChildTagsByYearAndParentTagId(year: Int, parentTagId: UUID): GetChildTag.TotalTagInfo {
-        val currentUserId = getAuthenticationPrincipal()
-        val experiences = experienceReader.readByUserIDAndYearDesc(year, currentUserId)
-        val experienceGroup = experiences.groupBy { it.childTagId }
+        val childTags = getAllChildTagsByParentTagId(parentTagId).tags.map { tagReader.readById(it.id) }
+        var totalExperienceCount = 0
 
-        val tagSummaries = experienceGroup.map {
-            val childTag = tagReader.readById(it.key)
-
+        val childTagDetails = childTags.map {
+            val experiences = experienceReader.readByChildTagIdAndYear(it.id, year)
+            totalExperienceCount += experiences.size
             GetChildTag.ChildTagSummary(
-                childTag.id,
-                childTag.name,
-                it.value.size
+                it.id,
+                it.name,
+                experiences.size
             )
         }
 
         return GetChildTag.TotalTagInfo(
-            experiences.size,
-            tagSummaries
+            totalExperienceCount,
+            childTagDetails
         )
     }
 

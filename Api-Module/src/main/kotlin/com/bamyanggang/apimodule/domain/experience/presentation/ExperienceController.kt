@@ -1,6 +1,9 @@
 package com.bamyanggang.apimodule.domain.experience.presentation
 
-import com.bamyanggang.apimodule.domain.experience.application.dto.*
+import com.bamyanggang.apimodule.domain.experience.application.dto.CreateExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.EditExperience
+import com.bamyanggang.apimodule.domain.experience.application.dto.ExperienceYear
+import com.bamyanggang.apimodule.domain.experience.application.dto.GetExperience
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceCreateService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
@@ -20,8 +23,8 @@ class ExperienceController(
                               @RequestParam("parent-tag") parentTagId: UUID,
                               @RequestParam("child-tag", required = false) childTagId: UUID?
     ) : GetExperience.Response =
-        when (childTagId){
-            null -> experienceGetService.getExperienceByYearAndParentTag(year, parentTagId)
+        when {
+            childTagId == null -> experienceGetService.getExperienceByYearAndParentTag(year, parentTagId)
             else -> experienceGetService.getExperienceByYearAndChildTag(year, childTagId)
         }
 

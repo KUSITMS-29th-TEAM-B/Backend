@@ -12,4 +12,6 @@ public interface ExperienceJpaRepository extends JpaRepository<ExperienceJpaEnti
     List<ExperienceJpaEntity> findByParentTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(UUID parentTagId, LocalDateTime startYear, LocalDateTime endYear);
     List<ExperienceJpaEntity> findByChildTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(UUID childTagId, LocalDateTime startYear, LocalDateTime endYear);
     List<ExperienceJpaEntity> findByUserIdAndParentTagId(UUID userId, UUID parentTagId);
+    List<ExperienceJpaEntity> findByUserIdAndParentTagIdAndCreatedAtBetweenOrderByCreatedAtDesc(
+            UUID userId, UUID parentTagId, LocalDateTime startYear, LocalDateTime endYear);
 }
