@@ -59,8 +59,8 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public List<Tag> findByNameContains(String search) {
-        List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findByNameContaining(search);
+    public List<Tag> findByUserIdAndNameContains(UUID userId, String search) {
+        List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findByUserIdAndNameContaining(userId, search);
         return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
     }
   
