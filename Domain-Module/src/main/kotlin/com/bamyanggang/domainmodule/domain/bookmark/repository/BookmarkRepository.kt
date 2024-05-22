@@ -8,6 +8,6 @@ interface BookmarkRepository {
 
     fun findById(jobDescriptionId : UUID, experienceId : UUID) : Bookmark?
     fun save(bookmark: Bookmark)
-    fun findByStatusAndJobDescriptionId(jobDescriptionId: UUID, status: BookmarkStatus): List<Bookmark>
-    fun findByExperienceIds(experiences: List<UUID>): List<Bookmark>
+    fun findByBookmarkStatusAndJobDescriptionId(jobDescriptionId: UUID, status: BookmarkStatus): List<Bookmark>
+    fun findByBookmarkStatusAndExperienceIds(experiences: List<UUID>, status: BookmarkStatus): List<Bookmark>
 }

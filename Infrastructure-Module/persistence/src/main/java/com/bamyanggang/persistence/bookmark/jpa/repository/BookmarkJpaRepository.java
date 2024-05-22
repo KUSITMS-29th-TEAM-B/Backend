@@ -19,6 +19,8 @@ public interface BookmarkJpaRepository extends JpaRepository<BookmarkJpaEntity, 
                                                                     @Param("jobDescriptionId") UUID jobDescriptionId);
 
     @Modifying
-    @Query("select bm from BookmarkJpaEntity bm where bm.experienceId in :experienceIds")
-    List<BookmarkJpaEntity> findByExperienceIds(@Param("experienceIds") List<UUID> experienceIds);
+    @Query("select bm from BookmarkJpaEntity bm where bm.experienceId in :experienceIds and bm.bookmarkStatus = :status")
+    List<BookmarkJpaEntity> findByBookmarkStatusAndExperienceIds(
+            @Param("experienceIds") List<UUID> experienceIds,
+            @Param("status") BookmarkStatus status);
 }

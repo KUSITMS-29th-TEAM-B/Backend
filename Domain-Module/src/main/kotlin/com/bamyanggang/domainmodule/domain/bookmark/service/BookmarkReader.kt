@@ -14,10 +14,10 @@ class BookmarkReader(
     }
 
     fun readByStatusAndJobDescriptionId(jobDescriptionId: UUID, status: BookmarkStatus): List<Bookmark> {
-        return bookmarkRepository.findByStatusAndJobDescriptionId(jobDescriptionId, status)
+        return bookmarkRepository.findByBookmarkStatusAndJobDescriptionId(jobDescriptionId, status)
     }
 
-    fun readByExperienceIds(experiencesIds: List<UUID>) : List<Bookmark>{
-        return bookmarkRepository.findByExperienceIds(experiencesIds)
+    fun readByBookmarkStatusAndExperienceIds(experiencesIds: List<UUID>, status: BookmarkStatus) : List<Bookmark>{
+        return bookmarkRepository.findByBookmarkStatusAndExperienceIds(experiencesIds, status)
     }
 }

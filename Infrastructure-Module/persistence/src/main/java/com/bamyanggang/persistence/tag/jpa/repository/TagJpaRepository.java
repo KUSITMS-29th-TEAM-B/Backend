@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TagJpaRepository extends JpaRepository<TagJpaEntity, UUID> {
     List<TagJpaEntity> findAllByUserIdAndParentTagIdIsNull(UUID userId);
     List<TagJpaEntity> findAllByUserIdAndParentTagId(UUID parentTagId, UUID parentId);
-    List<TagJpaEntity> findByNameContaining(String search);
+    List<TagJpaEntity> findByUserIdAndNameContaining(UUID userId, String name);
     List<TagJpaEntity> findAllByParentTagId(UUID parentTagId);
 }

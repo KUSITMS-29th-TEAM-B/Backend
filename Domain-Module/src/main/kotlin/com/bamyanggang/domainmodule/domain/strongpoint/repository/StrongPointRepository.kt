@@ -10,5 +10,5 @@ interface StrongPointRepository {
     fun isExistByStrongPointId(strongPointId: UUID): Boolean
     fun findByIds(strongPointIds: List<UUID>) : List<StrongPoint>
     fun saveAll(strongPoints: List<StrongPoint>)
-    fun findByNameContains(search: String): List<StrongPoint>
+    fun findByUserIdAndNameContains(userId: UUID, search: String): List<StrongPoint>
 }
