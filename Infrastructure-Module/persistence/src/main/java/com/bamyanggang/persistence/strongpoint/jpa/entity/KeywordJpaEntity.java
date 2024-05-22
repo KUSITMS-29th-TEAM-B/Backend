@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 @Getter
 public class KeywordJpaEntity {
     @Id
-    @Column(name = "keyword_id", columnDefinition = "BINARY(16)")
+    @Column(name = "keyword_id", columnDefinition = "BINARY(32)")
     private UUID keywordId;
 
-    @Column(name = "default_keyword_id", columnDefinition = "BINARY(16)")
-    private UUID defaultKeywordId;
 
-    public KeywordJpaEntity(UUID keywordId, UUID defaultKeywordId) {
+    private String name;
+
+    public KeywordJpaEntity(UUID keywordId, String name) {
         this.keywordId = keywordId;
-        this.defaultKeywordId = defaultKeywordId;
+        this.name = name;
     }
 }
