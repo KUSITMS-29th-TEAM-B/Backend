@@ -10,11 +10,15 @@ class TokenAppender (
     fun appendToken(
         userId: UUID,
         refreshToken: String,
-    ): Token {
-        return Token.create(
+    ) {
+        val existingToken = tokenRepository.findByUserId(userId)
+        existingToken?.let {
+            it.update(userId = userId, refreshToken = refreshToken)
+            tokenRepository.save(it)
+        } ?: Token.create(
             userId = userId,
             value = refreshToken
         ).also { tokenRepository.save(it) }
-
     }
+
 }
