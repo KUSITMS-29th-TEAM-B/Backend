@@ -18,8 +18,8 @@ class UserServiceConfiguration(
     }
 
     @Bean
-    fun tokenReader(): TokenReader {
-        return TokenReader(tokenRepository)
+    fun tokenModifier(): TokenModifier {
+        return TokenModifier(tokenRepository)
     }
 
     @Bean

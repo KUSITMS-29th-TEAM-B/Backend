@@ -7,8 +7,9 @@ class TokenRemover(
     private val tokenRepository: TokenRepository
 ) {
     fun removeToken(
-        token: Token
+        token: String
     ) {
         tokenRepository.deleteByValue(token)
     }
+
 }
