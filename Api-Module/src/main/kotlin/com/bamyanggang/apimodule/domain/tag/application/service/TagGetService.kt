@@ -111,8 +111,8 @@ class TagGetService(
         }
 
         val years = experiences
-            .distinctBy { it.createdAt.year }
-            .map { it.createdAt.year }
+            .distinctBy { it.startedAt.year }
+            .map { it.startedAt.year }
             .sorted().reversed()
 
         return GetParentTag.Years(years)
