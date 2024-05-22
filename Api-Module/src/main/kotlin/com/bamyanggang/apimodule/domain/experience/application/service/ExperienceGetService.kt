@@ -244,7 +244,7 @@ class ExperienceGetService(
             )
         }
 
-    private fun convertStrongPoints(strongPoints: List<ExperienceStrongPoint>) =
+    private fun convertStrongPoints(strongPoints: List<ExperienceStrongPoint>) {
         strongPoints.map { it.strongPointId }.let {
             strongPointReader.readByIds(it).map { strongPoint ->
                 GetExperience.DetailStrongPoint(
@@ -252,5 +252,6 @@ class ExperienceGetService(
                     strongPoint.name
                 )
             }
+        }
     }
 }   
