@@ -15,9 +15,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class KeywordJpaEntity {
     @Id
-    @Column(name = "keyword_id", columnDefinition = "BINARY(32)")
+    @Column(name = "keyword_id", columnDefinition = "BINARY(16)")
     private UUID keywordId;
-
 
     private String name;
 

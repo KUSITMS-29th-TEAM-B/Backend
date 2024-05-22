@@ -18,7 +18,8 @@ public class KeywordRepositoryImpl implements KeywordRepository {
 
     @Override
     public List<Keyword> findByIds(List<UUID> strongPointIds) {
-        List<KeywordJpaEntity> keywordJpaEntities = keywordJpaRepository.findByDefaultKeywordIds(strongPointIds);
+        System.out.println(strongPointIds);
+        List<KeywordJpaEntity> keywordJpaEntities = keywordJpaRepository.findByKeywordIds(strongPointIds);
         return keywordJpaEntities.stream().map(keywordMapper::toDomainEntity).toList();
     }
 }

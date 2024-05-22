@@ -6,18 +6,13 @@ import java.util.*
 
 class StrongPointReader(
     private val strongPointRepository: StrongPointRepository,
-    private val keywordReader : KeywordReader
 ) {
     fun readAllByUserId(userId: UUID): List<StrongPoint> {
         return strongPointRepository.findAllByUserId(userId)
     }
 
     fun readByIds(strongPointIds: List<UUID>) : List<StrongPoint> {
-        val defaultStrongPointIds = keywordReader.readByIds(strongPointIds).map { it.defaultKeywordId }
-        val defaultStrongPoints = strongPointRepository.findByIds(defaultStrongPointIds)
-        val restStrongPointIds = strongPointIds.filter { !defaultStrongPointIds.contains(it) }
-
-        return strongPointRepository.findByIds(restStrongPointIds) + defaultStrongPoints
+        return strongPointRepository.findByIds(strongPointIds)
     }
 
     fun readIdsByUserIdAndNameContains(userId: UUID, search: String) : List<UUID> {

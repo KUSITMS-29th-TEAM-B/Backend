@@ -8,6 +8,9 @@ import com.bamyanggang.apimodule.domain.experience.application.service.Experienc
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceDeleteService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceEditService
 import com.bamyanggang.apimodule.domain.experience.application.service.ExperienceGetService
+import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.Keyword
+import com.bamyanggang.persistence.strongpoint.jpa.repository.KeywordJpaRepository
+import com.bamyanggang.persistence.strongpoint.mapper.KeywordMapper
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -16,8 +19,26 @@ class ExperienceController(
     private val experienceCreateService: ExperienceCreateService,
     private val experienceDeleteService: ExperienceDeleteService,
     private val experienceEditService: ExperienceEditService,
-    private val experienceGetService: ExperienceGetService
+    private val experienceGetService: ExperienceGetService,
+    private val keywordJpaRepository: KeywordJpaRepository,
+    private val keywordMapper: KeywordMapper
 ) {
+    data class keyword(
+        val id: UUID,
+        val name: String
+    )
+
+    @PostMapping("/api/set-data")
+    fun setData(words : List<keyword>) {
+        val datas = words.map { Keyword(it.id, it.name) }.map { keywordMapper.toJpaEntity(it) }
+        keywordJpaRepository.saveAll(datas)
+    }
+
+    @GetMapping("/api/default-points")
+    fun getAllPoints() : List<Keyword> {
+        return keywordJpaRepository.findAll().map { keywordMapper.toDomainEntity(it) }
+    }
+
     @GetMapping(ExperienceApi.BOOKMARK_EXPERIENCE_URL)
     fun getBookMarkExperiences(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID,

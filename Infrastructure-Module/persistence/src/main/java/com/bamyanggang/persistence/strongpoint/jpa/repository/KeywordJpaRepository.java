@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface KeywordJpaRepository extends JpaRepository<KeywordJpaEntity, UUID> {
-    @Query("select k from KeywordJpaEntity k where k.defaultKeywordId in :strongPointIds")
-    List<KeywordJpaEntity> findByDefaultKeywordIds(@Param("strongPointIds") List<UUID> strongPointIds);
+    @Query("select k from KeywordJpaEntity k where k.keywordId in :strongPointIds")
+    List<KeywordJpaEntity> findByKeywordIds(@Param("strongPointIds") List<UUID> strongPointIds);
 }

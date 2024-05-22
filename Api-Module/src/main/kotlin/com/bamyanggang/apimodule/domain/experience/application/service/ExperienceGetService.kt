@@ -9,6 +9,7 @@ import com.bamyanggang.domainmodule.domain.experience.aggregate.Experience
 import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceContent
 import com.bamyanggang.domainmodule.domain.experience.aggregate.ExperienceStrongPoint
 import com.bamyanggang.domainmodule.domain.experience.service.ExperienceReader
+import com.bamyanggang.domainmodule.domain.strongpoint.service.KeywordReader
 import com.bamyanggang.domainmodule.domain.strongpoint.service.StrongPointReader
 import com.bamyanggang.domainmodule.domain.tag.service.TagReader
 import org.springframework.stereotype.Service
@@ -21,6 +22,7 @@ class ExperienceGetService(
     private val strongPointReader: StrongPointReader,
     private val tagReader: TagReader,
     private val bookMarkReader: BookmarkReader,
+    private val keywordReader: KeywordReader,
 ) {
     @Transactional(readOnly = true)
     fun getExperienceDetailById(experienceId: UUID): GetExperience.DetailExperience {
@@ -244,13 +246,26 @@ class ExperienceGetService(
             )
         }
 
-    private fun convertStrongPoints(strongPoints: List<ExperienceStrongPoint>) =
-        strongPoints.map { it.strongPointId }.let {
-            strongPointReader.readByIds(it).map { strongPoint ->
-                GetExperience.DetailStrongPoint(
-                    strongPoint.id,
-                    strongPoint.name
-                )
-            }
+    private fun convertStrongPoints(strongPoints: List<ExperienceStrongPoint>) : List<GetExperience.DetailStrongPoint> {
+        val strongPointIds = strongPoints.map { it.strongPointId }
+        val defaultStrongPoints = keywordReader.readByIds(strongPointIds)
+        println(defaultStrongPoints)
+        val targetStrongPointIds = strongPointIds.union(defaultStrongPoints.map { it.id }).toList()
+
+        val customStrongPointDetails = strongPointReader.readByIds(targetStrongPointIds).map { strongPoint ->
+            GetExperience.DetailStrongPoint(
+                strongPoint.id,
+                strongPoint.name
+            )
         }
+
+        val defaultStrongPointDetails = defaultStrongPoints.map {
+            GetExperience.DetailStrongPoint(
+                it.id,
+                it.name
+            )
+        }
+
+        return customStrongPointDetails + defaultStrongPointDetails
+    }
 }   
