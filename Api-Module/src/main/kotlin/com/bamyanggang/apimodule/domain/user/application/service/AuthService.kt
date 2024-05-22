@@ -7,10 +7,7 @@ import com.bamyanggang.apimodule.domain.user.application.service.handler.AuthHan
 import com.bamyanggang.cache.CacheManager
 import com.bamyanggang.commonmodule.util.TransactionUtils
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
-import com.bamyanggang.domainmodule.domain.user.service.TokenAppender
-import com.bamyanggang.domainmodule.domain.user.service.TokenReader
-import com.bamyanggang.domainmodule.domain.user.service.TokenRemover
-import com.bamyanggang.domainmodule.domain.user.service.UserReader
+import com.bamyanggang.domainmodule.domain.user.service.*
 import com.bamyanggang.jwt.*
 import com.bamyanggang.lock.LockManager
 import org.springframework.stereotype.Service
@@ -25,8 +22,8 @@ class AuthService(
     private val tokenAppender: TokenAppender,
     private val claimsExtractor: ClaimsExtractor,
     private val tokenRemover: TokenRemover,
-    private val tokenReader : TokenReader,
-    private val tokenExtractor: TokenExtractor
+    private val tokenExtractor: TokenExtractor,
+    private val tokenModifier: TokenModifier
 ){
     fun executeSocialLogin(provider: SocialLoginProvider, request: SocialLogin.Request): SocialLogin.Response {
         val socialLoginHandler = authHandlerManager.getHandler(provider)
@@ -55,8 +52,7 @@ class AuthService(
             val accessToken = jwtProvider.generateAccessToken(userClaims)
             val newRefreshToken = jwtProvider.generateRefreshToken(userClaims)
 
-            tokenAppender.appendToken(userClaims.userId, newRefreshToken)
-            tokenReader.readToken(reissueRequest.refreshToken).also { tokenRemover.removeToken(it) }
+            tokenModifier.modifyToken(userClaims.userId, reissueRequest.refreshToken, newRefreshToken)
 
             return@cacheByKey Reissue.Response(accessToken, newRefreshToken)
         }
@@ -65,6 +61,7 @@ class AuthService(
     @Transactional
     fun logout(refreshToken: String) {
         val refreshToken = tokenExtractor.extractValue(refreshToken)
-        tokenReader.readToken(refreshToken).also { tokenRemover.removeToken(it) }
+        tokenRemover.removeToken(refreshToken)
     }
+
 }
