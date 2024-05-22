@@ -553,7 +553,7 @@ class TagControllerTest : BaseRestDocsTest() {
         val result = mockMvc.perform(request)
 
         //then
-        result.andExpect(status().isNotFound)
+        result.andExpect(status().isBadRequest)
             .andDo(resultHandler.document(
                 requestHeaders(
                     headerWithName("Authorization").description("엑세스 토큰")

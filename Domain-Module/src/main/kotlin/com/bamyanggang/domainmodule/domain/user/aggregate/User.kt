@@ -75,35 +75,6 @@ data class User (
                 updatedAt = LocalDateTime.now(),
             )
         }
-
-        fun toDomain(
-            id: UUID,
-            socialId: String,
-            profileImgUrl: String,
-            provider: SocialLoginProvider,
-            email: String,
-            nickName: String,
-            jobSearchStatus: String?,
-            desiredJob: String?,
-            goal: String?,
-            dream: String?,
-            createdAt: LocalDateTime,
-            updatedAt: LocalDateTime
-        ): User {
-            return User(
-                id = id,
-                socialId = socialId,
-                profileImgUrl = profileImgUrl,
-                provider = provider,
-                email = email,
-                nickName = nickName,
-                jobSearchStatus = jobSearchStatus,
-                desiredJob = desiredJob,
-                goal = goal,
-                dream = dream,
-                createdAt = createdAt,
-                updatedAt = updatedAt
-            )
-        }
     }
+
 }

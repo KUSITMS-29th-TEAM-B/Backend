@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.jobDescription.config
+package com.bamyanggang.apimodule.domain.jobDescription.config
 
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.ApplyRepository
 import com.bamyanggang.domainmodule.domain.jobDescription.repository.JobDescriptionRepository

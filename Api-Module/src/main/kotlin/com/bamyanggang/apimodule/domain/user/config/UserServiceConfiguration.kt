@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.user.config
+package com.bamyanggang.apimodule.domain.user.config
 
 import com.bamyanggang.domainmodule.domain.user.repository.TokenRepository
 import com.bamyanggang.domainmodule.domain.user.repository.UserRepository
