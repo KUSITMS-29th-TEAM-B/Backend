@@ -40,7 +40,7 @@ class TagGetService(
     @Transactional(readOnly = true)
     fun getParentTagsByYearAndLimit(year: Int, limit: Int): GetParentTag.Response {
         val currentUserId = getAuthenticationPrincipal()
-        val topParentTagIds = experienceReader.readByUserIDAndYearDesc(year, currentUserId)
+        val topParentTagIds = experienceReader.readByUserIdAndYearDesc(year, currentUserId)
             .distinctBy { it.parentTagId }
             .take(limit)
             .map { it.parentTagId }
@@ -55,7 +55,7 @@ class TagGetService(
     @Transactional(readOnly = true)
     fun getAllParentTagsByYear(year: Int): GetParentTag.TotalTagInfo {
         val currentUserId = getAuthenticationPrincipal()
-        val experiences = experienceReader.readByUserIDAndYearDesc(year, currentUserId)
+        val experiences = experienceReader.readByUserIdAndYearDesc(year, currentUserId)
 
         val experienceGroup = experiences.groupBy { it.parentTagId }
 
