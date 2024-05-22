@@ -5,7 +5,7 @@ import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRep
 import java.util.*
 
 class StrongPointReader(
-    private val strongPointRepository: StrongPointRepository
+    private val strongPointRepository: StrongPointRepository,
 ) {
     fun readAllByUserId(userId: UUID): List<StrongPoint> {
         return strongPointRepository.findAllByUserId(userId)
