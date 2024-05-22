@@ -1,7 +1,7 @@
-package com.bamyanggang.persistence.keword.mapper;
+package com.bamyanggang.persistence.strongpoint.mapper;
 
-import com.bamyanggang.domainmodule.domain.keyword.aggregate.Keyword;
-import com.bamyanggang.persistence.keword.jpa.entity.KeywordJpaEntity;
+import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.Keyword;
+import com.bamyanggang.persistence.strongpoint.jpa.entity.KeywordJpaEntity;
 import org.springframework.stereotype.Component;
 
 @Component

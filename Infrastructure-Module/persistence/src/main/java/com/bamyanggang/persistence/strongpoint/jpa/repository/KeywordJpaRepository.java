@@ -1,6 +1,6 @@
-package com.bamyanggang.persistence.keword.jpa.repository;
+package com.bamyanggang.persistence.strongpoint.jpa.repository;
 
-import com.bamyanggang.persistence.keword.jpa.entity.KeywordJpaEntity;
+import com.bamyanggang.persistence.strongpoint.jpa.entity.KeywordJpaEntity;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 

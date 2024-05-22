@@ -1,8 +1,8 @@
-package com.bamyanggang.persistence.keword;
+package com.bamyanggang.persistence.strongpoint;
 
-import com.bamyanggang.domainmodule.domain.keyword.repository.KeywordRepository;
-import com.bamyanggang.persistence.keword.jpa.repository.KeywordJpaRepository;
-import com.bamyanggang.persistence.keword.mapper.KeywordMapper;
+import com.bamyanggang.domainmodule.domain.strongpoint.repository.KeywordRepository;
+import com.bamyanggang.persistence.strongpoint.jpa.repository.KeywordJpaRepository;
+import com.bamyanggang.persistence.strongpoint.mapper.KeywordMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

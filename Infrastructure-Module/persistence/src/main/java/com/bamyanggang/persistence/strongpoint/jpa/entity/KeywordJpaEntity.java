@@ -1,4 +1,4 @@
-package com.bamyanggang.persistence.keword.jpa.entity;
+package com.bamyanggang.persistence.strongpoint.jpa.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

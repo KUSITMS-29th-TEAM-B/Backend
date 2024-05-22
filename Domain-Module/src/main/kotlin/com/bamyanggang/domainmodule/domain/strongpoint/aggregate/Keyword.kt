@@ -1,4 +1,4 @@
-package com.bamyanggang.domainmodule.domain.keyword.aggregate
+package com.bamyanggang.domainmodule.domain.strongpoint.aggregate
 
 import com.bamyanggang.domainmodule.common.entity.AggregateRoot
 import com.example.uuid.UuidCreator
@@ -11,7 +11,7 @@ class Keyword(
 ): AggregateRoot{
 
     companion object{
-        fun create(defaultKeywordId: UUID, userId: UUID): Keyword{
+        fun create(defaultKeywordId: UUID, userId: UUID): Keyword {
             return Keyword(
                 id = UuidCreator.create(),
                 defaultKeywordId = defaultKeywordId,
