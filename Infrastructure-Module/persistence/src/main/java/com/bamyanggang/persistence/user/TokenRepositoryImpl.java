@@ -6,6 +6,7 @@ import com.bamyanggang.persistence.common.exception.PersistenceException;
 import com.bamyanggang.persistence.user.jpa.entity.TokenJpaEntity;
 import com.bamyanggang.persistence.user.jpa.repository.TokenJpaRepository;
 import com.bamyanggang.persistence.user.mapper.UserMapper;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
@@ -23,15 +24,22 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     @Override
-    public void deleteByValue(Token token) {
-        TokenJpaEntity tokenJpaEntity = userMapper.toJpaEntity(token);
-        tokenJpaRepository.delete(tokenJpaEntity);
-    }
-
-    @Override
     public Token findByValue(String value) {
         TokenJpaEntity tokenJpaEntity = tokenJpaRepository.findByValue(value)
                 .orElseThrow(() -> new PersistenceException.NotFound());
         return userMapper.toDomainEntity(tokenJpaEntity);
     }
+
+    @Override
+    public void deleteByValue(@NotNull String value) {
+        tokenJpaRepository.deleteByValue(value);
+    }
+
+    @Override
+    public Token findByUserId(@NotNull UUID userId) {
+        return tokenJpaRepository.findByUserId(userId)
+                .map(userMapper::toDomainEntity)
+                .orElse(null);
+    }
+
 }
