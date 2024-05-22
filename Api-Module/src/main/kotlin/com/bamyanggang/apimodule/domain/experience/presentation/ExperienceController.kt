@@ -22,10 +22,12 @@ class ExperienceController(
     fun getBookMarkExperiences(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
         @RequestParam("search", required = false) search: String?,
-    ) : GetExperience.BookmarkResponse =
-        when (search) {
-            null -> experienceGetService.getAllBookmarkExperiences(jobDescriptionId)
-            else -> experienceGetService.getBookmarkExperienceBySearch(jobDescriptionId, search.trim())
+        @RequestParam("parent-tag", required = false) parentTagId: UUID?,
+        @RequestParam("child-tag", required = false) childTagId: UUID?,
+    ): GetExperience.BookmarkResponse =
+        when  {
+            search != null -> experienceGetService.getBookmarkExperienceBySearch(jobDescriptionId, search.trim())
+            else -> experienceGetService.getBookmarkExperienceFilterByTagId(jobDescriptionId, parentTagId, childTagId)
         }
 
     @GetMapping(ExperienceApi.BASE_URL)
