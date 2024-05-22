@@ -7,15 +7,13 @@ import java.util.*
 class Keyword(
     override val id: UUID,
     val defaultKeywordId: UUID,
-    val userId: UUID
 ): DomainEntity{
 
     companion object{
-        fun create(defaultKeywordId: UUID, userId: UUID): Keyword {
+        fun create(defaultKeywordId: UUID): Keyword {
             return Keyword(
                 id = UuidCreator.create(),
-                defaultKeywordId = defaultKeywordId,
-                userId = userId
+                defaultKeywordId = defaultKeywordId
             )
         }
     }

@@ -18,15 +18,11 @@ public class KeywordJpaEntity {
     @Column(name = "keyword_id", columnDefinition = "BINARY(16)")
     private UUID keywordId;
 
-    @Column(name = "user_id", columnDefinition = "BINARY(16)")
-    private UUID userId;
-
-    @Column(name = "user_id", columnDefinition = "BINARY(16)")
+    @Column(name = "default_keyword_id", columnDefinition = "BINARY(16)")
     private UUID defaultKeywordId;
 
-    public KeywordJpaEntity(UUID keywordId, UUID defaultKeywordId, UUID userId) {
+    public KeywordJpaEntity(UUID keywordId, UUID defaultKeywordId) {
         this.keywordId = keywordId;
         this.defaultKeywordId = defaultKeywordId;
-        this.userId = userId;
     }
 }

@@ -9,16 +9,14 @@ public class KeywordMapper {
     public KeywordJpaEntity toJpaEntity(Keyword keyword) {
         return new KeywordJpaEntity(
                 keyword.getId(),
-                keyword.getDefaultKeywordId(),
-                keyword.getUserId()
+                keyword.getDefaultKeywordId()
         );
     }
 
     public Keyword toDomainEntity(KeywordJpaEntity keywordJpaEntity) {
         return new Keyword(
                 keywordJpaEntity.getKeywordId(),
-                keywordJpaEntity.getDefaultKeywordId(),
-                keywordJpaEntity.getUserId()
+                keywordJpaEntity.getDefaultKeywordId()
         );
     }
 }
