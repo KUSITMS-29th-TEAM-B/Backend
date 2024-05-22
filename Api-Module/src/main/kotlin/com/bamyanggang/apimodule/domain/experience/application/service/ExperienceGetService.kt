@@ -36,7 +36,7 @@ class ExperienceGetService(
 
         val years = experienceReader.readAllYearsByExistExperience(currentUserId)
         val yearTagInfos = years.map { year ->
-            val parentTagIds = experienceReader.readByUserIDAndYearDesc(year, currentUserId)
+            val parentTagIds = experienceReader.readByUserIdAndYearDesc(year, currentUserId)
                 .distinctBy { it.parentTagId }
                 .map { it.parentTagId }
 
