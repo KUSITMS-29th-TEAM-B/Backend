@@ -165,6 +165,25 @@ class ExperienceGetService(
         return GetExperience.BookmarkResponse(bookmarkDetailExperiences)
     }
 
+    @Transactional(readOnly = true)
+    fun getBookmarkExperience(
+        jobDescriptionId: UUID,
+        search: String?,
+        parentTagId: UUID?,
+        childTagId: UUID?,
+    ): GetExperience.BookmarkResponse = when {
+        search != null -> getBookmarkExperienceBySearch(jobDescriptionId, search.trim())
+        else -> getBookmarkExperienceFilterByTagId(jobDescriptionId, parentTagId, childTagId)
+    }
+
+    @Transactional(readOnly = true)
+    fun getExperienceFilter(year: Int, parentTagId: UUID?, childTagId: UUID?): GetExperience.Response =
+        when {
+            childTagId == null && parentTagId == null -> getAllExperienceByYear(year)
+            childTagId == null && parentTagId != null -> getExperienceByYearAndParentTag(year, parentTagId)
+            else -> childTagId?.let { getExperienceByYearAndChildTag(year, it) } ?: GetExperience.Response(emptyList())
+        }
+
     private fun createExperienceDetailResponse(experience: Experience): GetExperience.DetailExperience {
         val detailExperienceContents = convertExperienceContent(experience.contents)
         val strongPointDetails = convertStrongPoints(experience.strongPoints)

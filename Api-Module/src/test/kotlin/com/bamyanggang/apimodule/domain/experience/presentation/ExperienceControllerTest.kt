@@ -361,90 +361,8 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     }
 
     @Test
-    @DisplayName("경험 목록을 상위 태그 id를 기준으로 조회한다.")
-    fun getExperienceYearAndParentTagTest() {
-        val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
-        val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
-        val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
-        val strongPoint2 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
-        val parentTag = GetExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
-        val childTag = GetExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
-        val startedAt = LocalDateTime.now()
-        val endedAt = LocalDateTime.now().plusDays(1)
-
-        val contentResponse = arrayListOf(content1, content2)
-        val strongPointResponse = arrayListOf(strongPoint1, strongPoint2)
-
-        val experienceResponses =
-            GetExperience.Response(
-                arrayListOf(
-                    GetExperience.DetailExperience(
-                        id = UUID.randomUUID(),
-                        title = "경험 제목1 ",
-                        contents = contentResponse,
-                        strongPoints = strongPointResponse,
-                        parentTag = parentTag,
-                        childTag = childTag,
-                        startedAt = startedAt,
-                        endedAt = endedAt
-                    ),
-                    GetExperience.DetailExperience(
-                        id = UUID.randomUUID(),
-                        title = "경험 제목 2",
-                        contents = contentResponse,
-                        strongPoints = strongPointResponse,
-                        parentTag = parentTag,
-                        childTag = childTag,
-                        startedAt = startedAt.minusYears(1),
-                        endedAt = endedAt
-                    )
-                )
-            )
-
-        val year = 2024
-        given(experienceGetService.getExperienceByYearAndParentTag(year, parentTag.id)).willReturn(experienceResponses)
-
-        //given
-        val request = RestDocumentationRequestBuilders.get(ExperienceApi.BASE_URL)
-            .header("Authorization", "Bearer Access Token")
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .queryParam("year", year.toString())
-            .queryParam("parent-tag", parentTag.id.toString())
-
-        //when
-        val result = mockMvc.perform(request)
-
-        //then
-        result.andExpect(status().isOk).andDo(
-            resultHandler.document(
-                requestHeaders(
-                    headerWithName("Authorization").description("엑세스 토큰")
-                ),
-                responseFields(
-                    fieldWithPath("experiences[].id").description("경험 id"),
-                    fieldWithPath("experiences[].title").description("경험 제목"),
-                    fieldWithPath("experiences[].contents").description("경험 내용"),
-                    fieldWithPath("experiences[].contents[].question").description("경험 내용 질문"),
-                    fieldWithPath("experiences[].contents[].answer").description("경험 내용 답변"),
-                    fieldWithPath("experiences[].strongPoints").description("관련된 역량 키워드"),
-                    fieldWithPath("experiences[].strongPoints[].id").description("역량 키워드 id"),
-                    fieldWithPath("experiences[].strongPoints[].name").description("역량 키워드 이름"),
-                    fieldWithPath("experiences[].parentTag").description("속한 상위 태그"),
-                    fieldWithPath("experiences[].parentTag.id").description("상위 태그 id"),
-                    fieldWithPath("experiences[].parentTag.name").description("상위 태그 이름"),
-                    fieldWithPath("experiences[].childTag").description("속한 하위 태그"),
-                    fieldWithPath("experiences[].childTag.id").description("하위 태그 id"),
-                    fieldWithPath("experiences[].childTag.name").description("하위 태그 이름"),
-                    fieldWithPath("experiences[].startedAt").description("경험 시작 날짜"),
-                    fieldWithPath("experiences[].endedAt").description("경험 종료 날짜"),
-                ),
-            )
-        )
-    }
-
-    @Test
-    @DisplayName("북마크 경험을 검색한다.")
-    fun getBookmarkExperienceBySearchTest() {
+    @DisplayName("북마크 경험을 검색(태그 필터)한다.")
+    fun getBookmarkExperienceByFilterTest() {
         val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
         val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
         val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
@@ -485,16 +403,17 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                 )
             )
 
-        val search = "검색어"
         val jdId = UUID.randomUUID()
-
-        given(experienceGetService.getBookmarkExperienceBySearch(jdId, search)).willReturn(experienceResponses)
+        val search = "검색어"
+        given(experienceGetService.getBookmarkExperience(jdId, search, parentTag.id, childTag.id)).willReturn(experienceResponses)
 
         //given
         val request = RestDocumentationRequestBuilders.get(ExperienceApi.BOOKMARK_EXPERIENCE_URL, jdId)
             .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .queryParam("search", search)
+            .queryParam("parent-tag", parentTag.id.toString())
+            .queryParam("child-tag", childTag.id.toString())
 
         //when
         val result = mockMvc.perform(request)
@@ -509,7 +428,9 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                     parameterWithName("jobDescriptionId").description("직무 공고 id")
                 ),
                 queryParameters(
-                    parameterWithName("search").description("검색 문자열 (생략 시 전체 조회)"),
+                    parameterWithName("parent-tag").description("상위 태그 id (상위, 하위 태그 모두 생략 시 검색 문자열이 없다면 전체 조회)"),
+                    parameterWithName("child-tag").description("하위 태그 id"),
+                    parameterWithName("search").description("검색 문자열")
                 ),
                 responseFields(
                     fieldWithPath("experiences[].id").description("경험 id"),
@@ -535,103 +456,8 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     }
 
     @Test
-    @DisplayName("북마크 경험을 태그로 필터링한다.")
-    fun getBookmarkExperienceByTagTest() {
-        val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
-        val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
-        val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
-        val strongPoint2 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
-        val parentTag = GetExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
-        val childTag = GetExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
-        val startedAt = LocalDateTime.now()
-        val endedAt = LocalDateTime.now().plusDays(1)
-
-        val contentResponse = arrayListOf(content1, content2)
-        val strongPointResponse = arrayListOf(strongPoint1, strongPoint2)
-
-        val experienceResponses =
-            GetExperience.BookmarkResponse(
-                arrayListOf(
-                    GetExperience.BookmarkDetailExperience(
-                        id = UUID.randomUUID(),
-                        title = "경험 제목1 ",
-                        contents = contentResponse,
-                        strongPoints = strongPointResponse,
-                        parentTag = parentTag,
-                        childTag = childTag,
-                        startedAt = startedAt,
-                        endedAt = endedAt,
-                        bookmarked = BookmarkStatus.ON
-                    ),
-                    GetExperience.BookmarkDetailExperience(
-                        id = UUID.randomUUID(),
-                        title = "경험 제목 2",
-                        contents = contentResponse,
-                        strongPoints = strongPointResponse,
-                        parentTag = parentTag,
-                        childTag = childTag,
-                        startedAt = startedAt.minusYears(1),
-                        endedAt = endedAt,
-                        bookmarked = BookmarkStatus.OFF
-                    )
-                )
-            )
-
-        val parentTagId = UUID.randomUUID()
-        val childTagId = UUID.randomUUID()
-        val jdId = UUID.randomUUID()
-
-        given(experienceGetService.getBookmarkExperienceFilterByTagId(jdId, parentTagId, childTagId)).willReturn(experienceResponses)
-
-        //given
-        val request = RestDocumentationRequestBuilders.get(ExperienceApi.BOOKMARK_EXPERIENCE_URL, jdId)
-            .header("Authorization", "Bearer Access Token")
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .queryParam("parent-tag", parentTagId.toString())
-            .queryParam("child-tag", childTagId.toString())
-
-        //when
-        val result = mockMvc.perform(request)
-
-        //then
-        result.andExpect(status().isOk).andDo(
-            resultHandler.document(
-                requestHeaders(
-                    headerWithName("Authorization").description("엑세스 토큰")
-                ),
-                pathParameters(
-                    parameterWithName("jobDescriptionId").description("직무 공고 id")
-                ),
-                queryParameters(
-                    parameterWithName("parent-tag").description("상위 태그 id (상위, 하위 태그 모두 생략 시 전체 조회)"),
-                    parameterWithName("child-tag").description("하위 태그 id")
-                ),
-                responseFields(
-                    fieldWithPath("experiences[].id").description("경험 id"),
-                    fieldWithPath("experiences[].title").description("경험 제목"),
-                    fieldWithPath("experiences[].contents").description("경험 내용"),
-                    fieldWithPath("experiences[].contents[].question").description("경험 내용 질문"),
-                    fieldWithPath("experiences[].contents[].answer").description("경험 내용 답변"),
-                    fieldWithPath("experiences[].strongPoints").description("관련된 역량 키워드"),
-                    fieldWithPath("experiences[].strongPoints[].id").description("역량 키워드 id"),
-                    fieldWithPath("experiences[].strongPoints[].name").description("역량 키워드 이름"),
-                    fieldWithPath("experiences[].parentTag").description("속한 상위 태그"),
-                    fieldWithPath("experiences[].parentTag.id").description("상위 태그 id"),
-                    fieldWithPath("experiences[].parentTag.name").description("상위 태그 이름"),
-                    fieldWithPath("experiences[].childTag").description("속한 하위 태그"),
-                    fieldWithPath("experiences[].childTag.id").description("하위 태그 id"),
-                    fieldWithPath("experiences[].childTag.name").description("하위 태그 이름"),
-                    fieldWithPath("experiences[].startedAt").description("경험 시작 날짜"),
-                    fieldWithPath("experiences[].endedAt").description("경험 종료 날짜"),
-                    fieldWithPath("experiences[].bookmarked").description("북마크 여부"),
-                ),
-            )
-        )
-    }
-
-    @Test
-    @DisplayName("경험 목록을 하위 태그 id를 기준으로 조회한다.")
-    fun getExperienceYearAndChildTagTest() {
+    @DisplayName("경험 목록을 태그 id를 기준으로 조회한다.")
+    fun getExperienceYearAndTagIdTest() {
         val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
         val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
         val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
@@ -671,7 +497,7 @@ class ExperienceControllerTest : BaseRestDocsTest() {
             )
 
         val year = 2024
-        given(experienceGetService.getExperienceByYearAndChildTag(year, childTag.id)).willReturn(experienceResponses)
+        given(experienceGetService.getExperienceFilter(year, parentTag.id, childTag.id)).willReturn(experienceResponses)
 
         //given
         val request = RestDocumentationRequestBuilders.get(ExperienceApi.BASE_URL)
@@ -688,6 +514,11 @@ class ExperienceControllerTest : BaseRestDocsTest() {
             resultHandler.document(
                 requestHeaders(
                     headerWithName("Authorization").description("엑세스 토큰")
+                ),
+                queryParameters(
+                    parameterWithName("year").description("검색 연도"),
+                    parameterWithName("parent-tag").description("상위 태그 id"),
+                    parameterWithName("child-tag").description("하위 태그 id"),
                 ),
                 responseFields(
                     fieldWithPath("experiences").description("경험 목록"),
