@@ -23,7 +23,7 @@ class ExperienceGetService(
     private val bookMarkReader: BookmarkReader,
 ) {
     @Transactional(readOnly = true)
-    fun getExperienceDetailById(experienceId: UUID) : GetExperience.DetailExperience {
+    fun getExperienceDetailById(experienceId: UUID): GetExperience.DetailExperience {
         val oneExperience = experienceReader.readExperience(experienceId)
         return createExperienceDetailResponse(oneExperience)
     }
@@ -77,7 +77,8 @@ class ExperienceGetService(
 
     @Transactional(readOnly = true)
     fun getAllBookmarkExperiences(jobDescriptionId: UUID): GetExperience.BookmarkResponse {
-        val experienceIds = bookMarkReader.readByStatusAndJobDescriptionId(jobDescriptionId, BookmarkStatus.ON).map { it.experienceId }
+        val experienceIds =
+            bookMarkReader.readByStatusAndJobDescriptionId(jobDescriptionId, BookmarkStatus.ON).map { it.experienceId }
 
         val userExperiences = experienceReader.readAllByUserId(getAuthenticationPrincipal())
 
@@ -105,7 +106,9 @@ class ExperienceGetService(
                 }
 
         val searchExperiences = experienceReader.readByIds(experiencesIds)
-        val bookmarkExperienceIds = bookMarkReader.readByBookmarkStatusAndExperienceIds(experiencesIds, BookmarkStatus.ON).map { it.experienceId }
+        val bookmarkExperienceIds =
+            bookMarkReader.readByBookmarkStatusAndExperienceIds(experiencesIds, BookmarkStatus.ON)
+                .map { it.experienceId }
         println(bookmarkExperienceIds)
         val bookmarkExperienceDetails = searchExperiences.map {
             when {
@@ -116,6 +119,70 @@ class ExperienceGetService(
 
         return GetExperience.BookmarkResponse(bookmarkExperienceDetails)
     }
+
+    @Transactional(readOnly = true)
+    fun getAllExperienceByYear(year: Int): GetExperience.Response {
+        val experiences = experienceReader.readByYear(year).map {
+            createExperienceDetailResponse(it)
+        }
+
+        return GetExperience.Response(experiences)
+    }
+
+    @Transactional(readOnly = true)
+    fun getBookmarkExperienceFilterByTagId(
+        jobDescriptionId: UUID,
+        parentTagId: UUID?,
+        childTagId: UUID?
+    ): GetExperience.BookmarkResponse =
+        when {
+            parentTagId == null -> getAllBookmarkExperiences(jobDescriptionId)
+            childTagId == null -> getBookmarkExperienceByParentTagId(jobDescriptionId, parentTagId)
+            else -> getBookmarkExperienceByChildTagId(jobDescriptionId, childTagId)
+        }
+
+    @Transactional(readOnly = true)
+    fun getBookmarkExperienceByParentTagId(
+        jobDescriptionId: UUID,
+        tagId: UUID?
+    ): GetExperience.BookmarkResponse {
+        val bookmarkDetailExperiences = getAllBookmarkExperiences(jobDescriptionId).experiences.filter {
+            it.parentTag.id == tagId
+        }
+
+        return GetExperience.BookmarkResponse(bookmarkDetailExperiences)
+    }
+
+    @Transactional(readOnly = true)
+    fun getBookmarkExperienceByChildTagId(
+        jobDescriptionId: UUID,
+        tagId: UUID?
+    ): GetExperience.BookmarkResponse {
+        val bookmarkDetailExperiences = getAllBookmarkExperiences(jobDescriptionId).experiences.filter {
+            it.childTag.id == tagId
+        }
+
+        return GetExperience.BookmarkResponse(bookmarkDetailExperiences)
+    }
+
+    @Transactional(readOnly = true)
+    fun getBookmarkExperience(
+        jobDescriptionId: UUID,
+        search: String?,
+        parentTagId: UUID?,
+        childTagId: UUID?,
+    ): GetExperience.BookmarkResponse = when {
+        search != null -> getBookmarkExperienceBySearch(jobDescriptionId, search.trim())
+        else -> getBookmarkExperienceFilterByTagId(jobDescriptionId, parentTagId, childTagId)
+    }
+
+    @Transactional(readOnly = true)
+    fun getExperienceFilter(year: Int, parentTagId: UUID?, childTagId: UUID?): GetExperience.Response =
+        when {
+            childTagId == null && parentTagId == null -> getAllExperienceByYear(year)
+            childTagId == null && parentTagId != null -> getExperienceByYearAndParentTag(year, parentTagId)
+            else -> childTagId?.let { getExperienceByYearAndChildTag(year, it) } ?: GetExperience.Response(emptyList())
+        }
 
     private fun createExperienceDetailResponse(experience: Experience): GetExperience.DetailExperience {
         val detailExperienceContents = convertExperienceContent(experience.contents)
@@ -185,13 +252,5 @@ class ExperienceGetService(
                     strongPoint.name
                 )
             }
-    }
-
-    fun getAllExperienceByYear(year: Int): GetExperience.Response {
-        val experiences = experienceReader.readByYear(year).map {
-            createExperienceDetailResponse(it)
-        }
-
-        return GetExperience.Response(experiences)
     }
 }   

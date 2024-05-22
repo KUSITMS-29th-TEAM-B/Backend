@@ -22,22 +22,17 @@ class ExperienceController(
     fun getBookMarkExperiences(
         @PathVariable("jobDescriptionId") jobDescriptionId: UUID,
         @RequestParam("search", required = false) search: String?,
-    ) : GetExperience.BookmarkResponse =
-        when (search) {
-            null -> experienceGetService.getAllBookmarkExperiences(jobDescriptionId)
-            else -> experienceGetService.getBookmarkExperienceBySearch(jobDescriptionId, search.trim())
-        }
+        @RequestParam("parent-tag", required = false) parentTagId: UUID?,
+        @RequestParam("child-tag", required = false) childTagId: UUID?,
+    ): GetExperience.BookmarkResponse =
+        experienceGetService.getBookmarkExperience(jobDescriptionId, search, parentTagId, childTagId)
 
     @GetMapping(ExperienceApi.BASE_URL)
     fun getExperienceByFilter(@RequestParam("year") year: Int,
                               @RequestParam("parent-tag", required = false) parentTagId: UUID?,
                               @RequestParam("child-tag", required = false) childTagId: UUID?
     ) : GetExperience.Response =
-        when {
-            childTagId == null && parentTagId == null -> experienceGetService.getAllExperienceByYear(year)
-            childTagId == null && parentTagId != null -> experienceGetService.getExperienceByYearAndParentTag(year, parentTagId)
-            else -> experienceGetService.getExperienceByYearAndChildTag(year, childTagId!!)
-        }
+        experienceGetService.getExperienceFilter(year, parentTagId, childTagId)
 
     @GetMapping(ExperienceApi.EXPERIENCE_PATH_VARIABLE_URL)
     fun getExperience(@PathVariable("experienceId") experienceId: UUID): GetExperience.DetailExperience {
