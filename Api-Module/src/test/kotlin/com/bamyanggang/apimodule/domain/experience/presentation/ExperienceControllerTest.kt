@@ -24,8 +24,7 @@ import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
-import org.springframework.restdocs.request.RequestDocumentation.pathParameters
+import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDateTime
 import java.util.*
@@ -297,21 +296,28 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     fun getExperienceDetailTest() {
         val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
         val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
+        val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
+        val strongPoint2 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 2")
+        val parentTag = GetExperience.DetailTag(UUID.randomUUID(), "상위 태그 이름")
+        val childTag = GetExperience.DetailTag(UUID.randomUUID(), "하위 태그 이름")
+        val startedAt = LocalDateTime.now()
+        val endedAt = LocalDateTime.now().plusDays(1)
 
         val contentResponse = arrayListOf(content1, content2)
+        val strongPointResponse = arrayListOf(strongPoint1, strongPoint2)
+
+        val experienceDetailResponse = GetExperience.DetailExperience(
+            id = UUID.randomUUID(),
+            title = "경험 제목1 ",
+            contents = contentResponse,
+            strongPoints = strongPointResponse,
+            parentTag = parentTag,
+            childTag = childTag,
+            startedAt = startedAt,
+            endedAt = endedAt
+        )
 
         val experienceId: UUID = UUID.randomUUID()
-
-        val experienceDetailResponse : GetExperience.DetailExperience = generateFixture {
-            it.set("id", experienceId)
-            it.set("title", "제목")
-            it.set("contents", contentResponse)
-            it.set("strongPoints", generateFixture<List<GetExperience.DetailStrongPoint>>())
-            it.set("parentTag", generateFixture<GetExperience.DetailTag>())
-            it.set("childTag", generateFixture<GetExperience.DetailTag>())
-            it.set("startedAt", generateFixture<LocalDateTime>())
-            it.set("endedAt", generateFixture<LocalDateTime>())
-        }
 
         given(experienceGetService.getExperienceDetailById(experienceId)).willReturn(experienceDetailResponse)
 
@@ -481,6 +487,7 @@ class ExperienceControllerTest : BaseRestDocsTest() {
 
         val search = "검색어"
         val jdId = UUID.randomUUID()
+
         given(experienceGetService.getBookmarkExperienceBySearch(jdId, search)).willReturn(experienceResponses)
 
         //given
@@ -500,6 +507,9 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                 ),
                 pathParameters(
                     parameterWithName("jobDescriptionId").description("직무 공고 id")
+                ),
+                queryParameters(
+                    parameterWithName("search").description("검색 문자열 (생략 시 전체 조회)"),
                 ),
                 responseFields(
                     fieldWithPath("experiences[].id").description("경험 id"),
@@ -525,8 +535,8 @@ class ExperienceControllerTest : BaseRestDocsTest() {
     }
 
     @Test
-    @DisplayName("북마크 경험을 전체 조회한다.")
-    fun getAllBookmarkExperienceTest() {
+    @DisplayName("북마크 경험을 태그로 필터링한다.")
+    fun getBookmarkExperienceByTagTest() {
         val content1 = GetExperience.DetailExperienceContent("질문1", "답변1")
         val content2 = GetExperience.DetailExperienceContent("질문2", "답변2")
         val strongPoint1 = GetExperience.DetailStrongPoint(UUID.randomUUID(), "역량 키워드 이름 1")
@@ -567,13 +577,18 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                 )
             )
 
+        val parentTagId = UUID.randomUUID()
+        val childTagId = UUID.randomUUID()
         val jdId = UUID.randomUUID()
-        given(experienceGetService.getAllBookmarkExperiences(jdId)).willReturn(experienceResponses)
+
+        given(experienceGetService.getBookmarkExperienceFilterByTagId(jdId, parentTagId, childTagId)).willReturn(experienceResponses)
 
         //given
         val request = RestDocumentationRequestBuilders.get(ExperienceApi.BOOKMARK_EXPERIENCE_URL, jdId)
             .header("Authorization", "Bearer Access Token")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .queryParam("parent-tag", parentTagId.toString())
+            .queryParam("child-tag", childTagId.toString())
 
         //when
         val result = mockMvc.perform(request)
@@ -586,6 +601,10 @@ class ExperienceControllerTest : BaseRestDocsTest() {
                 ),
                 pathParameters(
                     parameterWithName("jobDescriptionId").description("직무 공고 id")
+                ),
+                queryParameters(
+                    parameterWithName("parent-tag").description("상위 태그 id (상위, 하위 태그 모두 생략 시 전체 조회)"),
+                    parameterWithName("child-tag").description("하위 태그 id")
                 ),
                 responseFields(
                     fieldWithPath("experiences[].id").description("경험 id"),

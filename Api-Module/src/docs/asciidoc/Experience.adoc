@@ -36,6 +36,11 @@ operation::ExperienceControllerTest/getAllBookmarkExperienceYearTest/[snippets='
 
 operation::ExperienceControllerTest/getBookmarkExperienceBySearchYearTest/[snippets='http-request,request-headers,path-parameters,request-body,http-response,response-body']
 
+[[GetBookmarkExperienceByTagTest]]
+=== 북마크 경험 태그 필터링 API
+
+operation::ExperienceControllerTest/getBookmarkExperienceByTagTest/[snippets='http-request,request-headers,path-parameters,query-parameters,request-body,http-response,response-body']
+
 [[getExperienceYearsTest]]
 === 유저 경험 내 존재 연도 조회 API
 
