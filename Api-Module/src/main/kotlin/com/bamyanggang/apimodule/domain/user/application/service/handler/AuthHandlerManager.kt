@@ -2,7 +2,9 @@ package com.bamyanggang.apimodule.domain.user.application.service.handler
 
 import com.bamyanggang.apimodule.domain.user.application.exception.AuthException
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
+import org.springframework.stereotype.Component
 
+@Component
 class AuthHandlerManager(
     private val kakaoOAuthHandler: AuthHandler,
     private val googleOAuthHandler: AuthHandler
