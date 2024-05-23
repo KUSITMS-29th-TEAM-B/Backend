@@ -29,14 +29,15 @@ inline fun <reified T> generateFixture(): T {
 // 기본 타입의 임의의 객체
 inline fun <reified T> generateBasicTypeFixture(length: Int): T {
     return if (T::class == String::class) {
-        FixtureMonkey.builder()
+        val generatedString = FixtureMonkey.builder()
             .defaultNotNull(true)
             .plugin(KotlinPlugin())
             .build()
             .giveMeBuilder<T>()
             .sample()
             .toString()
-            .take(length) as T
+        val paddedString = generatedString.padEnd(length, ' ')
+        paddedString.take(length) as T
     } else {
         FixtureMonkey.builder()
             .defaultNotNull(true)
@@ -45,5 +46,4 @@ inline fun <reified T> generateBasicTypeFixture(length: Int): T {
             .giveMeBuilder<T>()
             .sample()
     }
-
 }
