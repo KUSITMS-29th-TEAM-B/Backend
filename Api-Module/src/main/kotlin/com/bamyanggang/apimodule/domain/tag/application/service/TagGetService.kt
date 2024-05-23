@@ -45,7 +45,7 @@ class TagGetService(
             .take(limit)
             .map { it.parentTagId }
 
-        return tagReader.readByIds(topParentTagIds).map {
+        return tagReader.readByParentTagIds(topParentTagIds).map {
             GetParentTag.TagDetail(it.id, it.name)
         }.let {
             GetParentTag.Response(it)
