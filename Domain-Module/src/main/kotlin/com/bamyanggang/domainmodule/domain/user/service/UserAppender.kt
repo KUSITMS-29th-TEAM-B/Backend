@@ -2,6 +2,7 @@ package com.bamyanggang.domainmodule.domain.user.service
 
 import com.bamyanggang.domainmodule.domain.user.aggregate.User
 import com.bamyanggang.domainmodule.domain.user.enums.SocialLoginProvider
+import com.bamyanggang.domainmodule.domain.user.exception.UserException
 import com.bamyanggang.domainmodule.domain.user.repository.UserRepository
 
 class UserAppender(
@@ -18,6 +19,7 @@ class UserAppender(
         goal: String?,
         dream: String?
     ): User {
+        if(userRepository.existsBySocialId(socialId)) {throw UserException.DuplicatedUser()}
         return User.create(
             socialId = socialId,
             profileImgUrl = profileImgUrl,
