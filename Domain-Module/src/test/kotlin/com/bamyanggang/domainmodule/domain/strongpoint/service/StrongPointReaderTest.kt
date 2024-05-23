@@ -8,7 +8,6 @@ import io.mockk.verify
 import java.util.*
 
 class StrongPointReaderTest : BehaviorSpec({
-
     val strongPointRepository = mockk<StrongPointRepository>(relaxed = true)
     val strongPointReader = StrongPointReader(strongPointRepository)
 
