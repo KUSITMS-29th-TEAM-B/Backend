@@ -45,6 +45,7 @@ data class Experience(
     init {
         require(title.length < 50) { "제목의 글자 수는 50자 제한입니다." }
         require(startedAt <= endedAt) { "활동 시작일은 종료일보다 빨라야 합니다."}
+        require(strongPoints.isNotEmpty()) { "최소 1개 이상의 역량 키워드를 선택해야 합니다."}
     }
 
     companion object {

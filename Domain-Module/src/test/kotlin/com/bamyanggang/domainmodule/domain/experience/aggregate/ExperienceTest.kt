@@ -98,4 +98,31 @@ class ExperienceTest : FunSpec({
             )
         }
     }
+
+    test("역량 키워드 최소 개수 제한 테스트") {
+        val title = "경험 제목"
+        val parentTagId: UUID = UUID.randomUUID()
+        val childTagId: UUID = UUID.randomUUID()
+        val contents: List<ExperienceContent> = generateFixture()
+        val userId : UUID = generateFixture()
+        val startedAt = LocalDateTime.now()
+        val endedAt = startedAt.minusDays(1)
+
+        val experienceStrongPoints = emptyList<ExperienceStrongPoint>()
+
+        val exception = shouldThrow<IllegalArgumentException> {
+            Experience.create(
+                title = title,
+                userId = userId,
+                parentTagId = parentTagId,
+                childTagId = childTagId,
+                contents = contents,
+                experienceStrongPoints = experienceStrongPoints,
+                startedAt = startedAt,
+                endedAt = endedAt,
+            )
+        }
+
+        assert(exception.message == "최소 1개 이상의 역량 키워드를 선택해야 합니다.")
+    }
 })
