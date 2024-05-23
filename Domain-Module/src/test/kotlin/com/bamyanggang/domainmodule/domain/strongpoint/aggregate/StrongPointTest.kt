@@ -1,7 +1,6 @@
 package com.bamyanggang.domainmodule.domain.strongpoint.aggregate
 
 import com.bamyanggang.commonmodule.fixture.generateFixture
-import com.bamyanggang.domainmodule.domain.strongpoint.aggregate.StrongPoint
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -31,5 +30,4 @@ class StrongPointTest: FunSpec({
 
         originStrongPoint.isDuplicated(name) shouldBe true
     }
-
 })
