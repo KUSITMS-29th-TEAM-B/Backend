@@ -16,6 +16,9 @@ sealed class TagException(
     class NotFoundTag(message: String = "존재하지 않는 태그 입니다.") :
         TagException(errorCode = 3, message = message)
 
+    class EmptyName(message: String = "태그 이름은 공백일 수 없습니다.") :
+        TagException(errorCode = 4, message = message)
+
     companion object {
         const val CODE_PREFIX = "TAG"
     }

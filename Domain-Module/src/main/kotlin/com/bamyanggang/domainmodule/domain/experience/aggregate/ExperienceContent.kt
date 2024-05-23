@@ -10,13 +10,10 @@ data class ExperienceContent(
     val answer: String,
 ) : DomainEntity {
 
+
     companion object {
         fun create(question: String, answer: String): ExperienceContent {
             return ExperienceContent(question = question, answer = answer)
-        }
-
-        fun toDomain(id: UUID, question: String, answer: String): ExperienceContent {
-            return ExperienceContent(id, question, answer)
         }
     }
 }

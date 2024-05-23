@@ -1,6 +1,5 @@
 package com.bamyanggang.domainmodule.domain.strongpoint.service
 
-import com.bamyanggang.commonmodule.fixture.generateFixture
 import com.bamyanggang.domainmodule.domain.strongpoint.repository.StrongPointRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.mockk
@@ -12,8 +11,8 @@ class StrongPointAppenderTest : BehaviorSpec({
     val strongPointAppender = StrongPointAppender(strongPointRepository)
 
     Given("역량 키워드 입력 값이 주어졌을 때") {
-        val name: String = generateFixture()
-        val userId: UUID = generateFixture()
+        val name: String = "역량 키워드 이름"
+        val userId: UUID = UUID.randomUUID()
 
         When("StrongPointAppender.appendStrongPoint 함수가 호출되면") {
             strongPointAppender.appendStrongPoint(name, userId)

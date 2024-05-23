@@ -14,7 +14,6 @@ interface ExperienceRepository {
     fun findByIds(experienceIds: List<UUID>): List<Experience>
     fun findByUserIdAndTitleContains(userId: UUID, search: String): List<Experience>
     fun findByUserIdAndParentTagId(userId: UUID, parentTagId: UUID): List<Experience>
-    fun findByUserIdAndParentTagIdAndYearDesc(year: Int, parentTagId: UUID, userId: UUID): List<Experience>
     fun findByYear(year: Int): List<Experience>
     fun findByChildTagId(childTag: UUID) : List<Experience>
     fun findByTagIds(tagIds: List<UUID>) : List<Experience>

@@ -13,10 +13,10 @@ class JobDescriptionTest : FunSpec({
 
     test("JobDescription 생성") {
         // arrange
-        val enterpriseName: String = "기업 명"
-        val title: String = "제목"
-        val content: String = "내용"
-        val link: String = "링크"
+        val enterpriseName = "기업 명"
+        val title = "제목"
+        val content = "내용"
+        val link = "링크"
         val startedAt: LocalDateTime = LocalDateTime.now()
         val endedAt: LocalDateTime = startedAt.plusDays(1)
         val userId : UUID = UUID.randomUUID()
