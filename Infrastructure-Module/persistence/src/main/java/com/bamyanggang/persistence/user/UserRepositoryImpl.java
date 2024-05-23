@@ -32,9 +32,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(@NotNull UUID userId) {
+    public User findById(UUID userId) {
         return userJpaRepository.findByUserId(userId)
                 .map(userMapper::toDomainEntity)
                 .orElseThrow(() -> new PersistenceException.NotFound());
     }
+
+    @Override
+    public boolean existsBySocialId(String socialId) {
+        return userJpaRepository.existsBySocialId(socialId);
+    }
+
 }

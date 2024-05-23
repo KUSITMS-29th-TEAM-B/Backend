@@ -11,4 +11,6 @@ interface UserRepository {
 
  fun findById(userId: UUID): User
 
+ fun existsBySocialId(socialId: String): Boolean
+
 }
