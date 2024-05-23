@@ -103,10 +103,19 @@ class ExperienceTest : FunSpec({
         val title = "경험 제목"
         val parentTagId: UUID = UUID.randomUUID()
         val childTagId: UUID = UUID.randomUUID()
-        val contents: List<ExperienceContent> = generateFixture()
-        val userId : UUID = generateFixture()
+        val contents = arrayListOf(
+            ExperienceContent(
+                question = "질문 1",
+                answer = "대답 1"
+            ),
+            ExperienceContent(
+                question = "질문 2",
+                answer = "대답 2"
+            )
+        )
+        val userId : UUID = UUID.randomUUID()
         val startedAt = LocalDateTime.now()
-        val endedAt = startedAt.minusDays(1)
+        val endedAt = startedAt.plusDays(1)
 
         val experienceStrongPoints = emptyList<ExperienceStrongPoint>()
 
