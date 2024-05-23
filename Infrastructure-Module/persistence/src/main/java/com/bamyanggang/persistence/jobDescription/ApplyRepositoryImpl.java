@@ -8,6 +8,7 @@ import com.bamyanggang.persistence.jobDescription.jpa.repository.ApplyJpaReposit
 import com.bamyanggang.persistence.jobDescription.mapper.JobDescriptionMapper;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -28,4 +29,10 @@ public class ApplyRepositoryImpl implements ApplyRepository {
                 .map(jobDescriptionMapper::toApplyDomainEntity)
                 .orElseThrow(() -> new PersistenceException.NotFound());
     }
+
+    @Override
+    public boolean existsByJobDescriptionId(UUID jobDescriptionId) {
+        return applyJpaRepository.existsByJobDescriptionId(jobDescriptionId);
+    }
+
 }

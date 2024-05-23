@@ -9,4 +9,6 @@ public interface ApplyJpaRepository extends JpaRepository<ApplyJpaEntity, UUID> 
 
     Optional<ApplyJpaEntity> findByJobDescriptionId(UUID jobDescriptionId);
 
+    boolean existsByJobDescriptionId(UUID jobDescriptionId);
+
 }
