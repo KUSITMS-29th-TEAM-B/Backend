@@ -1,6 +1,5 @@
-package com.bamyanggang.domainmodule.domain.tag
+package com.bamyanggang.domainmodule.domain.tag.aggregate
 
-import com.bamyanggang.domainmodule.domain.tag.aggregate.Tag
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
