@@ -57,12 +57,13 @@ class ExperienceReader(
             }.contains(true)
         }.map { it.id }
     }
+
     fun readByYear(year: Int): List<Experience> {
         return experienceRepository.findByYear(year)
     }
 
-    fun readByChildTag(childTag: UUID): List<Experience> {
-        return experienceRepository.findByChildTagId(childTag)
+    fun readByChildTagId(childTagId: UUID): List<Experience> {
+        return experienceRepository.findByChildTagId(childTagId)
     }
 
     fun readIdsByTagIds(tagIds: List<UUID>) : List<UUID> {
