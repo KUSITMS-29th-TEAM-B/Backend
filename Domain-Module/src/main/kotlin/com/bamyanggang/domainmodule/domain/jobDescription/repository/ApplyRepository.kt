@@ -8,4 +8,6 @@ interface ApplyRepository {
 
     fun findByJobDescriptionId(jobDescriptionId: UUID): Apply
 
+    fun existsByJobDescriptionId(jobDescriptionId: UUID): Boolean
+
 }
