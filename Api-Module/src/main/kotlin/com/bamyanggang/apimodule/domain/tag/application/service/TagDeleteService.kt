@@ -24,7 +24,7 @@ class TagDeleteService(
             experienceReader.readByUserIdAndParentTagId(getAuthenticationPrincipal(), deleteTag.id)
                 .forEach { experienceRemover.remove(it.id) }
         }else {
-            experienceReader.readByChildTag(tagId).forEach {
+            experienceReader.readByChildTagId(tagId).forEach {
                 experienceRemover.remove(it.id)
             }
         }
