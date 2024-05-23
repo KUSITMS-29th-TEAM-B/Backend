@@ -10,7 +10,7 @@ class TagAppenderTest : BehaviorSpec({
     val mockTagRepository = mockk<TagRepository>(relaxed = true)
     val tagAppender = TagAppender(mockTagRepository)
 
-    Given("상위 태그 이름과 userId가 주어지면") {
+    Given("상위 태그 이름과 userId가 주어졌을 때") {
         val name = "상위 태그 이름"
         val userId = UUID.randomUUID()
 
@@ -23,7 +23,7 @@ class TagAppenderTest : BehaviorSpec({
         }
     }
 
-    Given("하위 태그 이름과 userId, parentTagId가 주어지면") {
+    Given("하위 태그 이름과 userId, parentTagId가 주어졌을 때") {
         val name = "하위 태그 이름"
         val userId = UUID.randomUUID()
         val parentTagId = UUID.randomUUID()
