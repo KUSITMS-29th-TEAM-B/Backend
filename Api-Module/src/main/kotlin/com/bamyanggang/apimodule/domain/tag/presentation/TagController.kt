@@ -70,7 +70,6 @@ class TagController(
 
     @DeleteMapping(TagApi.TAG_PATH_VARIABLE_URL)
     fun deleteTag( @PathVariable("tagId") tagId: UUID) {
-
         tagDeleteService.deleteTag(tagId)
     }
 }
