@@ -1,6 +1,5 @@
 package com.bamyanggang.domainmodule.domain.user.service
 
-import com.bamyanggang.domainmodule.domain.user.aggregate.Token
 import com.bamyanggang.domainmodule.domain.user.repository.TokenRepository
 
 class TokenRemover(
