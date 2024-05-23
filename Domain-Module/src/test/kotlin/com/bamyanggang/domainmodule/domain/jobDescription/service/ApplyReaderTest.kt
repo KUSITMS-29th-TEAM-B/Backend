@@ -22,4 +22,16 @@ class ApplyReaderTest: BehaviorSpec({
         }
     }
 
+    given("ApplyReader.readApplyExists") {
+        val jobDescriptionId: UUID = UUID.randomUUID()
+        `when`("jobDescriptionId가 주어지면") {
+            applyReader.readApplyExists(jobDescriptionId)
+            then("applyRepository.existsByJobDescriptionId가 호출된다.") {
+                verify {
+                    applyRepository.existsByJobDescriptionId(jobDescriptionId)
+                }
+            }
+        }
+    }
+
 })
