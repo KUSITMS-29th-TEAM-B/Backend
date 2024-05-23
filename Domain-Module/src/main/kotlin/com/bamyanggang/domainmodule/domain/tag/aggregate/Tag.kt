@@ -21,9 +21,5 @@ data class Tag(
                 userId = userId
             )
         }
-
-        fun toDomain(id : UUID, name: String, parentTagId: UUID?, userId: UUID): Tag {
-            return Tag(id, name, parentTagId, userId)
-        }
     }
 }

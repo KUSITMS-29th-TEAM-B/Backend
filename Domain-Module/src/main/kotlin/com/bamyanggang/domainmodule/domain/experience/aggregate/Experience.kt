@@ -69,33 +69,5 @@ data class Experience(
                 updatedAt = LocalDateTime.now(),
             )
         }
-
-        fun toDomain(
-            id: UUID,
-            userId: UUID,
-            title: String,
-            parentTagId: UUID,
-            childTagId: UUID,
-            contents: List<ExperienceContent>,
-            experienceStrongPoints: List<ExperienceStrongPoint>,
-            startedAt: LocalDateTime,
-            endedAt: LocalDateTime,
-            createdAt: LocalDateTime,
-            updatedAt: LocalDateTime,
-        ): Experience {
-            return Experience(
-                id = id,
-                userId = userId,
-                title = title,
-                parentTagId = parentTagId,
-                childTagId = childTagId,
-                contents = contents,
-                strongPoints = experienceStrongPoints,
-                startedAt = startedAt,
-                endedAt = endedAt,
-                createdAt = createdAt,
-                updatedAt = updatedAt,
-            )
-        }
     }
 }

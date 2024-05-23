@@ -13,9 +13,5 @@ data class ExperienceStrongPoint(
         fun create(strongPointId: UUID): ExperienceStrongPoint {
             return ExperienceStrongPoint(strongPointId = strongPointId)
         }
-
-        fun toDomain(id: UUID, strongPointId: UUID): ExperienceStrongPoint {
-            return ExperienceStrongPoint(id, strongPointId)
-        }
     }
 }

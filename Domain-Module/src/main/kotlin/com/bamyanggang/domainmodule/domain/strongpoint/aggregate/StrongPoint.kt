@@ -22,9 +22,5 @@ data class StrongPoint(
         fun create(name: String, userId: UUID): StrongPoint {
             return StrongPoint(name = name, userId = userId)
         }
-
-        fun toDomain(id: UUID, name: String, userId: UUID): StrongPoint {
-            return StrongPoint(id, name, userId)
-        }
     }
 }

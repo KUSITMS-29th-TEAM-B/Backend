@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StrongPointMapper {
     public StrongPointJpaEntity toJpaEntity(StrongPoint strongPoint) {
-        return StrongPointJpaEntity.of(
+        return new StrongPointJpaEntity(
                 strongPoint.getId(),
                 strongPoint.getName(),
                 strongPoint.getUserId()
@@ -15,7 +15,7 @@ public class StrongPointMapper {
     }
 
     public StrongPoint toDomainEntity(StrongPointJpaEntity strongPointJpaEntity) {
-        return StrongPoint.Companion.toDomain(
+        return new StrongPoint(
                 strongPointJpaEntity.getStrongPointId(),
                 strongPointJpaEntity.getName(),
                 strongPointJpaEntity.getUserId()
