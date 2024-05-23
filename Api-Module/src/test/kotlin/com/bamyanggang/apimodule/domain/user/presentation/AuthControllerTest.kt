@@ -102,7 +102,7 @@ class AuthControllerTest : BaseRestDocsTest(){
         val reissueRequest : Reissue.Request = generateFixture()
         val reissueResponse : Reissue.Response = generateFixture()
         given(authService.reissueToken(reissueRequest)).willReturn(reissueResponse)
-        val request = RestDocumentationRequestBuilders.put(AuthApi.REISSUE)
+        val request = RestDocumentationRequestBuilders.patch(AuthApi.REISSUE)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(reissueRequest))
         //when

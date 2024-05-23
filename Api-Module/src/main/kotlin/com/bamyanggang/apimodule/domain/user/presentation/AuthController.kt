@@ -17,7 +17,7 @@ class AuthController(
         @RequestBody request: SocialLogin.Request
     ): SocialLogin.Response = authService.executeSocialLogin(provider,request)
 
-    @PutMapping(AuthApi.REISSUE)
+    @PatchMapping(AuthApi.REISSUE)
     fun reissueToken(
         @RequestBody request: Reissue.Request
     ): Reissue.Response = authService.reissueToken(request)
