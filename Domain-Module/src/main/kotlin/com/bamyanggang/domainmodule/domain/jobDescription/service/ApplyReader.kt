@@ -12,4 +12,8 @@ class ApplyReader(
         return applyRepository.findByJobDescriptionId(JobDescriptionId)
     }
 
+    fun readApplyExists(JobDescriptionId: UUID): Boolean{
+        return applyRepository.existsByJobDescriptionId(JobDescriptionId)
+    }
+
 }

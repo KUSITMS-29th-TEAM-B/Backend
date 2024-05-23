@@ -368,7 +368,8 @@ class JobDescriptionControllerTest : BaseRestDocsTest() {
                         fieldWithPath("writeStatus").description("작성 상태. NOT_APPLIED(칩 없음, 작성 전), WRITING(작성 중), WRITTEN(작성 완료), CLOSED(마감)"),
                         fieldWithPath("createdAt").description("생성일"),
                         fieldWithPath("startedAt").description("시작일"),
-                        fieldWithPath("endedAt").description("종료일")
+                        fieldWithPath("endedAt").description("종료일"),
+                        fieldWithPath("isApplyExists").description("자기소개서 작성 여부")
                     )
                 )
             )
