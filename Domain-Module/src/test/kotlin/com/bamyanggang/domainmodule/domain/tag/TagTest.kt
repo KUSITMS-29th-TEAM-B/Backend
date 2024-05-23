@@ -1,6 +1,7 @@
 package com.bamyanggang.domainmodule.domain.tag
 
 import com.bamyanggang.domainmodule.domain.tag.aggregate.Tag
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -26,6 +27,16 @@ class TagTest: DescribeSpec({
                 val newTag = Tag.create("새로운 태그", null, UUID.randomUUID())
 
                 originTag.isDuplicatedName(newTag.name) shouldBe false
+            }
+        }
+
+        context("태그 이름으로 공백이 넘어오면") {
+            it("IllegalmentArgumentException을 발생시킨다.") {
+                val emptyTitle = ""
+                shouldThrow<IllegalArgumentException> {
+                    Tag.create(emptyTitle, null, UUID.randomUUID())
+                    Tag.create(emptyTitle, UUID.randomUUID(), UUID.randomUUID())
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.bamyanggang.domainmodule.domain.tag.aggregate
 
 import com.bamyanggang.domainmodule.common.entity.DomainEntity
+import com.bamyanggang.domainmodule.domain.tag.exception.TagException
 import com.example.uuid.UuidCreator
 import java.util.*
 
@@ -10,6 +11,10 @@ data class Tag(
     val parentTagId: UUID?,
     val userId: UUID
 ) : DomainEntity{
+
+    init {
+        require(name.isNotEmpty()) { TagException.EmptyName().message }
+    }
 
     fun isDuplicatedName(name: String): Boolean = this.name == name
 
