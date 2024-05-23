@@ -1,6 +1,5 @@
 package com.bamyanggang.domainmodule.domain.experience.aggregate
 
-import com.bamyanggang.commonmodule.fixture.generateBasicTypeFixture
 import com.bamyanggang.commonmodule.fixture.generateFixture
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
@@ -9,10 +8,11 @@ import java.time.LocalDateTime
 import java.util.*
 
 class ExperienceTest : FunSpec({
+
     test("Experience 정상 생성 테스트"){
-        val title: String = generateBasicTypeFixture(15)
-        val parentTagId: UUID = generateFixture()
-        val childTagId: UUID = generateFixture()
+        val title = "경험 제목"
+        val parentTagId: UUID = UUID.randomUUID()
+        val childTagId: UUID = UUID.randomUUID()
         val contents: List<ExperienceContent> = generateFixture()
         val experienceStrongPoints: List<ExperienceStrongPoint> = generateFixture()
         val startedAt: LocalDateTime = generateFixture()
@@ -53,6 +53,31 @@ class ExperienceTest : FunSpec({
                 experienceStrongPoints = generateFixture<List<ExperienceStrongPoint>>(),
                 startedAt = generateFixture(),
                 endedAt = generateFixture(),
+            )
+        }
+    }
+
+    test("날짜 입력 예외 처리 테스트") {
+        val title = "경험 제목"
+        val parentTagId: UUID = UUID.randomUUID()
+        val childTagId: UUID = UUID.randomUUID()
+        val contents: List<ExperienceContent> = generateFixture()
+        val experienceStrongPoints: List<ExperienceStrongPoint> = generateFixture()
+        val userId : UUID = generateFixture()
+
+        val startedAt = LocalDateTime.now()
+        val endedAt = startedAt.minusDays(1)
+
+        shouldThrow<IllegalArgumentException> {
+            Experience.create(
+                title = title,
+                userId = userId,
+                parentTagId = parentTagId,
+                childTagId = childTagId,
+                contents = contents,
+                experienceStrongPoints = experienceStrongPoints,
+                startedAt = startedAt,
+                endedAt = endedAt,
             )
         }
     }

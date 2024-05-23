@@ -46,6 +46,7 @@ data class Experience(
         require(title.length < 50) { "제목의 글자 수는 50자 제한입니다." }
         require(startedAt.isBefore(endedAt)) { "활동 시작일은 종료일보다 빨라야 합니다."}
     }
+
     companion object {
         fun create(
             title: String,
