@@ -39,7 +39,8 @@ class JobDescriptionInfo {
             val writeStatus: WriteStatus,
             val createdAt: LocalDateTime,
             val startedAt: LocalDateTime,
-            val endedAt: LocalDateTime
+            val endedAt: LocalDateTime,
+            val isApplyExists: Boolean
         ): Response()
     }
 
