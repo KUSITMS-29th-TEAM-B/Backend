@@ -40,7 +40,7 @@ class ExperienceGetService(
                 .distinctBy { it.parentTagId }
                 .map { it.parentTagId }
 
-            val tagDetails = tagReader.readByParentTagIds(parentTagIds).map {
+            val tagDetails = tagReader.readByParentTagIdsAndYearAndExperienceCreatedAtDesc(parentTagIds, year).map {
                 ExperienceYear.TagDetail(
                     id = it.id,
                     name = it.name

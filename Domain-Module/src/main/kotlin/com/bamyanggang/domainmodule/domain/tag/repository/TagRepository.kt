@@ -13,4 +13,5 @@ interface TagRepository {
     fun findByParentTagIds(tagParentTagIds: List<UUID>): List<Tag>
     fun findByUserIdAndNameContains(userId: UUID, search: String): List<Tag>
     fun findAllChildTagsByParentTagId(parentTagId: UUID) : List<Tag>
+    fun findByParentTagIdsAndYearAndExperienceCreatedAtDesc(parentTagIds: List<UUID>, year: Int): List<Tag>
 }
