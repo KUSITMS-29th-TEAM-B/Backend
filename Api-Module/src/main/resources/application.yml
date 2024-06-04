@@ -6,4 +6,3 @@ spring:
     include:
       - db
       - jwt
-      - log
