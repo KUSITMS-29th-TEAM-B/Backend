@@ -30,6 +30,7 @@ class TokenAppenderTest : BehaviorSpec({
     Given("a user id and a refresh token, and the user has an existing token") {
         val mockToken = mockk<Token>(relaxed = true)
         every { mockTokenRepository.findByUserId(userId) } returns mockToken
+        every { mockToken.update(userId, refreshToken) } returns mockToken
 
         When("appendToken is called") {
             tokenAppender.appendToken(userId, refreshToken)
