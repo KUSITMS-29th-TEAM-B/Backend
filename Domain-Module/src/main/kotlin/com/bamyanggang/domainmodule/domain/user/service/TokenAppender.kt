@@ -13,8 +13,8 @@ class TokenAppender (
     ) {
         val existingToken = tokenRepository.findByUserId(userId)
         existingToken?.let {
-            it.update(userId = userId, refreshToken = refreshToken)
-            tokenRepository.save(it)
+            val updatedToken = it.update(userId = userId, refreshToken = refreshToken)
+            tokenRepository.save(updatedToken)
         } ?: Token.create(
             userId = userId,
             value = refreshToken

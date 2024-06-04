@@ -7,8 +7,7 @@ import java.util.*
 @Component
 class JwtProvider(
     private val jwtProperties: JwtProperties,
-    private val jwtKeyGenerator: JwtKeyGenerator,
-    private val jwtRegistry: JwtRegistry
+    private val jwtKeyGenerator: JwtKeyGenerator
 ) {
 
     fun generateAccessToken(user: Claims.UserClaims): String {
@@ -19,12 +18,10 @@ class JwtProvider(
     }
 
     fun generateRefreshToken(user: Claims.UserClaims): String {
-        val refreshToken = generateToken(
+        return generateToken(
             user.createPrivateClaims(TokenType.REFRESH_TOKEN),
             jwtProperties.refreshTokenExpirationTime
         )
-        jwtRegistry.upsert(user.userId to refreshToken)
-        return refreshToken
     }
 
     fun generateRegistrationToken(registrationClaims: Claims.RegistrationClaims): String {
