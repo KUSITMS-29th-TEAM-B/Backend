@@ -58,7 +58,7 @@ class JwtAuthenticationFilter(
             "/favicon.ico" to HttpMethod.GET,
             AuthApi.BASE_URL.plus("/login/**") to HttpMethod.POST,
             UserApi.REGISTER to HttpMethod.POST,
-            AuthApi.REISSUE to HttpMethod.PUT
+            AuthApi.REISSUE to HttpMethod.PATCH
         )
     }
 
