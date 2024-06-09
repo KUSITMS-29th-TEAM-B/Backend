@@ -1,4 +1,4 @@
-FROM amazoncorretto:17-alpine-jdk
+FROM openjdk:17-alpine
 
 # JAR_FILE 변수에 값을 저장
 ARG JAR_FILE=/Api-Module/build/libs/Api-Module-0.0.1-SNAPSHOT.jar
