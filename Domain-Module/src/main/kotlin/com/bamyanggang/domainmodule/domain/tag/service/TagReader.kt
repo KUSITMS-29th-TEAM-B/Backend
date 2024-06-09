@@ -30,4 +30,8 @@ class TagReader(
     fun readChildTagsByParentTagId(parentTagId: UUID) : List<Tag> {
         return tagRepository.findAllChildTagsByParentTagId(parentTagId)
     }
+
+    fun readByParentTagIdsAndYearAndExperienceCreatedAtDesc(parentTagIds: List<UUID>, year: Int): List<Tag> {
+        return tagRepository.findByParentTagIdsAndYearAndExperienceCreatedAtDesc(parentTagIds, year)
+    }
 }

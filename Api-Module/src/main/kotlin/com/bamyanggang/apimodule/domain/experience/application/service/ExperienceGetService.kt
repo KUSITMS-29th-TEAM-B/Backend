@@ -40,7 +40,7 @@ class ExperienceGetService(
                 .distinctBy { it.parentTagId }
                 .map { it.parentTagId }
 
-            val tagDetails = tagReader.readByParentTagIds(parentTagIds).map {
+            val tagDetails = tagReader.readByParentTagIdsAndYearAndExperienceCreatedAtDesc(parentTagIds, year).map {
                 ExperienceYear.TagDetail(
                     id = it.id,
                     name = it.name
@@ -111,7 +111,7 @@ class ExperienceGetService(
         val bookmarkExperienceIds =
             bookMarkReader.readByBookmarkStatusAndExperienceIds(experiencesIds, BookmarkStatus.ON)
                 .map { it.experienceId }
-        println(bookmarkExperienceIds)
+
         val bookmarkExperienceDetails = searchExperiences.map {
             when {
                 it.id in bookmarkExperienceIds -> createBookmarkExperienceDetailResponse(it, BookmarkStatus.ON)
@@ -249,7 +249,6 @@ class ExperienceGetService(
     private fun convertStrongPoints(strongPoints: List<ExperienceStrongPoint>) : List<GetExperience.DetailStrongPoint> {
         val strongPointIds = strongPoints.map { it.strongPointId }
         val defaultStrongPoints = keywordReader.readByIds(strongPointIds)
-        println(defaultStrongPoints)
         val targetStrongPointIds = strongPointIds.union(defaultStrongPoints.map { it.id }).toList()
 
         val customStrongPointDetails = strongPointReader.readByIds(targetStrongPointIds).map { strongPoint ->

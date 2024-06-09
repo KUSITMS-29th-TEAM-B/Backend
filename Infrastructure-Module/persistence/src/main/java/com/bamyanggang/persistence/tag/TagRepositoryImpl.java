@@ -6,6 +6,7 @@ import com.bamyanggang.domainmodule.domain.tag.repository.TagRepository;
 import com.bamyanggang.persistence.tag.jpa.entity.TagJpaEntity;
 import com.bamyanggang.persistence.tag.jpa.repository.TagJpaRepository;
 import com.bamyanggang.persistence.tag.mapper.TagMapper;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,17 @@ public class TagRepositoryImpl implements TagRepository {
   
     public List<Tag> findAllChildTagsByParentTagId(UUID parentTagId) {
         List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findAllByParentTagId(parentTagId);
+
+        return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
+    }
+
+    @Override
+    public List<Tag> findByParentTagIdsAndYearAndExperienceCreatedAtDesc(List<UUID> parentTagIds, int year) {
+        LocalDateTime startYear = LocalDateTime.of(year, 1, 1, 0, 0);
+        LocalDateTime endYear = LocalDateTime.of(year, 12, 31, 23, 59);
+
+        List<TagJpaEntity> tagJpaEntities = tagJpaRepository.findByParentTagIdAndYearAndExperienceCreatedAtDesc(
+                parentTagIds, startYear, endYear);
 
         return tagJpaEntities.stream().map(tagMapper::toDomainEntity).toList();
     }

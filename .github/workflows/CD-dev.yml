@@ -48,6 +48,7 @@ jobs:
             echo "JWT_ACCESS_TOKEN_EXPIRATION_TIME=${{ secrets.JWT_ACCESS_TOKEN_EXPIRATION_TIME }}" >> ./.env
             echo "JWT_REFRESH_TOKEN_EXPIRATION_TIME=${{ secrets.JWT_REFRESH_TOKEN_EXPIRATION_TIME }}" >> ./.env
             echo "JWT_REGISTRATION_TOKEN_EXPIRATION_TIME=${{ secrets.JWT_REGISTRATION_TOKEN_EXPIRATION_TIME }}" >> ./.env
+            echo "KEY_STORE_PASSWORD=${{ secrets.KEY_STORE_PASSWORD }}" >> ./.env
 
       # gradle build
       - name: Grant execute permission for gradlew
